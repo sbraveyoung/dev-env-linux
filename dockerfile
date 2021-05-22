@@ -20,6 +20,9 @@ ENV GOPATH=/home/$NORMAL_USER/code/ \
 #git-flow
 #vim-plugins
 #host
+#FlameGraph
+#GitlHEVCAnalyzer
+#gor
 
 RUN    dnf -y update \
     && dnf -y install epel-release \
