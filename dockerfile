@@ -20,20 +20,23 @@ ENV GOPATH=/home/$NORMAL_USER/code/ \
 #vim-plugins
 #host
 #FlameGraph
-#GitlHEVCAnalyzer
+#
 
-RUN    dnf -y update \
+RUN    dnf config-manager --add-repo https://cli.github.com/packages/rpm/gh-cli.repo \
+    && dnf -y update \
     && dnf -y install epel-release \
     && dnf -y --enablerepo=PowerTools install libgcc.i686 glibc-devel bison flex texinfo libtool \
           zlib-devel bzip2-devel openssl-devel ncurses-devel sqlite-devel readline-devel tk-devel \
           gdbm-devel xz-devel gettext pkg-config autoconf automake txt2man ncurses ncurses-devel \
-          tcl-devel net-tools llvm clang-libs clang-devel which libX11-devel libXcursor-devel \
-          libXrandr-devel libXinerama-devel mesa-libGL-devel libXi-devel libevent libevent-devel \
-          asciidoc pcre-devel xz-devel bind-utils freetype-devel glib2-devel fontconfig-devel \
+          tcl-devel net-tools llvm clang-libs clang-devel which libX11-devel libXcursor-devel libXrandr-devel \
+          libXinerama-devel mesa-libGL-devel mesa-libGLU-devel freeglut-devel libXi-devel libevent \
+          libevent-devel asciidoc pcre-devel xz-devel bind-utils freetype-devel glib2-devel fontconfig-devel \
+          pango-devel texlive-scheme-medium \
     && dnf -y --enablerepo=PowerTools install libpng libpng-devel libjpeg-devel ghostscript-devel \
           libtiff-devel libwmf-devel \
     && dnf -y groupinstall "Development Tools" \
-    && dnf -y install git sudo gcc gcc-c++ gdb make unzip ctags vim expect passwd wget cmake\
+    && dnf -y install git sudo gcc gcc-c++ gdb make unzip ctags vim expect passwd wget cmake figlet ncdu \
+        nnn gh kakoune colordiff \
     && dnf -y install perl nodejs rust cargo golang python2 python2-pip python2-devel \
           python3 python3-pip python3-devel ruby lua luajit zsh \
     && ln -s /usr/bin/python3 /usr/bin/python \
@@ -64,6 +67,11 @@ RUN    git clone https://github.com/ImageMagick/ImageMagick ${CLONE_PATH}/ImageM
 RUN    cd ${CLONE_PATH} \
        && curl -OL https://github.com/wagoodman/dive/releases/download/v0.9.2/dive_0.9.2_linux_amd64.rpm \
        && rpm -i dive_0.9.2_linux_amd64.rpm
+
+RUN    cd ${CLONE_PATH} \
+       && wget https://github.com/rgburke/grv/releases/download/v0.3.2/grv_v0.3.2_linux64 \
+       && chmod +x grv_v0.3.2_linux64 \
+       && cp grv_v0.3.2_linux64 ${BIN_PATH}/grv
 
 RUN    wget https://github.com/axel-download-accelerator/axel/releases/download/v2.17.7/axel-2.17.7.tar.gz -O ${CLONE_PATH}/axel-2.17.7.tar.gz \
        && cd ${CLONE_PATH} \
@@ -207,6 +215,37 @@ RUN    git clone https://git.ffmpeg.org/ffmpeg.git ${CLONE_PATH}/ffmpeg \
        && ln -s ${BIN_PATH}/ffmpeg/bin/ffmpeg /usr/local/bin/ffmpeg \
        && ln -s ${BIN_PATH}/ffmpeg/bin/ffprobe /usr/local/bin/ffprobe
 
+RUN    git clone git@github.com:kevinschoon/pomo.git ${CLONE_PATH}/pomo \
+       && cd ${CLONE_PATH}/pomo \
+       && make
+
+RUN    curl https://cht.sh/:cht.sh | tee ${BIN_PATH}/bin/cht.sh \
+       && chmod +x ${BIN_PATH}/bin/cht.sh
+
+RUN    curl https://raw.githubusercontent.com/denilsonsa/prettyping/master/prettyping | tee ${BIN_PATH}/bin/prettyping \
+       && chmod +x ${BIN_PATH}/bin/prettyping
+
+RUN    git clone https://github.com/charmbracelet/glow.git ${CLONE_PATH}/glow \
+       && cd ${CLONE_PATH}/glow \
+       && go build
+
+RUN    git clone https://github.com/p-e-w/hegemon.git ${CLONE_PATH}/hegemon \
+       && cd ${CLONE_PATH}/hegemon \
+       && cargo run
+
+#qa installer maybe need graphic window
+# RUN    cd ${CLONE_PATH} \
+       # && wget https://download.qt.io/official_releases/qt/5.12/5.12.11/qt-opensource-linux-x64-5.12.11.run \
+       # && chmod +x qt-opensource-linux-x64-5.12.1.run \
+       # && ./qt-opensource-linux-x64-5.12.1.run
+
+# RUN    git clone https://github.com/lheric/GitlHEVCAnalyzer.git ${CLONE_PATH}/GitlHEVCAnalyzer \
+       # && cd ${CLONE_PATH}/GitlHEVCAnalyzer \
+       # && git submodule update --init --recursive \
+       # && git submodule update --recursive \
+       # && qmake -qt=qt5 GitlHEVCAnalyzer.pro -r "CONFIG+=Release" \
+       # && make
+
 #    && git clone https://github.com/neovim/neovim ${CLONE_PATH}/neovim \
 #       && cd ${CLONE_PATH}/neovim \
 #       && make CMAKE_INSTALL_PREFIX=${BIN_PATH}/neovim \
@@ -217,10 +256,10 @@ RUN    git clone https://git.ffmpeg.org/ffmpeg.git ${CLONE_PATH}/ffmpeg \
 RUN    pip3 install git+https://github.com/jeffkaufman/icdiff.git \
     && pip3 install iredis ranger-fm mdv thefuck mycli asciinema http-prompt \
     && pip3 install --upgrade httpie \
-    && pip2 install pyotp
+    && pip2 install pyotp yapf mdv manimgl
 
 #nodejs
-RUN    npm install -g fx fx-completion cloc
+RUN    npm install -g fx fx-completion cloc svg-term-cli
 
 #go
 RUN    cd ${CLONE_PATH} \
@@ -234,7 +273,9 @@ RUN    cd ${CLONE_PATH} \
     && GOPATH=${BIN_PATH}/gopath go get -u -v github.com/go-delve/delve/cmd/dlv \
     && GOPATH=${BIN_PATH}/gopath go get -u -v github.com/peco/peco \
     && GOPATH=${BIN_PATH}/gopath GO111MODULE=on GOPROXY=https://goproxy.io go get -v github.com/mikefarah/yq/v3 \
-    && GOPATH=${BIN_PATH}/gopath go get -u -v github.com/liamg/aminal
+    && GOPATH=${BIN_PATH}/gopath go get -u -v github.com/liamg/aminal \
+    && GOPATH=${BIN_PATH}/gopath go get -u github.com/cheat/cheat/cmd/cheat
+    && GOPATH=${BIN_PATH}/gopath go get github.com/jesseduffield/lazydocker
 
 RUN    chmod a+w ${CLONE_PATH} \
        && chmod a+w ${BIN_PATH}
@@ -243,7 +284,6 @@ RUN    usermod -u 501 $NORMAL_USER
 USER   $NORMAL_USER
 WORKDIR /home/$NORMAL_USER
 RUN    ssh-keygen -t rsa -N "" -f ~/.ssh/id_rsa
-
 RUN    git clone https://github.com/wting/autojump ${CLONE_PATH}/autojump \
        && cd ${CLONE_PATH}/autojump \
        && SHELL=/bin/bash sudo ./install.py
@@ -256,7 +296,7 @@ RUN    curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs > ${CLONE_PATH}
 RUN    ~/.cargo/bin/cargo install --git https://github.com/Peltoche/lsd.git --branch master \
     && ~/.cargo/bin/cargo install --git https://github.com/o2sh/onefetch.git --branch master \
     && ~/.cargo/bin/cargo install broot exa fd-find hexyl ripgrep sd bat \
-    && ~/.cargo/bin/cargo install tealdeer
+    && ~/.cargo/bin/cargo install tealdeer pastel hyperfine
 
 RUN    git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf \
        && ~/.fzf/install \
@@ -269,7 +309,7 @@ RUN    sudo dnf -y install privoxy initscripts cscope
 #       && cd ${CLONE_PATH} \
 #       && ./bash-it/install.sh -s
 
-#figlet/ncdu/nnn/pastel/yapf/bench/grv/pomo/cheat/prettyping/cheat.sh/cli-github/terminal_markdown_viewer/dstat/kakoune/https://github.com/alebcay/awesome-shell/ack,sz/rz,fuck,j/mytop/atop/vtop/gtop/gotop/ptop/hegemon,ranger/svg-term/sshrc/github.com/rupa/z,github.com/rupa/v/script/scriptreplay,fortune,trans,bro/alacritty,/hyperfine/startship,file.shell,starship,ctop,lazydocket,colordiff,tldr,manimlib,gor,mediainfo,ssh-chat
+#starship,manimlib,gor,mediainfo,ssh-chat
 
 USER    root
 WORKDIR /
