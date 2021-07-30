@@ -1,0 +1,3 @@
+set main-view = date:default author:abbreviated id:yes,color \
+                line-number:no,interval=1 \
+                commit-title:graph=v2,refs=yes,overflow=no

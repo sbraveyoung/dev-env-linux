@@ -11,7 +11,6 @@ ENV GOPATH=/home/$NORMAL_USER/code/ \
     BIN_PATH=/usr/local
 
 #git clone https://github.com/Bash-it/bash-it ${CLONE_PATH}/bash-it cd ${CLONE_PATH}/bash-it \
-#ShellCheck the_silver_searcher fzf insect \
 #sudo go get -u -v github.com/liamg/aminal \
 #git clone --config transfer.fsckobjects=false --config receive.fsckobjects=false --config fetch.fsckobjects=false https://github.com/github/hub.git ${CLONE_PATH}/hub cd ${CLONE_PATH}/hub make install prefix=${BIN_PATH}/hub ln -s ${BIN_PATH}/hub/bin/hub /usr/local/bin/hub \
 #git clone https://github.com/flok99/multitail ${CLONE_PATH}/multitail cd ${CLONE_PATH}/multitail mkdir build cd build cmake .. sudo make install \
@@ -22,7 +21,6 @@ ENV GOPATH=/home/$NORMAL_USER/code/ \
 #host
 #FlameGraph
 #GitlHEVCAnalyzer
-#gor
 
 RUN    dnf -y update \
     && dnf -y install epel-release \
@@ -271,7 +269,7 @@ RUN    sudo dnf -y install privoxy initscripts cscope
 #       && cd ${CLONE_PATH} \
 #       && ./bash-it/install.sh -s
 
-#figlet/ncdu/nnn/pastel/yapf/bench/grv/pomo/cheat/prettyping/cheat.sh/cli-github/terminal_markdown_viewer/dstat/kakoune/https://github.com/alebcay/awesome-shell/ack,sz/rz,fuck,j/mytop/atop/vtop/gtop/gotop/ptop/hegemon,ranger/fd/svg-term/sshrc/github.com/rupa/z,github.com/rupa/v/script/scriptreplay,fortune,trans,bro/alacritty,/hyperfine/startship,file.shell,starship,ctop,lazydocket,colordiff,httpie,tldr,manimlib
+#figlet/ncdu/nnn/pastel/yapf/bench/grv/pomo/cheat/prettyping/cheat.sh/cli-github/terminal_markdown_viewer/dstat/kakoune/https://github.com/alebcay/awesome-shell/ack,sz/rz,fuck,j/mytop/atop/vtop/gtop/gotop/ptop/hegemon,ranger/svg-term/sshrc/github.com/rupa/z,github.com/rupa/v/script/scriptreplay,fortune,trans,bro/alacritty,/hyperfine/startship,file.shell,starship,ctop,lazydocket,colordiff,tldr,manimlib,gor,mediainfo,ssh-chat
 
 USER    root
 WORKDIR /
