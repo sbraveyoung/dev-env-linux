@@ -233,6 +233,24 @@ RUN    git clone https://github.com/p-e-w/hegemon.git ${CLONE_PATH}/hegemon \
        && cd ${CLONE_PATH}/hegemon \
        && cargo run
 
+RUN    git clone https://github.com/ogham/dog.git ${CLONE_PATH}/dog \
+       && cd ${CLONE_PATH}/dog \
+       && cargo build
+       && cargo test
+
+RUN    git clone https://github.com/rs/curlie.git ${CLONE_PATH}/curlie \
+       && cd ${CLONE_PATH}/curlie \
+       && go install
+
+RUN    mkdir ${CLONE_PATH}/mcfly \
+       && cd ${CLONE_PATH}/mcfly \
+       && curl -LSfs https://raw.githubusercontent.com/cantino/mcfly/master/ci/install.sh | sh -s -- --git cantino/mcfly \
+       && echo 'eval "$(mcfly init bash)"' >> ~/.bashrc
+
+RUN    git clone https://github.com/muesli/duf.git ${CLONE_PATH}/duf \
+       && cd ${CLONE_PATH}/duf \
+       && go install
+
 #qa installer maybe need graphic window
 # RUN    cd ${CLONE_PATH} \
        # && wget https://download.qt.io/official_releases/qt/5.12/5.12.11/qt-opensource-linux-x64-5.12.11.run \
@@ -295,8 +313,8 @@ RUN    curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs > ${CLONE_PATH}
 
 RUN    ~/.cargo/bin/cargo install --git https://github.com/Peltoche/lsd.git --branch master \
     && ~/.cargo/bin/cargo install --git https://github.com/o2sh/onefetch.git --branch master \
-    && ~/.cargo/bin/cargo install broot exa fd-find hexyl ripgrep sd bat \
-    && ~/.cargo/bin/cargo install tealdeer pastel hyperfine
+    && ~/.cargo/bin/cargo install broot exa fd-find hexyl ripgrep sd bat procs gping bottom choose du-dust \
+    && ~/.cargo/bin/cargo install tealdeer pastel hyperfine git-delta xh zoxide #zoxide need to configure
 
 RUN    git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf \
        && ~/.fzf/install \
@@ -310,6 +328,7 @@ RUN    sudo dnf -y install privoxy initscripts cscope
 #       && ./bash-it/install.sh -s
 
 #starship,manimlib,gor,mediainfo,ssh-chat
+#https://github.com/alebcay/awesome-shell
 
 USER    root
 WORKDIR /
