@@ -242,9 +242,9 @@ RUN    git clone https://github.com/rs/curlie.git ${CLONE_PATH}/curlie \
        && cd ${CLONE_PATH}/curlie \
        && go install
 
-RUN    mkdir ${CLONE_PATH}/mcfly \
+RUN    git clone https://github.com/cantino/mcfly ${CLONE_PATH}/mcfly \
        && cd ${CLONE_PATH}/mcfly \
-       && curl -LSfs https://raw.githubusercontent.com/cantino/mcfly/master/ci/install.sh | sh -s -- --git cantino/mcfly \
+       && cargo install --path . \
        && echo 'eval "$(mcfly init bash)"' >> ~/.bashrc
 
 RUN    git clone https://github.com/muesli/duf.git ${CLONE_PATH}/duf \
