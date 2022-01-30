@@ -1,49 +1,41 @@
 FROM centos:8
 MAINTAINER SmartBrave <SmartBraveCoder@gmail.com>
 
-#build command: docker build -t IMAGE_NAME --build-arg NORMAL_USER=xxx --build-arg NORMAL_PASSWD=xxx --build-arg ROOT_PASSWD=xxx .
+#build command: docker build -t ${USER_NAME}/${IMAGE_NAME}:${VERSION} --build-arg NORMAL_USER=${NORMAL_USER} --build-arg NORMAL_PASSWD=${NORMAL_PASSWD} --build-arg ROOT_PASSWD=${ROOT_PASSWD} .
 ARG  NORMAL_USER=test_user
 ARG  NORMAL_PASSWD=test_passwd
 ARG  ROOT_PASSWD=root_passwd
 
 ENV GOPATH=/home/$NORMAL_USER/code/ \
     CLONE_PATH=/usr/local/src \
-    BIN_PATH=/usr/local
+    BIN_PATH=/usr/local/app
 
-#git clone https://github.com/Bash-it/bash-it ${CLONE_PATH}/bash-it cd ${CLONE_PATH}/bash-it \
-#sudo go get -u -v github.com/liamg/aminal \
-#git clone --config transfer.fsckobjects=false --config receive.fsckobjects=false --config fetch.fsckobjects=false https://github.com/github/hub.git ${CLONE_PATH}/hub cd ${CLONE_PATH}/hub make install prefix=${BIN_PATH}/hub ln -s ${BIN_PATH}/hub/bin/hub /usr/local/bin/hub \
-#git clone https://github.com/flok99/multitail ${CLONE_PATH}/multitail cd ${CLONE_PATH}/multitail mkdir build cd build cmake .. sudo make install \
-#sudo GOPROXY="https://goproxy.io" GO111MODULE=on go get -u -v github.com/mikefarah/yq/v3
-#sudo sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" \
-#git-flow
-#vim-plugins
-#host
-#FlameGraph
-#
-
-RUN    dnf config-manager --add-repo https://cli.github.com/packages/rpm/gh-cli.repo \
+RUN    dnf -y install dnf-plugins-core \
+    && dnf config-manager --set-enabled powertools \
+    && dnf config-manager --add-repo https://cli.github.com/packages/rpm/gh-cli.repo \
+    && dnf localinstall -y https://download1.rpmfusion.org/free/el/rpmfusion-free-release-7.noarch.rpm \
     && dnf -y update \
     && dnf -y install epel-release \
-    && dnf -y --enablerepo=PowerTools install libgcc.i686 glibc-devel bison flex texinfo libtool \
+    && dnf -y install libgcc.i686 glibc-devel bison flex texinfo libtool \
           zlib-devel bzip2-devel openssl-devel ncurses-devel sqlite-devel readline-devel tk-devel \
           gdbm-devel xz-devel gettext pkg-config autoconf automake txt2man ncurses ncurses-devel \
           tcl-devel net-tools llvm clang-libs clang-devel which libX11-devel libXcursor-devel libXrandr-devel \
           libXinerama-devel mesa-libGL-devel mesa-libGLU-devel freeglut-devel libXi-devel libevent \
           libevent-devel asciidoc pcre-devel xz-devel bind-utils freetype-devel glib2-devel fontconfig-devel \
-          pango-devel texlive-scheme-medium \
-    && dnf -y --enablerepo=PowerTools install libpng libpng-devel libjpeg-devel ghostscript-devel \
+          pango-devel libwebp-devel libde265  libheif* privoxy initscripts cscope \
+    && dnf -y install libpng libpng-devel libjpeg-devel ghostscript-devel \
           libtiff-devel libwmf-devel \
     && dnf -y groupinstall "Development Tools" \
     && dnf -y install git sudo gcc gcc-c++ gdb make unzip ctags vim expect passwd wget cmake figlet ncdu \
         nnn gh kakoune colordiff \
-    && dnf -y install perl nodejs rust cargo golang python2 python2-pip python2-devel \
+    && dnf -y install perl nodejs rust golang python2 python2-pip python2-devel \
           python3 python3-pip python3-devel ruby lua luajit zsh \
     && ln -s /usr/bin/python3 /usr/bin/python \
        && ln -s /usr/bin/pip3 /usr/bin/pip \
     && sed -i '/Defaults/s/env_reset/\!env_reset/g' /etc/sudoers \
     && useradd --create-home $NORMAL_USER --password $NORMAL_PASSWD && echo "$NORMAL_USER ALL=(ALL) NOPASSWD:ALL" >>/etc/sudoers \
-    && echo "root:$ROOT_PASSWD" | chpasswd
+    && echo "root:$ROOT_PASSWD" | chpasswd \
+    && mkdir ${BIN_PATH}
 
 RUN    git clone https://github.com/ImageMagick/ImageMagick ${CLONE_PATH}/ImageMagick \
        && cd ${CLONE_PATH}/ImageMagick \
@@ -135,7 +127,6 @@ RUN    git clone https://github.com/facebook/PathPicker ${CLONE_PATH}/PathPicker
 
 RUN    git clone https://github.com/jonas/tig ${CLONE_PATH}/tig \
        && cd ${CLONE_PATH}/tig \
-       && ./configure LDFLAGS=-L/usr/lib64 CPPFLAGS=-I/usr/include
        && make prefix=${BIN_PATH}/tig \
        && make install prefix=${BIN_PATH}/tig \
        && ln -s ${BIN_PATH}/tig/bin/tig /usr/local/bin/tig
@@ -160,14 +151,6 @@ RUN    git clone https://github.com/vifm/vifm ${CLONE_PATH}/vifm \
        && make install \
        && ln -s ${BIN_PATH}/vifm/bin/vifm /usr/local/bin/vifm
 
-RUN    git clone https://github.com/ccache/ccache ${CLONE_PATH}/ccache \
-       && cd ${CLONE_PATH}/ccache \
-       && ./autogen.sh \
-       && ./configure --prefix=${BIN_PATH}/ccache --with-libzstd-from-internet --with-libb2-from-internet \
-       && make -j 10 \
-       && make install \
-       && ln -s ${BIN_PATH}/ccache/bin/ccache /usr/local/bin/ccache
-
 RUN    git clone https://github.com/mptre/yank ${CLONE_PATH}/yank \
        && cd ${CLONE_PATH}/yank \
        && make PREFIX=${BIN_PATH}/yank install \
@@ -187,13 +170,6 @@ RUN    cd ${CLONE_PATH} \
        && chmod +x gitflow-installer.sh \
        && REPO_HOST=git@github.com:nvie/gitflow ./gitflow-installer.sh
 
-RUN    git clone https://github.com/flok99/multitail ${CLONE_PATH}/multitail \
-       && cd ${CLONE_PATH}/multitail \
-       && mkdir build \
-       && cd build \
-       && cmake .. \
-       && make install
-
 RUN    git clone https://github.com/ggreer/the_silver_searcher ${CLONE_PATH}/the_silver_searcher \
        && cd ${CLONE_PATH}/the_silver_searcher \
        && ./build.sh \
@@ -207,51 +183,103 @@ RUN    git clone https://github.com/beyondgrep/ack2 ${CLONE_PATH}/ack2 \
        && make test \
        && make install
 
-RUN    git clone https://git.ffmpeg.org/ffmpeg.git ${CLONE_PATH}/ffmpeg \
-       && cd ${CLONE_PATH}/ffmpeg \
-       && ./configure --prefix=${BIN_PATH}/ffmpeg --enable-openssl --disable-x86asm \
-       && make -j 10 \
-       && make install \
-       && ln -s ${BIN_PATH}/ffmpeg/bin/ffmpeg /usr/local/bin/ffmpeg \
-       && ln -s ${BIN_PATH}/ffmpeg/bin/ffprobe /usr/local/bin/ffprobe
-
-RUN    git clone git@github.com:kevinschoon/pomo.git ${CLONE_PATH}/pomo \
+RUN    git clone https://github.com/kevinschoon/pomo.git ${CLONE_PATH}/pomo \
        && cd ${CLONE_PATH}/pomo \
        && make
-
-RUN    curl https://cht.sh/:cht.sh | tee ${BIN_PATH}/bin/cht.sh \
-       && chmod +x ${BIN_PATH}/bin/cht.sh
-
-RUN    curl https://raw.githubusercontent.com/denilsonsa/prettyping/master/prettyping | tee ${BIN_PATH}/bin/prettyping \
-       && chmod +x ${BIN_PATH}/bin/prettyping
 
 RUN    git clone https://github.com/charmbracelet/glow.git ${CLONE_PATH}/glow \
        && cd ${CLONE_PATH}/glow \
        && go build
 
-RUN    git clone https://github.com/p-e-w/hegemon.git ${CLONE_PATH}/hegemon \
-       && cd ${CLONE_PATH}/hegemon \
-       && cargo run
-
-RUN    git clone https://github.com/ogham/dog.git ${CLONE_PATH}/dog \
-       && cd ${CLONE_PATH}/dog \
-       && cargo build
-       && cargo test
-
 RUN    git clone https://github.com/rs/curlie.git ${CLONE_PATH}/curlie \
        && cd ${CLONE_PATH}/curlie \
        && go install
-
-RUN    git clone https://github.com/cantino/mcfly ${CLONE_PATH}/mcfly \
-       && cd ${CLONE_PATH}/mcfly \
-       && cargo install --path . \
-       && echo 'eval "$(mcfly init bash)"' >> ~/.bashrc
 
 RUN    git clone https://github.com/muesli/duf.git ${CLONE_PATH}/duf \
        && cd ${CLONE_PATH}/duf \
        && go install
 
-#qa installer maybe need graphic window
+RUN    git clone https://git.ffmpeg.org/ffmpeg.git ${CLONE_PATH}/ffmpeg \
+       && cd ${CLONE_PATH}/ffmpeg \
+       && ./configure --prefix=${BIN_PATH}/ffmpeg --enable-openssl --disable-x86asm \
+       && make -j 10 \
+       && make install \
+       && sudo ln -s ${BIN_PATH}/ffmpeg/bin/ffmpeg /usr/local/bin/ffmpeg \
+       && sudo ln -s ${BIN_PATH}/ffmpeg/bin/ffprobe /usr/local/bin/ffprobe
+
+#python
+RUN    pip install --upgrade setuptools \
+       && python -m pip install --upgrade pip
+
+RUN    pip2 install pybind11 \
+    && pip3 install pybind11 \
+    && pip3 install git+https://github.com/jeffkaufman/icdiff.git \
+    && pip3 install iredis ranger-fm mdv thefuck mycli asciinema http-prompt \
+    && pip3 install --upgrade httpie \
+    && pip3 install yapf mdv manimgl
+
+#nodejs
+RUN    npm install -g fx fx-completion cloc svg-term-cli
+
+#go
+RUN    cd ${CLONE_PATH} \
+       && wget https://dl.google.com/go/go1.17.6.linux-amd64.tar.gz \
+       && tar -zxvf go1.17.6.linux-amd64.tar.gz -C ${BIN_PATH} \
+       && ln -s ${BIN_PATH}/go/bin/go /usr/local/bin/go \
+       && ln -s ${BIN_PATH}/go/bin/gofmt /usr/local/bin/gofmt \
+    && go get -u -v github.com/tomnomnom/gron \
+    && go get -u -v github.com/jingweno/ccat \
+    && go get -u -v github.com/go-delve/delve/cmd/dlv \
+    && go get -u -v github.com/peco/peco \
+    && go get -u -v github.com/mikefarah/yq/v3 \
+    && go get -u -v github.com/cheat/cheat/cmd/cheat \
+    && go get -u -v github.com/jesseduffield/lazydocker
+    #&& go get -u -v github.com/liamg/aminal \
+
+RUN    chmod a+w ${CLONE_PATH} \
+       && chmod a+w ${BIN_PATH}
+
+#RUN    usermod -u 501 $NORMAL_USER
+USER   $NORMAL_USER
+WORKDIR /home/$NORMAL_USER
+RUN    ssh-keygen -t rsa -N "" -f ~/.ssh/id_rsa
+
+RUN    git clone https://github.com/SmartBrave/dotfiles ${CLONE_PATH}/dotfiles \
+       && cd ${CLONE_PATH}/dotfiles \
+       && cp .bash_profile .bashrc .gitconfig .tigrc .tmux.conf .vimrc ~
+
+RUN    git clone https://github.com/wting/autojump ${CLONE_PATH}/autojump \
+       && cd ${CLONE_PATH}/autojump \
+       && SHELL=/bin/bash sudo ./install.py
+
+#rust
+RUN    curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs > ${CLONE_PATH}/rustup-init.sh \
+       && chmod +x ${CLONE_PATH}/rustup-init.sh \
+       && ${CLONE_PATH}/rustup-init.sh -y
+
+RUN    ~/.cargo/bin/cargo install --git https://github.com/Peltoche/lsd.git --branch master \
+    && ~/.cargo/bin/cargo install --git https://github.com/cantino/mcfly.git --branch master \
+    && ~/.cargo/bin/cargo install broot exa fd-find hexyl ripgrep sd bat procs gping bottom choose du-dust \
+    && ~/.cargo/bin/cargo install onefetch tealdeer pastel hyperfine git-delta xh zoxide #zoxide need to configure
+    #&& ~/.cargo/bin/cargo install --git https://github.com/p-e-w/hegemon.git --branch master \
+    #&& ~/.cargo/bin/cargo install --git https://github.com/ogham/dog.git --branch master \
+
+RUN    git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf \
+       && ~/.fzf/install \
+    && git clone --depth=1 https://github.com/amix/vimrc.git ~/.vim_runtime \
+       && sh ~/.vim_runtime/install_awesome_vimrc.sh
+
+#starship,manimlib,gor,mediainfo,ssh-chat
+#sudo go get -u -v github.com/liamg/aminal \
+#git clone --config transfer.fsckobjects=false --config receive.fsckobjects=false --config fetch.fsckobjects=false https://github.com/github/hub.git ${CLONE_PATH}/hub cd ${CLONE_PATH}/hub make install prefix=${BIN_PATH}/hub ln -s ${BIN_PATH}/hub/bin/hub /usr/local/bin/hub \
+#git clone https://github.com/flok99/multitail ${CLONE_PATH}/multitail cd ${CLONE_PATH}/multitail mkdir build cd build cmake .. sudo make install \
+#git-flow
+#vim-plugins
+#host
+#FlameGraph
+#https://github.com/alebcay/awesome-shell
+
+#qt installer maybe need graphic window
 # RUN    cd ${CLONE_PATH} \
        # && wget https://download.qt.io/official_releases/qt/5.12/5.12.11/qt-opensource-linux-x64-5.12.11.run \
        # && chmod +x qt-opensource-linux-x64-5.12.1.run \
@@ -264,71 +292,37 @@ RUN    git clone https://github.com/muesli/duf.git ${CLONE_PATH}/duf \
        # && qmake -qt=qt5 GitlHEVCAnalyzer.pro -r "CONFIG+=Release" \
        # && make
 
-#    && git clone https://github.com/neovim/neovim ${CLONE_PATH}/neovim \
-#       && cd ${CLONE_PATH}/neovim \
-#       && make CMAKE_INSTALL_PREFIX=${BIN_PATH}/neovim \
-#       && make install \
-#       && ln -s ${BIN_PATH}/neovim/bin/neovim /usr/local/bin/neovim \
-
-#python
-RUN    pip3 install git+https://github.com/jeffkaufman/icdiff.git \
-    && pip3 install iredis ranger-fm mdv thefuck mycli asciinema http-prompt \
-    && pip3 install --upgrade httpie \
-    && pip2 install pyotp yapf mdv manimgl
-
-#nodejs
-RUN    npm install -g fx fx-completion cloc svg-term-cli
-
-#go
-RUN    cd ${CLONE_PATH} \
-       && wget https://dl.google.com/go/go1.14.3.linux-amd64.tar.gz \
-       && tar -zxvf go1.14.3.linux-amd64.tar.gz -C ${BIN_PATH} \
-       && ln -s ${BIN_PATH}/go/bin/go /usr/local/bin/go \
-       && ln -s ${BIN_PATH}/go/bin/gofmt /usr/local/bin/gofmt \
-    && mkdir ${BIN_PATH}/gopath \
-    && GOPATH=${BIN_PATH}/gopath GO111MODULE=on GOPROXY=https://goproxy.io go get -u -v github.com/tomnomnom/gron \
-    && GOPATH=${BIN_PATH}/gopath go get -u -v github.com/jingweno/ccat \
-    && GOPATH=${BIN_PATH}/gopath go get -u -v github.com/go-delve/delve/cmd/dlv \
-    && GOPATH=${BIN_PATH}/gopath go get -u -v github.com/peco/peco \
-    && GOPATH=${BIN_PATH}/gopath GO111MODULE=on GOPROXY=https://goproxy.io go get -v github.com/mikefarah/yq/v3 \
-    && GOPATH=${BIN_PATH}/gopath go get -u -v github.com/liamg/aminal \
-    && GOPATH=${BIN_PATH}/gopath go get -u github.com/cheat/cheat/cmd/cheat
-    && GOPATH=${BIN_PATH}/gopath go get github.com/jesseduffield/lazydocker
-
-RUN    chmod a+w ${CLONE_PATH} \
-       && chmod a+w ${BIN_PATH}
-
-RUN    usermod -u 501 $NORMAL_USER
-USER   $NORMAL_USER
-WORKDIR /home/$NORMAL_USER
-RUN    ssh-keygen -t rsa -N "" -f ~/.ssh/id_rsa
-RUN    git clone https://github.com/wting/autojump ${CLONE_PATH}/autojump \
-       && cd ${CLONE_PATH}/autojump \
-       && SHELL=/bin/bash sudo ./install.py
-
-#rust
-RUN    curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs > ${CLONE_PATH}/rustup-init.sh \
-       && chmod +x ${CLONE_PATH}/rustup-init.sh \
-       && ${CLONE_PATH}/rustup-init.sh -y
-
-RUN    ~/.cargo/bin/cargo install --git https://github.com/Peltoche/lsd.git --branch master \
-    && ~/.cargo/bin/cargo install --git https://github.com/o2sh/onefetch.git --branch master \
-    && ~/.cargo/bin/cargo install broot exa fd-find hexyl ripgrep sd bat procs gping bottom choose du-dust \
-    && ~/.cargo/bin/cargo install tealdeer pastel hyperfine git-delta xh zoxide #zoxide need to configure
-
-RUN    git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf \
-       && ~/.fzf/install \
-    && git clone --depth=1 https://github.com/amix/vimrc.git ~/.vim_runtime \
-       && sh ~/.vim_runtime/install_awesome_vimrc.sh
-
-RUN    sudo dnf -y install privoxy initscripts cscope
 #RUN    sudo sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" \
 #    && git clone --depth=1 https://github.com/Bash-it/bash-it.git ${CLONE_PATH}/bash-it \
 #       && cd ${CLONE_PATH} \
 #       && ./bash-it/install.sh -s
 
-#starship,manimlib,gor,mediainfo,ssh-chat
-#https://github.com/alebcay/awesome-shell
+#RUN    git clone https://github.com/ccache/ccache ${CLONE_PATH}/ccache \
+#       && cd ${CLONE_PATH}/ccache \
+#       && ./autogen.sh \
+#       && ./configure --prefix=${BIN_PATH}/ccache --with-libzstd-from-internet --with-libb2-from-internet \
+#       && make -j 10 \
+#       && make install \
+#       && ln -s ${BIN_PATH}/ccache/bin/ccache /usr/local/bin/ccache
+
+#RUN    git clone https://github.com/flok99/multitail ${CLONE_PATH}/multitail \
+#       && cd ${CLONE_PATH}/multitail \
+#       && mkdir build \
+#       && cd build \
+#       && cmake .. \
+#       && make install
+
+#RUN    curl https://cht.sh/:cht.sh | tee ${BIN_PATH}/bin/cht.sh \
+#       && chmod +x ${BIN_PATH}/bin/cht.sh
+
+#RUN    curl https://raw.githubusercontent.com/denilsonsa/prettyping/master/prettyping | tee ${BIN_PATH}/bin/prettyping \
+#       && chmod +x ${BIN_PATH}/bin/prettyping
+
+#    && git clone https://github.com/neovim/neovim ${CLONE_PATH}/neovim \
+#       && cd ${CLONE_PATH}/neovim \
+#       && make CMAKE_INSTALL_PREFIX=${BIN_PATH}/neovim \
+#       && make install \
+#       && ln -s ${BIN_PATH}/neovim/bin/neovim /usr/local/bin/neovim \
 
 USER    root
 WORKDIR /
