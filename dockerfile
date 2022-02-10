@@ -28,14 +28,15 @@ RUN    dnf -y install dnf-plugins-core \
     && dnf -y groupinstall "Development Tools" \
     && dnf -y install git sudo gcc gcc-c++ gdb make unzip ctags vim expect passwd wget cmake figlet ncdu \
         nnn gh kakoune colordiff \
-    && dnf -y install perl nodejs rust golang python2 python2-pip python2-devel \
+    && dnf -y install perl nodejs rust python2 python2-pip python2-devel \
           python3 python3-pip python3-devel ruby lua luajit zsh \
     && ln -s /usr/bin/python3 /usr/bin/python \
        && ln -s /usr/bin/pip3 /usr/bin/pip \
     && sed -i '/Defaults/s/env_reset/\!env_reset/g' /etc/sudoers \
     && useradd --create-home $NORMAL_USER --password $NORMAL_PASSWD && echo "$NORMAL_USER ALL=(ALL) NOPASSWD:ALL" >>/etc/sudoers \
     && echo "root:$ROOT_PASSWD" | chpasswd \
-    && mkdir ${BIN_PATH}
+    && mkdir ${BIN_PATH} \
+    && ln -sf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
 
 RUN    git clone https://github.com/ImageMagick/ImageMagick ${CLONE_PATH}/ImageMagick \
        && cd ${CLONE_PATH}/ImageMagick \
@@ -81,8 +82,7 @@ RUN    sudo git clone https://github.com/jarun/bcal ${CLONE_PATH}/bcal \
        && make strip install
 
 RUN    sudo git clone https://github.com/so-fancy/diff-so-fancy ${CLONE_PATH}/diff-so-fancy \
-       && cd ${CLONE_PATH}/diff-so-fancy \
-       && ln -s diff-so-fancy /usr/local/bin/diff-so-fancy
+       && ln -s ${CLONE_PATH}/diff-so-fancy /usr/local/bin/diff-so-fancy
 
 RUN    git clone https://github.com/clvv/fasd ${CLONE_PATH}/fasd \
        && cd ${CLONE_PATH}/fasd \
@@ -187,18 +187,6 @@ RUN    git clone https://github.com/kevinschoon/pomo.git ${CLONE_PATH}/pomo \
        && cd ${CLONE_PATH}/pomo \
        && make
 
-RUN    git clone https://github.com/charmbracelet/glow.git ${CLONE_PATH}/glow \
-       && cd ${CLONE_PATH}/glow \
-       && go build
-
-RUN    git clone https://github.com/rs/curlie.git ${CLONE_PATH}/curlie \
-       && cd ${CLONE_PATH}/curlie \
-       && go install
-
-RUN    git clone https://github.com/muesli/duf.git ${CLONE_PATH}/duf \
-       && cd ${CLONE_PATH}/duf \
-       && go install
-
 RUN    git clone https://git.ffmpeg.org/ffmpeg.git ${CLONE_PATH}/ffmpeg \
        && cd ${CLONE_PATH}/ffmpeg \
        && ./configure --prefix=${BIN_PATH}/ffmpeg --enable-openssl --disable-x86asm \
@@ -233,8 +221,21 @@ RUN    cd ${CLONE_PATH} \
     && go get -u -v github.com/peco/peco \
     && go get -u -v github.com/mikefarah/yq/v3 \
     && go get -u -v github.com/cheat/cheat/cmd/cheat \
+    && go install github.com/wader/fq@latest \
     && go get -u -v github.com/jesseduffield/lazydocker
     #&& go get -u -v github.com/liamg/aminal \
+
+RUN    git clone https://github.com/charmbracelet/glow.git ${CLONE_PATH}/glow \
+       && cd ${CLONE_PATH}/glow \
+       && go build
+
+RUN    git clone https://github.com/rs/curlie.git ${CLONE_PATH}/curlie \
+       && cd ${CLONE_PATH}/curlie \
+       && go install
+
+RUN    git clone https://github.com/muesli/duf.git ${CLONE_PATH}/duf \
+       && cd ${CLONE_PATH}/duf \
+       && go install
 
 RUN    chmod a+w ${CLONE_PATH} \
        && chmod a+w ${BIN_PATH}
@@ -244,18 +245,26 @@ USER   $NORMAL_USER
 WORKDIR /home/$NORMAL_USER
 RUN    ssh-keygen -t rsa -N "" -f ~/.ssh/id_rsa
 
-RUN    git clone https://github.com/SmartBrave/dotfiles ${CLONE_PATH}/dotfiles \
-       && cd ${CLONE_PATH}/dotfiles \
-       && cp .bash_profile .bashrc .gitconfig .tigrc .tmux.conf .vimrc ~
-
 RUN    git clone https://github.com/wting/autojump ${CLONE_PATH}/autojump \
        && cd ${CLONE_PATH}/autojump \
-       && SHELL=/bin/bash sudo ./install.py
+       && SHELL=/bin/bash ./install.py
+
+#TODO: install tmux plugins automatically
+RUN    git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
 
 #rust
 RUN    curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs > ${CLONE_PATH}/rustup-init.sh \
        && chmod +x ${CLONE_PATH}/rustup-init.sh \
        && ${CLONE_PATH}/rustup-init.sh -y
+
+RUN    git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf \
+       && ~/.fzf/install #\
+    #&& git clone --depth=1 https://github.com/amix/vimrc.git ~/.vim_runtime \
+    #   && sh ~/.vim_runtime/install_awesome_vimrc.sh
+
+RUN    git clone https://github.com/SmartBrave/dotfiles ${CLONE_PATH}/dotfiles \
+       && cd ${CLONE_PATH}/dotfiles \
+       && cp .bash_profile .bashrc .gitconfig .tigrc .tmux.conf .vimrc ~
 
 RUN    ~/.cargo/bin/cargo install --git https://github.com/Peltoche/lsd.git --branch master \
     && ~/.cargo/bin/cargo install --git https://github.com/cantino/mcfly.git --branch master \
@@ -263,11 +272,6 @@ RUN    ~/.cargo/bin/cargo install --git https://github.com/Peltoche/lsd.git --br
     && ~/.cargo/bin/cargo install onefetch tealdeer pastel hyperfine git-delta xh zoxide #zoxide need to configure
     #&& ~/.cargo/bin/cargo install --git https://github.com/p-e-w/hegemon.git --branch master \
     #&& ~/.cargo/bin/cargo install --git https://github.com/ogham/dog.git --branch master \
-
-RUN    git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf \
-       && ~/.fzf/install \
-    && git clone --depth=1 https://github.com/amix/vimrc.git ~/.vim_runtime \
-       && sh ~/.vim_runtime/install_awesome_vimrc.sh
 
 #starship,manimlib,gor,mediainfo,ssh-chat
 #sudo go get -u -v github.com/liamg/aminal \

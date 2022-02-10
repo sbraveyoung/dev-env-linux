@@ -20,6 +20,15 @@ echo_sentence(){
     echo $quo
     #echo `trans $quo` # toooooo slow!
 }
+
+cdls(){
+    cd $1
+    exa --all
+}
+
+jcurl(){
+    curl $1 | jq
+}
 #################### functions ####################
 
 
@@ -31,6 +40,7 @@ alias top="gtop"
 #alias ls="ls -a --color=auto"
 #alias ls="lsd -a"
 alias ls="exa --all"
+alias ll="ls -h"
 alias mysql="mycli"
 alias wget="axel"
 alias tig="/usr/local/bin/tig"
@@ -41,8 +51,6 @@ alias www="python -m SimpleHTTPServer 8000"
 alias of="onefetch"
 alias redis-cli="iredis"
 alias r="ranger"
-# alias cdls="foo(){ cd '$1'; ls }; foo"
-# alias jcurl="foo(){ curl '$1' | jq }; foo"
 
 # fasd
 alias a='fasd -a'        # any
@@ -54,6 +62,7 @@ alias sf='fasd -sif'     # interactive file selection
 alias z='fasd_cd -d'     # cd, same functionality as j in autojump
 alias zz='fasd_cd -d -i' # cd with interactive selection
 #alias v='f -e vim' # quick opening files with vim
+bind -x '"\C-l": clear'
 #################### aliases ####################
 
 
@@ -61,29 +70,31 @@ alias zz='fasd_cd -d -i' # cd with interactive selection
 HOME=/home/smart
 CODE_PATH=$HOME/code
 export GOPATH=$CODE_PATH
-export GOROOT=/usr/local/go
+export GOROOT=/usr/local/app/go
 export GOBIN=$GOPATH/bin
-export GO111MODULE=off
-export PATH=$HOME/.cargo/bin:$HOME/.autojump/bin:$HOME/.fzf/bin:$HOME/.local/bin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin:$GOBIN #:$HOME/dockerhome/code/go/bin
-export LD_LIBRARY_PATH=/usr/local/libeventbuild/lib:~/ffmpeg_build/lib
+export PATH=$HOME/.cargo/bin:$HOME/.autojump/bin:$HOME/.fzf/bin:$HOME/.local/bin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin:$GOBIN
+export LD_LIBRARY_PATH=/usr/local/app/ImageMagick/lib
 #export C_INCLUDE_PATH=
-#export CPLUS_INCLUDE_PATH=
+export CPLUS_INCLUDE_PATH=/usr/local/app/ImageMagick/include/ImageMagick-7
 export MCFLY_KEY_SCHEME=vim
 export MCFLY_FUZZY=true
 export MCFLY_RESULTS=50
+export BAT_THEME="Coldark-Dark"
+# export PS1="\u@\h \W \[\033[31m\][\$(echo_sentence)]\[\033[00m\] \[\033[33m\][\$(echo_date)]\[\033[00m\]\[\033[32m\]\$(parse_git_branch)\[\033[00m\] $"
+export PS1="\u@\h \W \[\033[33m\][\$(echo_date)]\[\033[00m\]\[\033[32m\]\$(parse_git_branch)\[\033[00m\] $"
 #################### environments ####################
 
 
 #################### source application config ####################
-# eval $(thefuck --alias 2>/dev/null)
+eval $(thefuck --alias 2>/dev/null)
 # eval "$(fasd --init auto)"
 # source <(fx-completion --bash)
 # source /home/smart/.config/broot/launcher/bash/br
 # Generated for envman. Do not edit.
 # [ -s "$HOME/.config/envman/load.sh" ] && source "$HOME/.config/envman/load.sh"
 eval "$(mcfly init bash)"
-#[ -f ~/.fzf.bash ] && source ~/.fzf.bash
-# [[ -s /home/smart/.autojump/etc/profile.d/autojump.sh ]] && source /home/smart/.autojump/etc/profile.d/autojump.sh
-# . "$HOME/.cargo/env"
-# set -o vi
+[ -f ~/.fzf.bash ] && source ~/.fzf.bash
+[[ -s /home/smart/.autojump/etc/profile.d/autojump.sh ]] && source /home/smart/.autojump/etc/profile.d/autojump.sh
+. "$HOME/.cargo/env"
+set -o vi
 #################### source application config ####################

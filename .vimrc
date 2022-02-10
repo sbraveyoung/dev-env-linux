@@ -24,7 +24,7 @@ Plug 'vim-scripts/DrawIt'
 Plug 'artur-shaik/vim-javacomplete2'
 Plug 'xolox/vim-misc'
 Plug 'xolox/vim-lua-ftplugin'
-Plug 'pangloss/vim-javascript'
+" Plug 'pangloss/vim-javascript'
 Plug 'sentientmachine/erics_vim_syntax_and_color_highlighting'
 " Plug 'Yggdroot/indentLine'
 Plug 'tbastos/vim-lua'
@@ -92,6 +92,7 @@ set fileencodings=utf-8,ucs-bom,gb18030,gbk,gb2312,cp936
 set termencoding=utf-8
 set encoding=utf-8
 
+call glaive#Install()
 augroup autoformat_settings
   autocmd FileType bzl AutoFormatBuffer buildifier
   autocmd FileType c,cpp,proto,javascript AutoFormatBuffer clang-format
@@ -100,8 +101,10 @@ augroup autoformat_settings
   autocmd FileType gn AutoFormatBuffer gn
   autocmd FileType html,css,sass,scss,less,json AutoFormatBuffer js-beautify
   autocmd FileType java AutoFormatBuffer google-java-format
-  " autocmd FileType python AutoFormatBuffer yapf
+  autocmd FileType python AutoFormatBuffer yapf
   " Alternative: autocmd FileType python AutoFormatBuffer autopep8
   autocmd FileType rust AutoFormatBuffer rustfmt
   autocmd FileType vue AutoFormatBuffer prettier
 augroup END
+
+hi comment ctermfg=6
