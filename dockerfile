@@ -2,13 +2,22 @@ FROM centos:8
 MAINTAINER SmartBrave <SmartBraveCoder@gmail.com>
 
 #build command: docker build -t ${USER_NAME}/${IMAGE_NAME}:${VERSION} --build-arg NORMAL_USER=${NORMAL_USER} --build-arg NORMAL_PASSWD=${NORMAL_PASSWD} --build-arg ROOT_PASSWD=${ROOT_PASSWD} .
+#run command:   docker exec -it `docker run -d --name ${dev-linux-env} --privileged=true ${USER_NAME}/${IMAGE_NAME}:${VERSION}` /bin/bash
+#suggection:    If you want to mount volumns on MacOS, use mutagen or docker-sync instead of -v args.
+
 ARG  NORMAL_USER=test_user
 ARG  NORMAL_PASSWD=test_passwd
 ARG  ROOT_PASSWD=root_passwd
 
+#https://github.com/alebcay/awesome-shell
+
 ENV GOPATH=/home/$NORMAL_USER/code/ \
     CLONE_PATH=/usr/local/src \
-    BIN_PATH=/usr/local/app
+    APP_PATH=/usr/local/app \
+    BIN_PATH=/usr/local/bin
+
+RUN    sed -i 's/mirrorlist/#mirrorlist/g' /etc/yum.repos.d/CentOS-* \
+    && sed -i 's|#baseurl=http://mirror.centos.org|baseurl=http://vault.centos.org|g' /etc/yum.repos.d/CentOS-*
 
 RUN    dnf -y install dnf-plugins-core \
     && dnf config-manager --set-enabled powertools \
@@ -17,7 +26,7 @@ RUN    dnf -y install dnf-plugins-core \
     && dnf -y update \
     && dnf -y install epel-release \
     && dnf -y install libgcc.i686 glibc-devel bison flex texinfo libtool \
-          zlib-devel bzip2-devel openssl-devel ncurses-devel sqlite-devel readline-devel tk-devel \
+          zlib-devel bzip2-devel openssl-devel sqlite-devel readline-devel tk-devel \
           gdbm-devel xz-devel gettext pkg-config autoconf automake txt2man ncurses ncurses-devel \
           tcl-devel net-tools llvm clang-libs clang-devel which libX11-devel libXcursor-devel libXrandr-devel \
           libXinerama-devel mesa-libGL-devel mesa-libGLU-devel freeglut-devel libXi-devel libevent \
@@ -35,27 +44,27 @@ RUN    dnf -y install dnf-plugins-core \
     && sed -i '/Defaults/s/env_reset/\!env_reset/g' /etc/sudoers \
     && useradd --create-home $NORMAL_USER --password $NORMAL_PASSWD && echo "$NORMAL_USER ALL=(ALL) NOPASSWD:ALL" >>/etc/sudoers \
     && echo "root:$ROOT_PASSWD" | chpasswd \
-    && mkdir ${BIN_PATH} \
+    && mkdir ${APP_PATH} \
     && ln -sf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
 
 RUN    git clone https://github.com/ImageMagick/ImageMagick ${CLONE_PATH}/ImageMagick \
        && cd ${CLONE_PATH}/ImageMagick \
-       && ./configure --prefix=${BIN_PATH}/ImageMagick --with-heic=yes --with-jxl=yes --with-jpeg=yes --with-png=yes --with-webp=yes \
+       && ./configure --prefix=${APP_PATH}/ImageMagick --with-heic=yes --with-jxl=yes --with-jpeg=yes --with-png=yes --with-webp=yes \
        && make -j 10 \
        && make install \
-       && ln -s ${BIN_PATH}/bin/magick /usr/local/bin/magick \
-       && ln -s ${BIN_PATH}/ImageMagick/bin/animate /usr/local/bin/animate \
-       && ln -s ${BIN_PATH}/ImageMagick/bin/compare /usr/local/bin/compare \
-       && ln -s ${BIN_PATH}/ImageMagick/bin/composite /usr/local/bin/composite \
-       && ln -s ${BIN_PATH}/ImageMagick/bin/conjure /usr/local/bin/conjure \
-       && ln -s ${BIN_PATH}/ImageMagick/bin/convert /usr/local/bin/convert \
-       && ln -s ${BIN_PATH}/ImageMagick/bin/display /usr/local/bin/display \
-       && ln -s ${BIN_PATH}/ImageMagick/bin/identify /usr/local/bin/identify \
-       && ln -s ${BIN_PATH}/ImageMagick/bin/import /usr/local/bin/import \
-       && ln -s ${BIN_PATH}/ImageMagick/bin/magick-script /usr/local/bin/magick-script \
-       && ln -s ${BIN_PATH}/ImageMagick/bin/mogrify /usr/local/bin/mogrify \
-       && ln -s ${BIN_PATH}/ImageMagick/bin/montage /usr/local/bin/montage \
-       && ln -s ${BIN_PATH}/ImageMagick/bin/stream /usr/local/bin/stream
+       && ln -s ${APP_PATH}/ImageMagick/bin/magick ${BIN_PATH}/magick \
+       && ln -s ${APP_PATH}/ImageMagick/bin/animate ${BIN_PATH}/animate \
+       && ln -s ${APP_PATH}/ImageMagick/bin/compare ${BIN_PATH}/compare \
+       && ln -s ${APP_PATH}/ImageMagick/bin/composite ${BIN_PATH}/composite \
+       && ln -s ${APP_PATH}/ImageMagick/bin/conjure ${BIN_PATH}/conjure \
+       && ln -s ${APP_PATH}/ImageMagick/bin/convert ${BIN_PATH}/convert \
+       && ln -s ${APP_PATH}/ImageMagick/bin/display ${BIN_PATH}/display \
+       && ln -s ${APP_PATH}/ImageMagick/bin/identify ${BIN_PATH}/identify \
+       && ln -s ${APP_PATH}/ImageMagick/bin/import ${BIN_PATH}/import \
+       && ln -s ${APP_PATH}/ImageMagick/bin/magick-script ${BIN_PATH}/magick-script \
+       && ln -s ${APP_PATH}/ImageMagick/bin/mogrify ${BIN_PATH}/mogrify \
+       && ln -s ${APP_PATH}/ImageMagick/bin/montage ${BIN_PATH}/montage \
+       && ln -s ${APP_PATH}/ImageMagick/bin/stream ${BIN_PATH}/stream
 
 RUN    cd ${CLONE_PATH} \
        && curl -OL https://github.com/wagoodman/dive/releases/download/v0.9.2/dive_0.9.2_linux_amd64.rpm \
@@ -64,17 +73,17 @@ RUN    cd ${CLONE_PATH} \
 RUN    cd ${CLONE_PATH} \
        && wget https://github.com/rgburke/grv/releases/download/v0.3.2/grv_v0.3.2_linux64 \
        && chmod +x grv_v0.3.2_linux64 \
-       && cp grv_v0.3.2_linux64 ${BIN_PATH}/grv
+       && cp grv_v0.3.2_linux64 ${APP_PATH}/grv
 
 RUN    wget https://github.com/axel-download-accelerator/axel/releases/download/v2.17.7/axel-2.17.7.tar.gz -O ${CLONE_PATH}/axel-2.17.7.tar.gz \
        && cd ${CLONE_PATH} \
        && tar -zxvf axel-2.17.7.tar.gz \
        && cd axel-2.17.7 \
        && cd ${CLONE_PATH}/axel-2.17.7 \
-       && ./configure --prefix=${BIN_PATH}/axel-2.17.7 \
+       && ./configure --prefix=${APP_PATH}/axel-2.17.7 \
        && make -j 10 \
        && make install \
-       && ln -s ${BIN_PATH}/axel-2.17.7/bin/axel /usr/local/bin/axel
+       && ln -s ${APP_PATH}/axel-2.17.7/bin/axel ${BIN_PATH}/axel
 
 RUN    sudo git clone https://github.com/jarun/bcal ${CLONE_PATH}/bcal \
        && cd ${CLONE_PATH}/bcal \
@@ -82,7 +91,7 @@ RUN    sudo git clone https://github.com/jarun/bcal ${CLONE_PATH}/bcal \
        && make strip install
 
 RUN    sudo git clone https://github.com/so-fancy/diff-so-fancy ${CLONE_PATH}/diff-so-fancy \
-       && ln -s ${CLONE_PATH}/diff-so-fancy /usr/local/bin/diff-so-fancy
+       && ln -s ${CLONE_PATH}/diff-so-fancy/diff-so-fancy ${BIN_PATH}/diff-so-fancy
 
 RUN    git clone https://github.com/clvv/fasd ${CLONE_PATH}/fasd \
        && cd ${CLONE_PATH}/fasd \
@@ -90,8 +99,8 @@ RUN    git clone https://github.com/clvv/fasd ${CLONE_PATH}/fasd \
 
 RUN    git clone https://github.com/dylanaraps/fff ${CLONE_PATH}/fff \
        && cd ${CLONE_PATH}/fff \
-       && make PREFIX=${BIN_PATH}/fff install \
-       && ln -s ${BIN_PATH}/fff/bin/fff /usr/local/bin/fff
+       && make PREFIX=${APP_PATH}/fff install \
+       && ln -s ${APP_PATH}/fff/bin/fff ${BIN_PATH}/fff
 
 RUN    git clone https://github.com/golbin/git-commander ${CLONE_PATH}/git-commander \
        && cd ${CLONE_PATH}/git-commander \
@@ -100,10 +109,10 @@ RUN    git clone https://github.com/golbin/git-commander ${CLONE_PATH}/git-comma
 RUN    git clone https://github.com/hishamhm/htop ${CLONE_PATH}/htop \
        && cd ${CLONE_PATH}/htop \
        && ./autogen.sh \
-       && ./configure --prefix=${BIN_PATH}/htop \
+       && ./configure --prefix=${APP_PATH}/htop \
        && make -j 10 \
        && make install \
-       && ln -s ${BIN_PATH}/htop/bin/htop /usr/local/bin/htop
+       && ln -s ${APP_PATH}/htop/bin/htop ${BIN_PATH}/htop
 
 RUN    curl -L https://bit.ly/glances | /bin/bash
 
@@ -111,33 +120,33 @@ RUN    git clone https://github.com/stedolan/jq ${CLONE_PATH}/jq \
        && cd ${CLONE_PATH}/jq \
        && git submodule update --init \
        && autoreconf -fi \
-       && ./configure --prefix=${BIN_PATH}/jq --with-oniguruma=builtin \
+       && ./configure --prefix=${APP_PATH}/jq --with-oniguruma=builtin \
        && make -j 10 \
        && make check \
        && make install \
-       && ln -s ${BIN_PATH}/jq/bin/jq /usr/local/bin/jq
+       && ln -s ${APP_PATH}/jq/bin/jq ${BIN_PATH}/jq
 
 RUN    git clone https://github.com/hackerb9/lsix ${CLONE_PATH}/lsix \
        && cd ${CLONE_PATH}/lsix \
-       && ln -s ${CLONE_PATH}/lsix /usr/local/bin/lsix
+       && ln -s ${CLONE_PATH}/lsix ${BIN_PATH}/lsix
 
 RUN    git clone https://github.com/facebook/PathPicker ${CLONE_PATH}/PathPicker \
        && cd ${CLONE_PATH}/PathPicker \
-       && ln -s fpp /usr/local/bin/fpp
+       && ln -s fpp ${BIN_PATH}/fpp
 
 RUN    git clone https://github.com/jonas/tig ${CLONE_PATH}/tig \
        && cd ${CLONE_PATH}/tig \
-       && make prefix=${BIN_PATH}/tig \
-       && make install prefix=${BIN_PATH}/tig \
-       && ln -s ${BIN_PATH}/tig/bin/tig /usr/local/bin/tig
+       && make prefix=${APP_PATH}/tig \
+       && make install prefix=${APP_PATH}/tig \
+       && ln -s ${APP_PATH}/tig/bin/tig ${BIN_PATH}/tig
 
 RUN    git clone https://github.com/tmux/tmux ${CLONE_PATH}/tmux \
        && cd ${CLONE_PATH}/tmux \
        && sh autogen.sh \
-       && ./configure --prefix=${BIN_PATH}/tmux \
+       && ./configure --prefix=${APP_PATH}/tmux \
        && make -j 10 \
        && make install \
-       && ln -s ${BIN_PATH}/tmux/bin/tmux /usr/local/bin/tmux
+       && ln -s ${APP_PATH}/tmux/bin/tmux ${BIN_PATH}/tmux
 
 RUN    git clone https://github.com/andreafrancia/trash-cli ${CLONE_PATH}/trash-cli \
        && cd ${CLONE_PATH}/trash-cli \
@@ -146,24 +155,24 @@ RUN    git clone https://github.com/andreafrancia/trash-cli ${CLONE_PATH}/trash-
 RUN    git clone https://github.com/vifm/vifm ${CLONE_PATH}/vifm \
        && cd ${CLONE_PATH}/vifm \
        && ./scripts/fix-timestamps \
-       && ./configure --prefix=${BIN_PATH}/vifm \
+       && ./configure --prefix=${APP_PATH}/vifm \
        && make \
        && make install \
-       && ln -s ${BIN_PATH}/vifm/bin/vifm /usr/local/bin/vifm
+       && ln -s ${APP_PATH}/vifm/bin/vifm ${BIN_PATH}/vifm
 
 RUN    git clone https://github.com/mptre/yank ${CLONE_PATH}/yank \
        && cd ${CLONE_PATH}/yank \
-       && make PREFIX=${BIN_PATH}/yank install \
-       && ln -s ${BIN_PATH}/yank/bin/yank /usr/local/bin/yank
+       && make PREFIX=${APP_PATH}/yank install \
+       && ln -s ${APP_PATH}/yank/bin/yank ${BIN_PATH}/yank
 
 RUN    cd ${CLONE_PATH} \
        && wget https://github.com/sharkdp/insect/releases/download/v5.3.0/insect-linux-x64 \
-       && ln -s ./insect-linux-x64 /usr/local/bin/insect
+       && ln -s ./insect-linux-x64 ${BIN_PATH}/insect
 
 RUN    cd ${CLONE_PATH} \
        && wget https://github.com/koalaman/shellcheck/releases/download/stable/shellcheck-stable.linux.x86_64.tar.xz \
        && tar xf shellcheck-stable.linux.x86_64.tar.xz \
-       && ln -s ./shellcheck-stable/shellcheck /usr/local/bin/shellcheck
+       && ln -s ./shellcheck-stable/shellcheck ${BIN_PATH}/shellcheck
 
 RUN    cd ${CLONE_PATH} \
        && curl -OL https://raw.github.com/nvie/gitflow/develop/contrib/gitflow-installer.sh \
@@ -183,38 +192,62 @@ RUN    git clone https://github.com/beyondgrep/ack2 ${CLONE_PATH}/ack2 \
        && make test \
        && make install
 
-RUN    git clone https://github.com/kevinschoon/pomo.git ${CLONE_PATH}/pomo \
-       && cd ${CLONE_PATH}/pomo \
-       && make
-
 RUN    git clone https://git.ffmpeg.org/ffmpeg.git ${CLONE_PATH}/ffmpeg \
        && cd ${CLONE_PATH}/ffmpeg \
-       && ./configure --prefix=${BIN_PATH}/ffmpeg --enable-openssl --disable-x86asm \
+       && ./configure --prefix=${APP_PATH}/ffmpeg --enable-openssl --disable-x86asm \
        && make -j 10 \
        && make install \
-       && sudo ln -s ${BIN_PATH}/ffmpeg/bin/ffmpeg /usr/local/bin/ffmpeg \
-       && sudo ln -s ${BIN_PATH}/ffmpeg/bin/ffprobe /usr/local/bin/ffprobe
+       && sudo ln -s ${APP_PATH}/ffmpeg/bin/ffmpeg ${BIN_PATH}/ffmpeg \
+       && sudo ln -s ${APP_PATH}/ffmpeg/bin/ffprobe ${BIN_PATH}/ffprobe
+
+RUN    git clone https://github.com/vim/vim.git ${CLONE_PATH} \
+       && cd ${CLONE_PATH/vim \
+       && ./configure --prefix=/usr/local/app/vim --with-features=huge --enable-multibyte --enable-python3interp=yes --with-python3-config-dir=/usr/lib64/python3.6/config-3.6m-x86_64-linux-gnu --enable-gui=gtk2 --enable-cscope \
+       && make -j6 \
+       && make install \
+       && mv /usr/bin/vim /usr/bin/vim.bak \
+       && ln -s $(pwd)/bin/vim /usr/local/bin/vim \
+       && ln -s $(pwd)/bin/vimdiff /usr/local/bin/vimdiff \
+       && hash -r
+
+RUN    curl -LSfs https://raw.githubusercontent.com/cantino/mcfly/master/ci/install.sh | sh -s -- --git cantino/mcfly
 
 #python
 RUN    pip install --upgrade setuptools \
        && python -m pip install --upgrade pip
 
-RUN    pip2 install pybind11 \
-    && pip3 install pybind11 \
-    && pip3 install git+https://github.com/jeffkaufman/icdiff.git \
-    && pip3 install iredis ranger-fm mdv thefuck mycli asciinema http-prompt \
+RUN    pip3 install pybind11 git+https://github.com/jeffkaufman/icdiff.git iredis ranger-fm mdv thefuck mycli asciinema http-prompt yapf \
     && pip3 install --upgrade httpie \
-    && pip3 install yapf mdv manimgl
+    && pip2 install pybind11
+# RUN    pip install manimgl
 
 #nodejs
-RUN    npm install -g fx fx-completion cloc svg-term-cli
+RUN    npm install -g fx fx-completion cloc svg-term-cli zx
+
+RUN    chmod a+w ${CLONE_PATH} \
+       && chmod a+w ${APP_PATH} \
+       && chown -R $NORMAL_USER $GOPATH #TODO
+
+#RUN    usermod -u 501 $NORMAL_USER
+USER   $NORMAL_USER
+WORKDIR /home/$NORMAL_USER
+
+RUN    git clone https://github.com/adwpc/xvim.git ${CLONE_PATH}/xvim \
+       && cd ${CLONE_PATH}/xvim \
+       && yes | ./install vimrc
+
+RUN    git clone https://github.com/SmartBrave/dev-env-linux ${CLONE_PATH}/dev-env-linux \
+       && cd ${CLONE_PATH}/dev-env-linux \
+       && cp .bash_profile .bashrc .gitconfig .tigrc .tmux.conf .vimrc ~ \
+       && vim +PluginInstall +qall
+       #need to install vim plugins after login, reference to https://github.com/adwpc/xvim
 
 #go
 RUN    cd ${CLONE_PATH} \
-       && wget https://dl.google.com/go/go1.17.6.linux-amd64.tar.gz \
-       && tar -zxvf go1.17.6.linux-amd64.tar.gz -C ${BIN_PATH} \
-       && ln -s ${BIN_PATH}/go/bin/go /usr/local/bin/go \
-       && ln -s ${BIN_PATH}/go/bin/gofmt /usr/local/bin/gofmt \
+       && sudo wget https://dl.google.com/go/go1.17.6.linux-amd64.tar.gz \
+       && sudo tar -zxvf go1.17.6.linux-amd64.tar.gz -C ${APP_PATH} \
+       && sudo ln -s ${APP_PATH}/go/bin/go ${BIN_PATH}/go \
+       && sudo ln -s ${APP_PATH}/go/bin/gofmt ${BIN_PATH}/gofmt \
     && go get -u -v github.com/tomnomnom/gron \
     && go get -u -v github.com/jingweno/ccat \
     && go get -u -v github.com/go-delve/delve/cmd/dlv \
@@ -224,6 +257,10 @@ RUN    cd ${CLONE_PATH} \
     && go install github.com/wader/fq@latest \
     && go get -u -v github.com/jesseduffield/lazydocker
     #&& go get -u -v github.com/liamg/aminal \
+
+RUN    git clone https://github.com/kevinschoon/pomo.git ${CLONE_PATH}/pomo \
+       && cd ${CLONE_PATH}/pomo \
+       && make
 
 RUN    git clone https://github.com/charmbracelet/glow.git ${CLONE_PATH}/glow \
        && cd ${CLONE_PATH}/glow \
@@ -237,12 +274,6 @@ RUN    git clone https://github.com/muesli/duf.git ${CLONE_PATH}/duf \
        && cd ${CLONE_PATH}/duf \
        && go install
 
-RUN    chmod a+w ${CLONE_PATH} \
-       && chmod a+w ${BIN_PATH}
-
-#RUN    usermod -u 501 $NORMAL_USER
-USER   $NORMAL_USER
-WORKDIR /home/$NORMAL_USER
 RUN    ssh-keygen -t rsa -N "" -f ~/.ssh/id_rsa
 
 RUN    git clone https://github.com/wting/autojump ${CLONE_PATH}/autojump \
@@ -250,7 +281,8 @@ RUN    git clone https://github.com/wting/autojump ${CLONE_PATH}/autojump \
        && SHELL=/bin/bash ./install.py
 
 #TODO: install tmux plugins automatically
-RUN    git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
+RUN    git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm \
+       && tmux source ~/.tmux.conf #need to install tmux plugins with `prefix+I` after login
 
 #rust
 RUN    curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs > ${CLONE_PATH}/rustup-init.sh \
@@ -262,12 +294,7 @@ RUN    git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf \
     #&& git clone --depth=1 https://github.com/amix/vimrc.git ~/.vim_runtime \
     #   && sh ~/.vim_runtime/install_awesome_vimrc.sh
 
-RUN    git clone https://github.com/SmartBrave/dotfiles ${CLONE_PATH}/dotfiles \
-       && cd ${CLONE_PATH}/dotfiles \
-       && cp .bash_profile .bashrc .gitconfig .tigrc .tmux.conf .vimrc ~
-
 RUN    ~/.cargo/bin/cargo install --git https://github.com/Peltoche/lsd.git --branch master \
-    && ~/.cargo/bin/cargo install --git https://github.com/cantino/mcfly.git --branch master \
     && ~/.cargo/bin/cargo install broot exa fd-find hexyl ripgrep sd bat procs gping bottom choose du-dust \
     && ~/.cargo/bin/cargo install onefetch tealdeer pastel hyperfine git-delta xh zoxide #zoxide need to configure
     #&& ~/.cargo/bin/cargo install --git https://github.com/p-e-w/hegemon.git --branch master \
@@ -275,7 +302,7 @@ RUN    ~/.cargo/bin/cargo install --git https://github.com/Peltoche/lsd.git --br
 
 #starship,manimlib,gor,mediainfo,ssh-chat
 #sudo go get -u -v github.com/liamg/aminal \
-#git clone --config transfer.fsckobjects=false --config receive.fsckobjects=false --config fetch.fsckobjects=false https://github.com/github/hub.git ${CLONE_PATH}/hub cd ${CLONE_PATH}/hub make install prefix=${BIN_PATH}/hub ln -s ${BIN_PATH}/hub/bin/hub /usr/local/bin/hub \
+#git clone --config transfer.fsckobjects=false --config receive.fsckobjects=false --config fetch.fsckobjects=false https://github.com/github/hub.git ${CLONE_PATH}/hub cd ${CLONE_PATH}/hub make install prefix=${APP_PATH}/hub ln -s ${APP_PATH}/hub/bin/hub ${BIN_PATH}/hub \
 #git clone https://github.com/flok99/multitail ${CLONE_PATH}/multitail cd ${CLONE_PATH}/multitail mkdir build cd build cmake .. sudo make install \
 #git-flow
 #vim-plugins
@@ -304,10 +331,10 @@ RUN    ~/.cargo/bin/cargo install --git https://github.com/Peltoche/lsd.git --br
 #RUN    git clone https://github.com/ccache/ccache ${CLONE_PATH}/ccache \
 #       && cd ${CLONE_PATH}/ccache \
 #       && ./autogen.sh \
-#       && ./configure --prefix=${BIN_PATH}/ccache --with-libzstd-from-internet --with-libb2-from-internet \
+#       && ./configure --prefix=${APP_PATH}/ccache --with-libzstd-from-internet --with-libb2-from-internet \
 #       && make -j 10 \
 #       && make install \
-#       && ln -s ${BIN_PATH}/ccache/bin/ccache /usr/local/bin/ccache
+#       && ln -s ${APP_PATH}/ccache/bin/ccache ${BIN_PATH}/ccache
 
 #RUN    git clone https://github.com/flok99/multitail ${CLONE_PATH}/multitail \
 #       && cd ${CLONE_PATH}/multitail \
@@ -316,18 +343,18 @@ RUN    ~/.cargo/bin/cargo install --git https://github.com/Peltoche/lsd.git --br
 #       && cmake .. \
 #       && make install
 
-#RUN    curl https://cht.sh/:cht.sh | tee ${BIN_PATH}/bin/cht.sh \
-#       && chmod +x ${BIN_PATH}/bin/cht.sh
+#RUN    curl https://cht.sh/:cht.sh | tee ${APP_PATH}/bin/cht.sh \
+#       && chmod +x ${APP_PATH}/bin/cht.sh
 
-#RUN    curl https://raw.githubusercontent.com/denilsonsa/prettyping/master/prettyping | tee ${BIN_PATH}/bin/prettyping \
-#       && chmod +x ${BIN_PATH}/bin/prettyping
+#RUN    curl https://raw.githubusercontent.com/denilsonsa/prettyping/master/prettyping | tee ${APP_PATH}/bin/prettyping \
+#       && chmod +x ${APP_PATH}/bin/prettyping
 
 #    && git clone https://github.com/neovim/neovim ${CLONE_PATH}/neovim \
 #       && cd ${CLONE_PATH}/neovim \
-#       && make CMAKE_INSTALL_PREFIX=${BIN_PATH}/neovim \
+#       && make CMAKE_INSTALL_PREFIX=${APP_PATH}/neovim \
 #       && make install \
-#       && ln -s ${BIN_PATH}/neovim/bin/neovim /usr/local/bin/neovim \
+#       && ln -s ${APP_PATH}/neovim/bin/neovim ${BIN_PATH}/neovim \
 
-USER    root
-WORKDIR /
-CMD    /usr/bin/bash
+
+USER root
+CMD /usr/sbin/init

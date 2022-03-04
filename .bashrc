@@ -21,8 +21,21 @@ echo_sentence(){
     #echo `trans $quo` # toooooo slow!
 }
 
+#smart cd: can import environment variable you need automatically
+#maybe https://github.com/hyperupcall/autoenv is better
+scd(){ 
+    [ -f .unenv ] && . .unenv
+    cd $1
+    [ -f .env ] && . .env
+}
+
 cdls(){
     cd $1
+    exa --all
+}
+
+jls(){
+    j $1
     exa --all
 }
 
@@ -51,6 +64,8 @@ alias www="python -m SimpleHTTPServer 8000"
 alias of="onefetch"
 alias redis-cli="iredis"
 alias r="ranger"
+alias curl="curlie"
+alias cd="cdls"
 
 # fasd
 alias a='fasd -a'        # any
@@ -68,10 +83,14 @@ bind -x '"\C-l": clear'
 
 #################### environments ####################
 HOME=/home/smart
-CODE_PATH=$HOME/code
-export GOPATH=$CODE_PATH
+MY_CODE_PATH=$HOME/code
+OPEN_CODE_PATH=/usr/local/src
+BIN_PATH=/usr/local/bin
+
+export GOPATH=$MY_CODE_PATH
 export GOROOT=/usr/local/app/go
-export GOBIN=$GOPATH/bin
+export GOBIN=$BIN_PATH
+export GOMODCACHE=$OPEN_CODE_PATH/gomod
 export PATH=$HOME/.cargo/bin:$HOME/.autojump/bin:$HOME/.fzf/bin:$HOME/.local/bin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin:$GOBIN
 export LD_LIBRARY_PATH=/usr/local/app/ImageMagick/lib
 #export C_INCLUDE_PATH=
