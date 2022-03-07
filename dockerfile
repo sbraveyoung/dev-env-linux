@@ -1,51 +1,38 @@
-FROM centos:8
+FROM ubuntu:22.04
 MAINTAINER SmartBrave <SmartBraveCoder@gmail.com>
 
 #build command: docker build -t ${USER_NAME}/${IMAGE_NAME}:${VERSION} --build-arg NORMAL_USER=${NORMAL_USER} --build-arg NORMAL_PASSWD=${NORMAL_PASSWD} --build-arg ROOT_PASSWD=${ROOT_PASSWD} .
-#run command:   docker exec -it `docker run -d --name ${dev-linux-env} --privileged=true ${USER_NAME}/${IMAGE_NAME}:${VERSION}` /bin/bash
+#centos run command:   docker exec -it `docker run -d --name ${dev-linux-env} --privileged=true ${USER_NAME}/${IMAGE_NAME}:${VERSION}` /bin/bash
+#ubuntu run command:   docker run -it --name ${dev-linux-env} --privileged=true ${USER_NAME}/${IMAGE_NAME}:${VERSION} /bin/bash
 #suggection:    If you want to mount volumns on MacOS, use mutagen or docker-sync instead of -v args.
 
-ARG  NORMAL_USER=test_user
-ARG  NORMAL_PASSWD=test_passwd
-ARG  ROOT_PASSWD=root_passwd
+ARG NORMAL_USER=test_user \
+    NORMAL_PASSWD=test_passwd \
+    ROOT_PASSWD=root_passwd
 
-#https://github.com/alebcay/awesome-shell
-
-ENV GOPATH=/home/$NORMAL_USER/code/ \
+ENV HOME=/home/$NORMAL_USER \
+    GOPATH=/home/$NORMAL_USER/code \
     CLONE_PATH=/usr/local/src \
     APP_PATH=/usr/local/app \
-    BIN_PATH=/usr/local/bin
+    BIN_PATH=/usr/local/bin \
+    DEBIAN_FRONTEND=noninteractive \
+    LANG=en_US.utf8
 
-RUN    sed -i 's/mirrorlist/#mirrorlist/g' /etc/yum.repos.d/CentOS-* \
-    && sed -i 's|#baseurl=http://mirror.centos.org|baseurl=http://vault.centos.org|g' /etc/yum.repos.d/CentOS-*
+#https://github.com/alebcay/awesome-shell
+#ctags figlet ncdu rust lua initscripts ghostscript-devel expect figlet
+RUN    apt-get update && apt-get -y upgrade \
+    && apt-get install -y ca-certificates gnupg lsb-release pkg-config openssl libssl-dev libreadline-dev \
+    && apt-get install -y locales build-essential cmake autoconf sudo privoxy cscope \
+    && apt-get install -y git gdb unzip vim curl wget file gh nnn kakoune colordiff htop jq tmux silversearcher-ag \
+    && apt-get install -y libwebp-dev libde265-dev libheif* libpng-dev libjpeg-dev \
+    && apt-get install -y nodejs npm python2 python3 pip ruby luajit zsh
 
-RUN    dnf -y install dnf-plugins-core \
-    && dnf config-manager --set-enabled powertools \
-    && dnf config-manager --add-repo https://cli.github.com/packages/rpm/gh-cli.repo \
-    && dnf localinstall -y https://download1.rpmfusion.org/free/el/rpmfusion-free-release-7.noarch.rpm \
-    && dnf -y update \
-    && dnf -y install epel-release \
-    && dnf -y install libgcc.i686 glibc-devel bison flex texinfo libtool \
-          zlib-devel bzip2-devel openssl-devel sqlite-devel readline-devel tk-devel \
-          gdbm-devel xz-devel gettext pkg-config autoconf automake txt2man ncurses ncurses-devel \
-          tcl-devel net-tools llvm clang-libs clang-devel which libX11-devel libXcursor-devel libXrandr-devel \
-          libXinerama-devel mesa-libGL-devel mesa-libGLU-devel freeglut-devel libXi-devel libevent \
-          libevent-devel asciidoc pcre-devel xz-devel bind-utils freetype-devel glib2-devel fontconfig-devel \
-          pango-devel libwebp-devel libde265  libheif* privoxy initscripts cscope \
-    && dnf -y install libpng libpng-devel libjpeg-devel ghostscript-devel \
-          libtiff-devel libwmf-devel \
-    && dnf -y groupinstall "Development Tools" \
-    && dnf -y install git sudo gcc gcc-c++ gdb make unzip ctags vim expect passwd wget cmake figlet ncdu \
-        nnn gh kakoune colordiff \
-    && dnf -y install perl nodejs rust python2 python2-pip python2-devel \
-          python3 python3-pip python3-devel ruby lua luajit zsh \
-    && ln -s /usr/bin/python3 /usr/bin/python \
-       && ln -s /usr/bin/pip3 /usr/bin/pip \
+RUN    localedef -i en_US -c -f UTF-8 -A /usr/share/locale/locale.alias en_US.UTF-8 \
     && sed -i '/Defaults/s/env_reset/\!env_reset/g' /etc/sudoers \
     && useradd --create-home $NORMAL_USER --password $NORMAL_PASSWD && echo "$NORMAL_USER ALL=(ALL) NOPASSWD:ALL" >>/etc/sudoers \
     && echo "root:$ROOT_PASSWD" | chpasswd \
     && mkdir ${APP_PATH} \
-    && ln -sf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
+    && ln -s /usr/bin/python3 /usr/bin/python
 
 RUN    git clone https://github.com/ImageMagick/ImageMagick ${CLONE_PATH}/ImageMagick \
        && cd ${CLONE_PATH}/ImageMagick \
@@ -67,13 +54,14 @@ RUN    git clone https://github.com/ImageMagick/ImageMagick ${CLONE_PATH}/ImageM
        && ln -s ${APP_PATH}/ImageMagick/bin/stream ${BIN_PATH}/stream
 
 RUN    cd ${CLONE_PATH} \
-       && curl -OL https://github.com/wagoodman/dive/releases/download/v0.9.2/dive_0.9.2_linux_amd64.rpm \
-       && rpm -i dive_0.9.2_linux_amd64.rpm
+       && wget https://github.com/wagoodman/dive/releases/download/v0.9.2/dive_0.9.2_linux_amd64.deb \
+       && apt install ./dive_0.9.2_linux_amd64.deb
 
 RUN    cd ${CLONE_PATH} \
        && wget https://github.com/rgburke/grv/releases/download/v0.3.2/grv_v0.3.2_linux64 \
        && chmod +x grv_v0.3.2_linux64 \
-       && cp grv_v0.3.2_linux64 ${APP_PATH}/grv
+       && cp grv_v0.3.2_linux64 ${APP_PATH}/grv \
+       && ln -s ${APP_PATH}/grv ${BIN_PATH}/grv
 
 RUN    wget https://github.com/axel-download-accelerator/axel/releases/download/v2.17.7/axel-2.17.7.tar.gz -O ${CLONE_PATH}/axel-2.17.7.tar.gz \
        && cd ${CLONE_PATH} \
@@ -106,25 +94,7 @@ RUN    git clone https://github.com/golbin/git-commander ${CLONE_PATH}/git-comma
        && cd ${CLONE_PATH}/git-commander \
        && npm -g install blessed lodash git-commander
 
-RUN    git clone https://github.com/hishamhm/htop ${CLONE_PATH}/htop \
-       && cd ${CLONE_PATH}/htop \
-       && ./autogen.sh \
-       && ./configure --prefix=${APP_PATH}/htop \
-       && make -j 10 \
-       && make install \
-       && ln -s ${APP_PATH}/htop/bin/htop ${BIN_PATH}/htop
-
-RUN    curl -L https://bit.ly/glances | /bin/bash
-
-RUN    git clone https://github.com/stedolan/jq ${CLONE_PATH}/jq \
-       && cd ${CLONE_PATH}/jq \
-       && git submodule update --init \
-       && autoreconf -fi \
-       && ./configure --prefix=${APP_PATH}/jq --with-oniguruma=builtin \
-       && make -j 10 \
-       && make check \
-       && make install \
-       && ln -s ${APP_PATH}/jq/bin/jq ${BIN_PATH}/jq
+# RUN    curl -L https://bit.ly/glances | /bin/bash
 
 RUN    git clone https://github.com/hackerb9/lsix ${CLONE_PATH}/lsix \
        && cd ${CLONE_PATH}/lsix \
@@ -139,14 +109,6 @@ RUN    git clone https://github.com/jonas/tig ${CLONE_PATH}/tig \
        && make prefix=${APP_PATH}/tig \
        && make install prefix=${APP_PATH}/tig \
        && ln -s ${APP_PATH}/tig/bin/tig ${BIN_PATH}/tig
-
-RUN    git clone https://github.com/tmux/tmux ${CLONE_PATH}/tmux \
-       && cd ${CLONE_PATH}/tmux \
-       && sh autogen.sh \
-       && ./configure --prefix=${APP_PATH}/tmux \
-       && make -j 10 \
-       && make install \
-       && ln -s ${APP_PATH}/tmux/bin/tmux ${BIN_PATH}/tmux
 
 RUN    git clone https://github.com/andreafrancia/trash-cli ${CLONE_PATH}/trash-cli \
        && cd ${CLONE_PATH}/trash-cli \
@@ -179,11 +141,6 @@ RUN    cd ${CLONE_PATH} \
        && chmod +x gitflow-installer.sh \
        && REPO_HOST=git@github.com:nvie/gitflow ./gitflow-installer.sh
 
-RUN    git clone https://github.com/ggreer/the_silver_searcher ${CLONE_PATH}/the_silver_searcher \
-       && cd ${CLONE_PATH}/the_silver_searcher \
-       && ./build.sh \
-       && make install
-
 RUN    git clone https://github.com/beyondgrep/ack2 ${CLONE_PATH}/ack2 \
        && cpan install File::Next \
        && cd ${CLONE_PATH}/ack2 \
@@ -200,8 +157,8 @@ RUN    git clone https://git.ffmpeg.org/ffmpeg.git ${CLONE_PATH}/ffmpeg \
        && sudo ln -s ${APP_PATH}/ffmpeg/bin/ffmpeg ${BIN_PATH}/ffmpeg \
        && sudo ln -s ${APP_PATH}/ffmpeg/bin/ffprobe ${BIN_PATH}/ffprobe
 
-RUN    git clone https://github.com/vim/vim.git ${CLONE_PATH} \
-       && cd ${CLONE_PATH/vim \
+RUN    git clone https://github.com/vim/vim.git ${CLONE_PATH}/vim \
+       && cd ${CLONE_PATH}/vim \
        && ./configure --prefix=/usr/local/app/vim --with-features=huge --enable-multibyte --enable-python3interp=yes --with-python3-config-dir=/usr/lib64/python3.6/config-3.6m-x86_64-linux-gnu --enable-gui=gtk2 --enable-cscope \
        && make -j6 \
        && make install \
@@ -217,20 +174,19 @@ RUN    pip install --upgrade setuptools \
        && python -m pip install --upgrade pip
 
 RUN    pip3 install pybind11 git+https://github.com/jeffkaufman/icdiff.git iredis ranger-fm mdv thefuck mycli asciinema http-prompt yapf \
-    && pip3 install --upgrade httpie \
-    && pip2 install pybind11
+    && pip3 install --upgrade httpie
 # RUN    pip install manimgl
 
 #nodejs
 RUN    npm install -g fx fx-completion cloc svg-term-cli zx
 
 RUN    chmod a+w ${CLONE_PATH} \
-       && chmod a+w ${APP_PATH} \
-       && chown -R $NORMAL_USER $GOPATH #TODO
+       && chmod a+w ${APP_PATH}
 
 #RUN    usermod -u 501 $NORMAL_USER
 USER   $NORMAL_USER
 WORKDIR /home/$NORMAL_USER
+RUN    mkdir $GOPATH
 
 RUN    git clone https://github.com/adwpc/xvim.git ${CLONE_PATH}/xvim \
        && cd ${CLONE_PATH}/xvim \
@@ -281,8 +237,8 @@ RUN    git clone https://github.com/wting/autojump ${CLONE_PATH}/autojump \
        && SHELL=/bin/bash ./install.py
 
 #TODO: install tmux plugins automatically
-RUN    git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm \
-       && tmux source ~/.tmux.conf #need to install tmux plugins with `prefix+I` after login
+RUN    git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
+       # && tmux source ~/.tmux.conf #need to install tmux plugins with `prefix+I` after login
 
 #rust
 RUN    curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs > ${CLONE_PATH}/rustup-init.sh \
@@ -356,5 +312,5 @@ RUN    ~/.cargo/bin/cargo install --git https://github.com/Peltoche/lsd.git --br
 #       && ln -s ${APP_PATH}/neovim/bin/neovim ${BIN_PATH}/neovim \
 
 
-USER root
-CMD /usr/sbin/init
+# USER root
+# CMD /usr/sbin/init

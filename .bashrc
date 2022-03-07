@@ -82,7 +82,6 @@ bind -x '"\C-l": clear'
 
 
 #################### environments ####################
-HOME=/home/smart
 MY_CODE_PATH=$HOME/code
 OPEN_CODE_PATH=/usr/local/src
 BIN_PATH=/usr/local/bin
