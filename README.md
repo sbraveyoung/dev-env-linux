@@ -8,11 +8,11 @@ docker build -t ${USER_NAME}/${IMAGE_NAME}:${VERSION} --build-arg NORMAL_USER=${
 
 ## run
 ```shell
-#centos
-docker exec -it `docker run -d --name ${dev-linux-env} --privileged=true ${USER_NAME}/${IMAGE_NAME}:${VERSION}` /bin/bash
-
-#ubuntu
+#ubuntu(recommend)
 docker run -it --name ${dev-linux-env} --privileged=true ${USER_NAME}/${IMAGE_NAME}:${VERSION} /bin/bash
+
+#centos(abandon)
+docker exec -it `docker run -d --name ${dev-linux-env} --privileged=true ${USER_NAME}/${IMAGE_NAME}:${VERSION}` /bin/bash
 ```
 
 ## suggection

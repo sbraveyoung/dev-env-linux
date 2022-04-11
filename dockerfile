@@ -1,11 +1,6 @@
 FROM ubuntu:22.04
 MAINTAINER SmartBrave <SmartBraveCoder@gmail.com>
 
-#build command: docker build -t ${USER_NAME}/${IMAGE_NAME}:${VERSION} --build-arg NORMAL_USER=${NORMAL_USER} --build-arg NORMAL_PASSWD=${NORMAL_PASSWD} --build-arg ROOT_PASSWD=${ROOT_PASSWD} .
-#centos run command:   docker exec -it `docker run -d --name ${dev-linux-env} --privileged=true ${USER_NAME}/${IMAGE_NAME}:${VERSION}` /bin/bash
-#ubuntu run command:   docker run -it --name ${dev-linux-env} --privileged=true ${USER_NAME}/${IMAGE_NAME}:${VERSION} /bin/bash
-#suggection:    If you want to mount volumns on MacOS, use mutagen or docker-sync instead of -v args.
-
 ARG NORMAL_USER=test_user \
     NORMAL_PASSWD=test_passwd \
     ROOT_PASSWD=root_passwd
@@ -23,11 +18,12 @@ ENV HOME=/home/$NORMAL_USER \
 RUN    apt-get update && apt-get -y upgrade \
     && apt-get install -y ca-certificates gnupg lsb-release pkg-config openssl libssl-dev libreadline-dev \
     && apt-get install -y locales build-essential cmake autoconf sudo privoxy cscope \
-    && apt-get install -y git gdb unzip vim curl wget file gh nnn kakoune colordiff htop jq tmux silversearcher-ag \
+    && apt-get install -y git gdb unzip curl wget file gh nnn kakoune colordiff htop jq tmux silversearcher-ag bc \
     && apt-get install -y libwebp-dev libde265-dev libheif* libpng-dev libjpeg-dev \
     && apt-get install -y nodejs npm python2 python3 pip ruby luajit zsh
 
 RUN    localedef -i en_US -c -f UTF-8 -A /usr/share/locale/locale.alias en_US.UTF-8 \
+    && ln -sf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime \
     && sed -i '/Defaults/s/env_reset/\!env_reset/g' /etc/sudoers \
     && useradd --create-home $NORMAL_USER --password $NORMAL_PASSWD && echo "$NORMAL_USER ALL=(ALL) NOPASSWD:ALL" >>/etc/sudoers \
     && echo "root:$ROOT_PASSWD" | chpasswd \
@@ -159,12 +155,13 @@ RUN    git clone https://git.ffmpeg.org/ffmpeg.git ${CLONE_PATH}/ffmpeg \
 
 RUN    git clone https://github.com/vim/vim.git ${CLONE_PATH}/vim \
        && cd ${CLONE_PATH}/vim \
-       && ./configure --prefix=/usr/local/app/vim --with-features=huge --enable-multibyte --enable-python3interp=yes --with-python3-config-dir=/usr/lib64/python3.6/config-3.6m-x86_64-linux-gnu --enable-gui=gtk2 --enable-cscope \
+       && ./configure --prefix=${APP_PATH}/vim --with-features=huge --enable-multibyte --enable-python3interp=yes --with-python3-config-dir=/usr/lib64/python3.6/config-3.6m-x86_64-linux-gnu --enable-gui=gtk2 --enable-cscope \
        && make -j6 \
        && make install \
        && mv /usr/bin/vim /usr/bin/vim.bak \
-       && ln -s $(pwd)/bin/vim /usr/local/bin/vim \
-       && ln -s $(pwd)/bin/vimdiff /usr/local/bin/vimdiff \
+       && ln -s ${APP_PATH}/vim/bin/vim ${BIN_PATH}/vim \
+       && ln -s ${APP_PATH}/vim/bin/vimdiff ${BIN_PATH}/vimdiff \
+       && ln -s ${APP_PATH}/vim/bin/xxd ${BIN_PATH}/xxd \
        && hash -r
 
 RUN    curl -LSfs https://raw.githubusercontent.com/cantino/mcfly/master/ci/install.sh | sh -s -- --git cantino/mcfly
@@ -190,18 +187,16 @@ RUN    mkdir $GOPATH
 
 RUN    git clone https://github.com/adwpc/xvim.git ${CLONE_PATH}/xvim \
        && cd ${CLONE_PATH}/xvim \
-       && yes | ./install vimrc
-
-RUN    git clone https://github.com/SmartBrave/dev-env-linux ${CLONE_PATH}/dev-env-linux \
+       && yes | ./install vimrc \
+       && git clone https://github.com/SmartBrave/dev-env-linux ${CLONE_PATH}/dev-env-linux \
        && cd ${CLONE_PATH}/dev-env-linux \
        && cp .bash_profile .bashrc .gitconfig .tigrc .tmux.conf .vimrc ~ \
        && vim +PluginInstall +qall
-       #need to install vim plugins after login, reference to https://github.com/adwpc/xvim
 
 #go
 RUN    cd ${CLONE_PATH} \
-       && sudo wget https://dl.google.com/go/go1.17.6.linux-amd64.tar.gz \
-       && sudo tar -zxvf go1.17.6.linux-amd64.tar.gz -C ${APP_PATH} \
+       && sudo wget https://go.dev/dl/go1.18.linux-amd64.tar.gz \
+       && sudo tar -zxvf go1.18.linux-amd64.tar.gz -C ${APP_PATH} \
        && sudo ln -s ${APP_PATH}/go/bin/go ${BIN_PATH}/go \
        && sudo ln -s ${APP_PATH}/go/bin/gofmt ${BIN_PATH}/gofmt \
     && go get -u -v github.com/tomnomnom/gron \
@@ -246,15 +241,17 @@ RUN    curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs > ${CLONE_PATH}
        && ${CLONE_PATH}/rustup-init.sh -y
 
 RUN    git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf \
-       && ~/.fzf/install #\
-    #&& git clone --depth=1 https://github.com/amix/vimrc.git ~/.vim_runtime \
-    #   && sh ~/.vim_runtime/install_awesome_vimrc.sh
+       && ~/.fzf/install
 
 RUN    ~/.cargo/bin/cargo install --git https://github.com/Peltoche/lsd.git --branch master \
     && ~/.cargo/bin/cargo install broot exa fd-find hexyl ripgrep sd bat procs gping bottom choose du-dust \
-    && ~/.cargo/bin/cargo install onefetch tealdeer pastel hyperfine git-delta xh zoxide #zoxide need to configure
-    #&& ~/.cargo/bin/cargo install --git https://github.com/p-e-w/hegemon.git --branch master \
-    #&& ~/.cargo/bin/cargo install --git https://github.com/ogham/dog.git --branch master \
+    && ~/.cargo/bin/cargo install onefetch tealdeer pastel hyperfine git-delta xh zoxide \
+    && tldr --update \
+    && ~/.cargo/bin/cargo install --git https://github.com/p-e-w/hegemon.git --branch master \
+    && ~/.cargo/bin/cargo install --git https://github.com/ogham/dog.git --branch master
+
+    #&& git clone --depth=1 https://github.com/amix/vimrc.git ~/.vim_runtime \
+    #   && sh ~/.vim_runtime/install_awesome_vimrc.sh
 
 #starship,manimlib,gor,mediainfo,ssh-chat
 #sudo go get -u -v github.com/liamg/aminal \
