@@ -11,9 +11,10 @@ docker build -t ${USER_NAME}/${IMAGE_NAME}:${VERSION} --build-arg NORMAL_USER=${
 #ubuntu(recommend)
 docker run -it --name ${dev-linux-env} --privileged=true ${USER_NAME}/${IMAGE_NAME}:${VERSION} /bin/bash
 
-#centos(abandon)
+#centos(deprecated)
+git checkout dockerfile_centos_based
 docker exec -it `docker run -d --name ${dev-linux-env} --privileged=true ${USER_NAME}/${IMAGE_NAME}:${VERSION}` /bin/bash
 ```
 
 ## suggection
-If you want to mount volumns on MacOS, use mutagen or docker-sync instead of `-v` args.
+If you want to mount volumns on MacOS, use `mutagen` or `docker-sync` instead of `-v` args.

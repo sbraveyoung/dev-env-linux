@@ -22,7 +22,7 @@ echo_sentence(){
 }
 
 #smart cd: can import environment variable you need automatically
-#maybe https://github.com/hyperupcall/autoenv is better
+#maybe https://github.com/hyperupcall/autoenv or https://direnv.net/ is better
 scd(){ 
     [ -f .unenv ] && . .unenv
     cd $1
@@ -41,6 +41,13 @@ jls(){
 
 jcurl(){
     curl $1 | jq
+}
+
+mkdir_and_cd(){
+    dir_count=$#
+
+    mkdir $@
+    [ $? -eq 0 ] && cd ${!dir_count} #cd the last dir
 }
 #################### functions ####################
 
@@ -66,6 +73,7 @@ alias redis-cli="iredis"
 alias r="ranger"
 alias curl="curlie"
 alias cd="cdls"
+alias mkdir="mkdir_and_cd"
 
 # fasd
 alias a='fasd -a'        # any
@@ -98,6 +106,7 @@ export MCFLY_KEY_SCHEME=vim
 export MCFLY_FUZZY=true
 export MCFLY_RESULTS=50
 export BAT_THEME="Coldark-Dark"
+export TERM=xterm-256color
 # export PS1="\u@\h \W \[\033[31m\][\$(echo_sentence)]\[\033[00m\] \[\033[33m\][\$(echo_date)]\[\033[00m\]\[\033[32m\]\$(parse_git_branch)\[\033[00m\] $"
 export PS1="\u@\h \W \[\033[33m\][\$(echo_date)]\[\033[00m\]\[\033[32m\]\$(parse_git_branch)\[\033[00m\] $"
 #################### environments ####################
@@ -107,12 +116,12 @@ export PS1="\u@\h \W \[\033[33m\][\$(echo_date)]\[\033[00m\]\[\033[32m\]\$(parse
 eval $(thefuck --alias 2>/dev/null)
 # eval "$(fasd --init auto)"
 # source <(fx-completion --bash)
-# source /home/smart/.config/broot/launcher/bash/br
+# source $HOME/.config/broot/launcher/bash/br
 # Generated for envman. Do not edit.
 # [ -s "$HOME/.config/envman/load.sh" ] && source "$HOME/.config/envman/load.sh"
 eval "$(mcfly init bash)"
 [ -f ~/.fzf.bash ] && source ~/.fzf.bash
-[[ -s /home/smart/.autojump/etc/profile.d/autojump.sh ]] && source /home/smart/.autojump/etc/profile.d/autojump.sh
+[[ -s $HOME/.autojump/etc/profile.d/autojump.sh ]] && source $HOME/.autojump/etc/profile.d/autojump.sh
 . "$HOME/.cargo/env"
 set -o vi
 #################### source application config ####################
