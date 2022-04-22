@@ -3,17 +3,26 @@ My development environment based on docker.
 
 ## build
 ```shell
-docker build -t ${USER_NAME}/${IMAGE_NAME}:${VERSION} --build-arg NORMAL_USER=${NORMAL_USER} --build-arg NORMAL_PASSWD=${NORMAL_PASSWD} --build-arg ROOT_PASSWD=${ROOT_PASSWD} .
+export USER_NAME=your_user
+export IMAGE_NAME=image_name_you_want
+export IMAGE_VERSION=image_version_you_want
+export NORMAL_USER=normal_user_name_you_want
+export NORMAL_PASSED=normal_user_password_you_want
+export ROOT_PASSWD=root_password_you_want
+
+docker build -t ${USER_NAME}/${IMAGE_NAME}:${IMAGE_VERSION} --build-arg NORMAL_USER=${NORMAL_USER} --build-arg NORMAL_PASSWD=${NORMAL_PASSWD} --build-arg ROOT_PASSWD=${ROOT_PASSWD} .
 ```
 
 ## run
 ```shell
+export CONTAINER_NAME=dev-linux-env #or any name you want
+
 #ubuntu(recommend)
-docker run -it --name ${dev-linux-env} --privileged=true ${USER_NAME}/${IMAGE_NAME}:${VERSION} /bin/bash
+docker run -it --name ${CONTAINER_NAME} --privileged=true ${USER_NAME}/${IMAGE_NAME}:${IMAGE_VERSION} /bin/bash
 
 #centos(deprecated)
 git checkout dockerfile_centos_based
-docker exec -it `docker run -d --name ${dev-linux-env} --privileged=true ${USER_NAME}/${IMAGE_NAME}:${VERSION}` /bin/bash
+docker exec -it `docker run -d --name ${CONTAINER_NAME} --privileged=true ${USER_NAME}/${IMAGE_NAME}:${IMAGE_VERSION}` /bin/bash
 ```
 
 ## suggection
