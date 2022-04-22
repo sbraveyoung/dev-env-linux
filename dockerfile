@@ -18,7 +18,7 @@ ENV HOME=/home/$NORMAL_USER \
 RUN    apt-get update && apt-get -y upgrade \
     && apt-get install -y ca-certificates gnupg lsb-release pkg-config openssl libssl-dev libreadline-dev \
     && apt-get install -y locales build-essential cmake autoconf sudo privoxy cscope \
-    && apt-get install -y git gdb unzip curl wget file gh nnn kakoune colordiff htop jq tmux silversearcher-ag bc \
+    && apt-get install -y git gdb unzip curl wget file gh nnn kakoune colordiff htop jq tmux silversearcher-ag bc git-flow \
     && apt-get install -y libwebp-dev libde265-dev libheif* libpng-dev libjpeg-dev \
     && apt-get install -y nodejs npm python2 python3 pip ruby luajit zsh
 
@@ -132,11 +132,6 @@ RUN    cd ${CLONE_PATH} \
        && tar xf shellcheck-stable.linux.x86_64.tar.xz \
        && ln -s ./shellcheck-stable/shellcheck ${BIN_PATH}/shellcheck
 
-RUN    cd ${CLONE_PATH} \
-       && curl -OL https://raw.github.com/nvie/gitflow/develop/contrib/gitflow-installer.sh \
-       && chmod +x gitflow-installer.sh \
-       && REPO_HOST=git@github.com:nvie/gitflow ./gitflow-installer.sh
-
 RUN    git clone https://github.com/beyondgrep/ack2 ${CLONE_PATH}/ack2 \
        && cpan install File::Next \
        && cd ${CLONE_PATH}/ack2 \
@@ -158,7 +153,6 @@ RUN    git clone https://github.com/vim/vim.git ${CLONE_PATH}/vim \
        && ./configure --prefix=${APP_PATH}/vim --with-features=huge --enable-multibyte --enable-python3interp=yes --with-python3-config-dir=/usr/lib64/python3.6/config-3.6m-x86_64-linux-gnu --enable-gui=gtk2 --enable-cscope \
        && make -j6 \
        && make install \
-       && mv /usr/bin/vim /usr/bin/vim.bak \
        && ln -s ${APP_PATH}/vim/bin/vim ${BIN_PATH}/vim \
        && ln -s ${APP_PATH}/vim/bin/vimdiff ${BIN_PATH}/vimdiff \
        && ln -s ${APP_PATH}/vim/bin/xxd ${BIN_PATH}/xxd \
@@ -257,7 +251,6 @@ RUN    ~/.cargo/bin/cargo install --git https://github.com/Peltoche/lsd.git --br
 #sudo go get -u -v github.com/liamg/aminal \
 #git clone --config transfer.fsckobjects=false --config receive.fsckobjects=false --config fetch.fsckobjects=false https://github.com/github/hub.git ${CLONE_PATH}/hub cd ${CLONE_PATH}/hub make install prefix=${APP_PATH}/hub ln -s ${APP_PATH}/hub/bin/hub ${BIN_PATH}/hub \
 #git clone https://github.com/flok99/multitail ${CLONE_PATH}/multitail cd ${CLONE_PATH}/multitail mkdir build cd build cmake .. sudo make install \
-#git-flow
 #vim-plugins
 #host
 #FlameGraph
