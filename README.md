@@ -3,7 +3,7 @@ My development environment based on docker.
 
 ## build
 
-### environments
+#### environments
 You shoul prepare those environments first:
 ```shell
 export USER_NAME      = your_dockerhub_user
@@ -15,23 +15,23 @@ export ROOT_PASSWD    = root_password_you_want
 export CONTAINER_NAME = dev-linux-env #or any name you want
 ```
 
-### centos
+#### centos
 ```shell
 docker build -t ${USER_NAME}/${IMAGE_NAME}:${IMAGE_VERSION} --build-arg NORMAL_USER=${NORMAL_USER} --build-arg NORMAL_PASSWD=${NORMAL_PASSWD} --build-arg ROOT_PASSWD=${ROOT_PASSWD} -f dockerfile_centos .
 ```
 
-### ubuntu
+#### ubuntu
 ```shell
 docker build -t ${USER_NAME}/${IMAGE_NAME}:${IMAGE_VERSION} --build-arg NORMAL_USER=${NORMAL_USER} --build-arg NORMAL_PASSWD=${NORMAL_PASSWD} --build-arg ROOT_PASSWD=${ROOT_PASSWD} -f dockerfile_ubuntu .
 ```
 
 ## run
-#centos
+#### centos
 ```shell
 docker exec -it `docker run -d --name ${CONTAINER_NAME} --privileged=true ${USER_NAME}/${IMAGE_NAME}:${IMAGE_VERSION}` /bin/bash
 ```
 
-#ubuntu
+#### ubuntu
 ```shell
 docker run -it --name ${CONTAINER_NAME} --privileged=true ${USER_NAME}/${IMAGE_NAME}:${IMAGE_VERSION} /bin/bash
 ```
