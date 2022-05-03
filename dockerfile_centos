@@ -223,7 +223,7 @@ RUN    pip3 install pybind11 git+https://github.com/jeffkaufman/icdiff.git iredi
     && pip3 install --upgrade httpie
 
 #nodejs
-RUN    npm install -g fx fx-completion cloc svg-term-cli zx
+RUN    npm install -g fx fx-completion cloc svg-term-cli zx @squoosh/cli
 
 RUN    chmod a+w ${CLONE_PATH} \
        && chmod a+w ${APP_PATH}

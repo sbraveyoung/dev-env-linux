@@ -4,7 +4,7 @@ My development environment based on docker.
 ## build
 
 #### environments
-You shoul prepare those environments first:
+You should prepare those environments first:
 ```shell
 export USER_NAME      = your_dockerhub_user
 export IMAGE_NAME     = image_name_you_want
