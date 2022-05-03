@@ -28,5 +28,10 @@ docker exec -it `docker run -d --name ${CONTAINER_NAME} --privileged=true ${USER
 docker run -it --name ${CONTAINER_NAME} --privileged=true ${USER_NAME}/${IMAGE_NAME}:${IMAGE_VERSION} /bin/bash
 ```
 
+## TODO
+1. You need to update your user_name and email of git in .gitconfig located `/home/${NORMAL_USER}/`;
+2. If you want to use vim, need to invoke `vim +PlugInstall +qall` after login with normal user;
+3. If you want to use tmux, need to invoke `tmux source ~/.tmux.conf` after login with normal user;
+
 ## suggection
 If you want to mount volumns on MacOS, use `mutagen` or `docker-sync` instead of `-v` args.

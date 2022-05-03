@@ -209,12 +209,12 @@ RUN go install github.com/tomnomnom/gron@latest \
     #&& go get -u -v github.com/liamg/aminal \
 
 
-#TODO: need to update your user_name and email in .gitconfig
 RUN    git clone https://github.com/adwpc/xvim.git ${CLONE_PATH}/xvim \
        && cd ${CLONE_PATH}/xvim \
        && yes | ./install vimrc
 
 #TODO: install vim plugins automatically
+#TODO: need to update your user_name and email in .gitconfig
 RUN    git clone https://github.com/SmartBrave/dev-env-linux ${CLONE_PATH}/dev-env-linux \
        && cd ${CLONE_PATH}/dev-env-linux \
        && cp .bash_profile .bashrc .gitconfig .tigrc .tmux.conf .vimrc ~
@@ -242,9 +242,10 @@ RUN    git clone https://github.com/wting/autojump ${CLONE_PATH}/autojump \
        && cd ${CLONE_PATH}/autojump \
        && SHELL=/bin/bash ./install.py
 
-#TODO: install tmux plugins automatically
+#TODO:  need to install tmux plugins with `prefix+I` after login
+#install tmux plugins automatically
 RUN    git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
-       # && tmux source ~/.tmux.conf #need to install tmux plugins with `prefix+I` after login
+       # && tmux source ~/.tmux.conf
 
 #rust
 RUN    curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs > ${CLONE_PATH}/rustup-init.sh \
