@@ -21,9 +21,20 @@ echo_sentence(){
     #echo `trans $quo` # toooooo slow!
 }
 
+save_origin_env(){
+    export ORIGIN_$1=`echo $1`
+}
+
+restore_origin_env(){
+    ORIGIN_VALUE_KEY=`echo ORIGIN_$1`
+    export `echo $1`=${!ORIGIN_VALUE_KEY}
+    unset ${ORIGIN_VALUE_KEY}
+}
+
 #smart cd: can import environment variable you need automatically
 #maybe https://github.com/hyperupcall/autoenv or https://direnv.net/ is better
 scd(){ 
+    #TODO: take effect in current dir and sub dir.
     [ -f .unenv ] && . .unenv
     cd $1
     [ -f .env ] && . .env
@@ -95,13 +106,13 @@ OPEN_CODE_PATH=/usr/local/src
 BIN_PATH=/usr/local/bin
 
 export GOPATH=$MY_CODE_PATH
-export GOROOT=/usr/local/app/go
+export GOROOT=${APP_PATH}/go
 export GOBIN=$BIN_PATH
 export GOMODCACHE=$OPEN_CODE_PATH/gomod
 export PATH=$HOME/.cargo/bin:$HOME/.autojump/bin:$HOME/.fzf/bin:$HOME/.local/bin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin:$GOBIN
-export LD_LIBRARY_PATH=/usr/local/app/ImageMagick/lib
+export LD_LIBRARY_PATH=${APP_PATH}/ImageMagick/lib:/usr/local/lib:${APP_PATH}/ffmpeg/lib
 #export C_INCLUDE_PATH=
-export CPLUS_INCLUDE_PATH=/usr/local/app/ImageMagick/include/ImageMagick-7
+export CPLUS_INCLUDE_PATH=${APP_PATH}/ImageMagick/include/ImageMagick-7:${APP_PATH}/ffmpeg/include
 export MCFLY_KEY_SCHEME=vim
 export MCFLY_FUZZY=true
 export MCFLY_RESULTS=50
