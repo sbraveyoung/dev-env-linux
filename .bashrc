@@ -60,6 +60,17 @@ mkdir_and_cd(){
     mkdir $@
     [ $? -eq 0 ] && cd ${!dir_count} #cd the last dir
 }
+
+every(){
+    t=$1
+    shift
+
+    while true
+    do
+        $@
+        sleep $t
+    done
+}
 #################### functions ####################
 
 

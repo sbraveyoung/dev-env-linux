@@ -38,7 +38,7 @@ docker run -it --name ${CONTAINER_NAME} --privileged=true ${USER_NAME}/${IMAGE_N
 
 ## TODO
 1. You need to update your user_name and email of git in .gitconfig located `/home/${NORMAL_USER}/`;
-2. If you want to use vim, need to invoke `vim +PlugInstall +qall` after login with normal user;
+2. If you want to use vim, need to invoke `vim +PlugInstall +qall` and `vim +GoInstallBinaries` after login with normal user;
 3. If you want to use tmux, need to invoke `tmux source ~/.tmux.conf` after login with normal user;
 
 ## suggection
