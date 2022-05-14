@@ -1,5 +1,5 @@
 # dev-env-linux
-A modern linux development environment based on docker, inspired by [modern-unix](https://github.com/ibraheemdev/modern-unix), more than it.
+A modern linux development environment based on docker, inspired by [the-art-of-command-line](https://github.com/jlevy/the-art-of-command-line), [awesome-shell](https://github.com/alebcay/awesome-shell) and [modern-unix](https://github.com/ibraheemdev/modern-unix), but more than that.
 
 ## build
 

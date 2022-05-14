@@ -27,8 +27,8 @@ RUN    dnf -y install dnf-plugins-core \
           libXinerama-devel mesa-libGL-devel mesa-libGLU-devel freeglut-devel libXi-devel libevent \
           libevent-devel asciidoc pcre-devel xz-devel bind-utils freetype-devel glib2-devel fontconfig-devel \
           pango-devel libwebp-devel libde265  libheif* privoxy initscripts cscope \
-    && dnf -y install libpng libpng-devel libjpeg-devel ghostscript-devel \
-          libtiff-devel libwmf-devel \
+    && dnf -y install libpng libpng-devel libjpeg-devel ghostscript-devel libtiff-devel libwmf-devel 
+          protobuf-devel \
     && dnf -y groupinstall "Development Tools" \
     && dnf -y install git sudo gcc gcc-c++ gdb make unzip ctags vim expect passwd wget cmake figlet ncdu \
         nnn gh kakoune colordiff \
@@ -215,9 +215,31 @@ RUN    git clone https://github.com/vim/vim.git ${CLONE_PATH}/vim \
 
 RUN    curl -LSfs https://raw.githubusercontent.com/cantino/mcfly/master/ci/install.sh | sh -s -- --git cantino/mcfly
 
+#`make check` could delete
+#RUN    git clone https://github.com/protocolbuffers/protobuf.git ${CLONE_PATH}/protobuf \
+#       && cd ${CLONE_PATH}/protobuf \
+#       && git submodule update --init --recursive
+#       && ./autogen.sh \
+#       && ./configure --prefix=${APP_PATH}/protobuf \
+#       && make -j$(nproc) \
+#       && make check \
+#       && make install \
+#       && ldconfig
+
+RUN    git clone https://github.com/mobile-shell/mosh ${CLONE_PATH} \
+       && cd ${CLONE_PATH}/mosh \
+       && ./autogen.sh \
+       && ./configure --prefix=${APP_PATH}/mosh \
+       && make \
+       && make install \
+       && ln -s ${APP_PATH}/mosh/bin/mosh ${BIN_PATH}/mosh \
+       && ln -s ${APP_PATH}/mosh/bin/mosh-client ${BIN_PATH}/mosh-client \
+       && ln -s ${APP_PATH}/mosh/bin/mosh-server ${BIN_PATH}/mosh-server
+
 #python
 RUN    pip install --upgrade setuptools \
-       && python -m pip install --upgrade pip
+       && python -m pip install --upgrade pip \
+       && pip2 install percol
 
 RUN    pip3 install pybind11 git+https://github.com/jeffkaufman/icdiff.git iredis ranger-fm mdv thefuck mycli asciinema http-prompt yapf \
     && pip3 install --upgrade httpie
@@ -232,6 +254,8 @@ RUN    chmod a+w ${CLONE_PATH} \
 USER    $NORMAL_USER
 WORKDIR ${HOME}
 RUN     mkdir $GOPATH
+
+RUN    ssh-keygen -t rsa -N "" -f ~/.ssh/id_rsa
 
 #go
 RUN    cd ${CLONE_PATH} \
@@ -257,7 +281,8 @@ RUN    git clone https://github.com/adwpc/xvim.git ${CLONE_PATH}/xvim \
 #TODO: need to update your user_name and email in .gitconfig
 RUN    git clone https://github.com/SmartBrave/dev-env-linux ${CLONE_PATH}/dev-env-linux \
        && cd ${CLONE_PATH}/dev-env-linux \
-       && sudo cp .bash_profile .bashrc .gitconfig .tigrc .tmux.conf .vimrc ~
+       && cp .ssh_config ~/.ssh/config
+       && cp .bash_profile .bashrc .gitconfig .tigrc .tmux.conf .vimrc ~
        #&& vim +PlugInstall +qall
 
 RUN    git clone https://github.com/kevinschoon/pomo.git ${CLONE_PATH}/pomo \
@@ -275,8 +300,6 @@ RUN    git clone https://github.com/rs/curlie.git ${CLONE_PATH}/curlie \
 RUN    git clone https://github.com/muesli/duf.git ${CLONE_PATH}/duf \
        && cd ${CLONE_PATH}/duf \
        && go install
-
-RUN    ssh-keygen -t rsa -N "" -f ~/.ssh/id_rsa
 
 RUN    git clone https://github.com/wting/autojump ${CLONE_PATH}/autojump \
        && cd ${CLONE_PATH}/autojump \
