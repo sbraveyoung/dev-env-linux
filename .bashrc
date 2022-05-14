@@ -96,6 +96,10 @@ alias r="ranger"
 alias curl="curlie"
 alias cd="cdls"
 alias mkdir="mkdir_and_cd"
+#about git
+alias status="git status"
+alias branch="git branch"
+alias checkout="git checkout"
 
 # fasd
 alias a='fasd -a'        # any

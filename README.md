@@ -42,4 +42,7 @@ docker run -it --name ${CONTAINER_NAME} --privileged=true ${USER_NAME}/${IMAGE_N
 3. If you want to use tmux, need to invoke `tmux source ~/.tmux.conf` after login with normal user;
 
 ## suggection
-If you want to mount volumns on MacOS, use `mutagen` or `docker-sync` instead of `-v` args.
+If you want to mount volumns on MacOS, use `mutagen` or `docker-sync` instead of `-v` args, like:
+```shell
+mutagen sync create --name ${SESSION_NAME} --symlink-mode=posix-raw ${CODE_PATH_ON_HOST} docker://${NORMAL_USER}@${CONTAINER_NAME}${CODE_PATH_ON_CONTAINER}
+```
