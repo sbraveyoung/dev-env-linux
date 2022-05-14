@@ -240,14 +240,14 @@ RUN    cd ${CLONE_PATH} \
        && sudo ln -s ${APP_PATH}/go/bin/go ${BIN_PATH}/go \
        && sudo ln -s ${APP_PATH}/go/bin/gofmt ${BIN_PATH}/gofmt
 
-RUN go install github.com/tomnomnom/gron@latest \
-    && go install github.com/jingweno/ccat@latest \
-    && go install github.com/go-delve/delve/cmd/dlv@latest \
-    && go install github.com/mikefarah/yq/v3@latest \
-    && go install github.com/cheat/cheat/cmd/cheat@latest \
-    && go install github.com/wader/fq@latest \
-    && go install github.com/jesseduffield/lazydocker@latest
-    #&& go get -u -v github.com/liamg/aminal \
+RUN    go install github.com/tomnomnom/gron@latest \
+       && go install github.com/jingweno/ccat@latest \
+       && go install github.com/go-delve/delve/cmd/dlv@latest \
+       && go install github.com/mikefarah/yq/v3@latest \
+       && go install github.com/cheat/cheat/cmd/cheat@latest \
+       && go install github.com/wader/fq@latest \
+       && go install github.com/jesseduffield/lazydocker@latest
+       #&& go get -u -v github.com/liamg/aminal \
 
 RUN    git clone https://github.com/adwpc/xvim.git ${CLONE_PATH}/xvim \
        && cd ${CLONE_PATH}/xvim \
@@ -282,7 +282,7 @@ RUN    git clone https://github.com/wting/autojump ${CLONE_PATH}/autojump \
        && cd ${CLONE_PATH}/autojump \
        && SHELL=/bin/bash ./install.py
 
-#TODO:  need to install tmux plugins with `prefix+I` after login
+#TODO:  need to install tmux plugins with `prefix+I` in tmux
 #install tmux plugins automatically
 RUN    git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
        # && tmux source ~/.tmux.conf
@@ -362,6 +362,6 @@ RUN    ~/.cargo/bin/cargo install --git https://github.com/Peltoche/lsd.git --br
     # && go install github.com/peco/peco@latest \
 #https://github.com/alebcay/awesome-shell
 
-
 USER root
+RUN chown -R $NORMAL_USER $HOME
 CMD /usr/sbin/init

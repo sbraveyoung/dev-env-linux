@@ -1,5 +1,5 @@
 # dev-env-linux
-My development environment based on docker.
+A modern linux development environment based on docker, inspired by [modern-unix](https://github.com/ibraheemdev/modern-unix), more than it.
 
 ## build
 
@@ -37,9 +37,10 @@ docker run -it --name ${CONTAINER_NAME} --privileged=true ${USER_NAME}/${IMAGE_N
 ```
 
 ## TODO
-1. You need to update your user_name and email of git in .gitconfig located `/home/${NORMAL_USER}/`;
-2. If you want to use vim, need to invoke `vim +PlugInstall +qall` and `vim +GoInstallBinaries` after login with normal user;
+1. If you want to use vim, need to invoke `vim +PlugInstall +qall` after login with normal user;
+2. If you are a Go developer, need to invoke `vim +GoInstallBinaries +qall` after login with ROOT user;
 3. If you want to use tmux, need to invoke `tmux source ~/.tmux.conf` after login with normal user;
+4. You need to update your user_name and email of git in .gitconfig located `/home/${NORMAL_USER}/`;
 
 ## suggection
 If you want to mount volumns on MacOS, use `mutagen` or `docker-sync` instead of `-v` args, like:

@@ -1,6 +1,6 @@
 [user]
-	name = SmartBrave
-	email = SmartBraveCoder@gmail.com
+	name = ${NORMAL_USER}
+	email = ${YOUR_EMAIL}
 [credential]
 	helper = store
 [core]

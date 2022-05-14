@@ -82,7 +82,7 @@ alias top="gtop"
 #alias ls="ls -a --color=auto"
 #alias ls="lsd -a"
 alias ls="exa --all"
-alias ll="ls -h"
+alias ll="ls -lh"
 alias mysql="mycli"
 alias wget="axel"
 alias tig="/usr/local/bin/tig"
@@ -145,7 +145,7 @@ eval $(thefuck --alias 2>/dev/null)
 # source $HOME/.config/broot/launcher/bash/br
 # Generated for envman. Do not edit.
 # [ -s "$HOME/.config/envman/load.sh" ] && source "$HOME/.config/envman/load.sh"
-eval "$(mcfly init bash)"
+#eval "$(mcfly init bash)"
 [ -f ~/.fzf.bash ] && source ~/.fzf.bash
 [[ -s $HOME/.autojump/etc/profile.d/autojump.sh ]] && source $HOME/.autojump/etc/profile.d/autojump.sh
 . "$HOME/.cargo/env"
