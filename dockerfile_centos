@@ -215,17 +215,6 @@ RUN    git clone https://github.com/vim/vim.git ${CLONE_PATH}/vim \
 
 RUN    curl -LSfs https://raw.githubusercontent.com/cantino/mcfly/master/ci/install.sh | sh -s -- --git cantino/mcfly
 
-#`make check` could delete
-#RUN    git clone https://github.com/protocolbuffers/protobuf.git ${CLONE_PATH}/protobuf \
-#       && cd ${CLONE_PATH}/protobuf \
-#       && git submodule update --init --recursive
-#       && ./autogen.sh \
-#       && ./configure --prefix=${APP_PATH}/protobuf \
-#       && make -j$(nproc) \
-#       && make check \
-#       && make install \
-#       && ldconfig
-
 RUN    git clone https://github.com/mobile-shell/mosh ${CLONE_PATH}/mosh \
        && cd ${CLONE_PATH}/mosh \
        && ./autogen.sh \
@@ -277,7 +266,6 @@ RUN    git clone https://github.com/adwpc/xvim.git ${CLONE_PATH}/xvim \
        && cd ${CLONE_PATH}/xvim \
        && yes | ./install vimrc
 
-#TODO: install vim plugins automatically
 #TODO: need to update your user_name and email in .gitconfig
 RUN    git clone https://github.com/SmartBrave/dev-env-linux ${CLONE_PATH}/dev-env-linux \
        && cd ${CLONE_PATH}/dev-env-linux \
@@ -319,72 +307,24 @@ RUN    curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs > ${CLONE_PATH}
 RUN    git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf \
        && ~/.fzf/install
 
-    #&& git clone --depth=1 https://github.com/amix/vimrc.git ~/.vim_runtime \
-    #   && sh ~/.vim_runtime/install_awesome_vimrc.sh
-
 #zoxide need to configure
 RUN    ~/.cargo/bin/cargo install --git https://github.com/Peltoche/lsd.git --branch master \
     && ~/.cargo/bin/cargo install broot exa fd-find hexyl ripgrep sd bat procs gping bottom choose du-dust \
     && ~/.cargo/bin/cargo install onefetch tealdeer pastel hyperfine git-delta xh zoxide
-    #&& ~/.cargo/bin/cargo install --git https://github.com/p-e-w/hegemon.git --branch master \
-    #&& ~/.cargo/bin/cargo install --git https://github.com/ogham/dog.git --branch master \
 
-#starship,manimlib,gor,mediainfo,ssh-chat
-#sudo go get -u -v github.com/liamg/aminal \
-#git clone --config transfer.fsckobjects=false --config receive.fsckobjects=false --config fetch.fsckobjects=false https://github.com/github/hub.git ${CLONE_PATH}/hub cd ${CLONE_PATH}/hub make install prefix=${APP_PATH}/hub ln -s ${APP_PATH}/hub/bin/hub ${BIN_PATH}/hub \
-#git clone https://github.com/flok99/multitail ${CLONE_PATH}/multitail cd ${CLONE_PATH}/multitail mkdir build cd build cmake .. sudo make install \
-#git-flow
-#vim-plugins
-#host
-#FlameGraph
+########################## other funny tools ########################## 
+#starship/manimlib/gor/mediainfo/ssh-chat/FlameGraph/ohmyzsh/ccache/prettyping/neovim
+#https://github.com/amix/vimrc.git
+#github.com/liamg/aminal
+#https://github.com/github/hub.git
+#https://github.com/flok99/multitail
 #https://github.com/alebcay/awesome-shell
-
-#qt installer maybe need graphic window
-# RUN    cd ${CLONE_PATH} \
-       # && wget https://download.qt.io/official_releases/qt/5.12/5.12.11/qt-opensource-linux-x64-5.12.11.run \
-       # && chmod +x qt-opensource-linux-x64-5.12.1.run \
-       # && ./qt-opensource-linux-x64-5.12.1.run
-
-# RUN    git clone https://github.com/lheric/GitlHEVCAnalyzer.git ${CLONE_PATH}/GitlHEVCAnalyzer \
-       # && cd ${CLONE_PATH}/GitlHEVCAnalyzer \
-       # && git submodule update --init --recursive \
-       # && git submodule update --recursive \
-       # && qmake -qt=qt5 GitlHEVCAnalyzer.pro -r "CONFIG+=Release" \
-       # && make
-
-#RUN    sudo sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" \
-#    && git clone --depth=1 https://github.com/Bash-it/bash-it.git ${CLONE_PATH}/bash-it \
-#       && cd ${CLONE_PATH} \
-#       && ./bash-it/install.sh -s
-
-#RUN    git clone https://github.com/ccache/ccache ${CLONE_PATH}/ccache \
-#       && cd ${CLONE_PATH}/ccache \
-#       && ./autogen.sh \
-#       && ./configure --prefix=${APP_PATH}/ccache --with-libzstd-from-internet --with-libb2-from-internet \
-#       && make -j 10 \
-#       && make install \
-#       && ln -s ${APP_PATH}/ccache/bin/ccache ${BIN_PATH}/ccache
-
-#RUN    git clone https://github.com/flok99/multitail ${CLONE_PATH}/multitail \
-#       && cd ${CLONE_PATH}/multitail \
-#       && mkdir build \
-#       && cd build \
-#       && cmake .. \
-#       && make install
-
-#RUN    curl https://cht.sh/:cht.sh | tee ${APP_PATH}/bin/cht.sh \
-#       && chmod +x ${APP_PATH}/bin/cht.sh
-
-#RUN    curl https://raw.githubusercontent.com/denilsonsa/prettyping/master/prettyping | tee ${APP_PATH}/bin/prettyping \
-#       && chmod +x ${APP_PATH}/bin/prettyping
-
-#    && git clone https://github.com/neovim/neovim ${CLONE_PATH}/neovim \
-#       && cd ${CLONE_PATH}/neovim \
-#       && make CMAKE_INSTALL_PREFIX=${APP_PATH}/neovim \
-#       && make install \
-#       && ln -s ${APP_PATH}/neovim/bin/neovim ${BIN_PATH}/neovim \
-    # && go install github.com/peco/peco@latest \
-#https://github.com/alebcay/awesome-shell
+#https://github.com/lheric/GitlHEVCAnalyzer.git
+#https://cht.sh/
+#https://github.com/peco/peco
+#https://github.com/ogham/dog.git
+#https://github.com/p-e-w/hegemon.git
+########################## other funny tools ########################## 
 
 USER root
 CMD /usr/sbin/init
