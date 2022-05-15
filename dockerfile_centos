@@ -27,7 +27,7 @@ RUN    dnf -y install dnf-plugins-core \
           libXinerama-devel mesa-libGL-devel mesa-libGLU-devel freeglut-devel libXi-devel libevent \
           libevent-devel asciidoc pcre-devel xz-devel bind-utils freetype-devel glib2-devel fontconfig-devel \
           pango-devel libwebp-devel libde265  libheif* privoxy initscripts cscope \
-    && dnf -y install libpng libpng-devel libjpeg-devel ghostscript-devel libtiff-devel libwmf-devel 
+    && dnf -y install libpng libpng-devel libjpeg-devel ghostscript-devel libtiff-devel libwmf-devel \
           protobuf-devel \
     && dnf -y groupinstall "Development Tools" \
     && dnf -y install git sudo gcc gcc-c++ gdb make unzip ctags vim expect passwd wget cmake figlet ncdu \
@@ -226,7 +226,7 @@ RUN    curl -LSfs https://raw.githubusercontent.com/cantino/mcfly/master/ci/inst
 #       && make install \
 #       && ldconfig
 
-RUN    git clone https://github.com/mobile-shell/mosh ${CLONE_PATH} \
+RUN    git clone https://github.com/mobile-shell/mosh ${CLONE_PATH}/mosh \
        && cd ${CLONE_PATH}/mosh \
        && ./autogen.sh \
        && ./configure --prefix=${APP_PATH}/mosh \
@@ -248,9 +248,9 @@ RUN    pip3 install pybind11 git+https://github.com/jeffkaufman/icdiff.git iredi
 RUN    npm install -g fx fx-completion cloc svg-term-cli zx @squoosh/cli
 
 RUN    chmod a+w ${CLONE_PATH} \
-       && chmod a+w ${APP_PATH}
+       && chmod a+w ${APP_PATH} \
+       && chmod a+w ${BIN_PATH}
 
-#RUN    usermod -u 501 $NORMAL_USER
 USER    $NORMAL_USER
 WORKDIR ${HOME}
 RUN     mkdir $GOPATH
@@ -281,9 +281,10 @@ RUN    git clone https://github.com/adwpc/xvim.git ${CLONE_PATH}/xvim \
 #TODO: need to update your user_name and email in .gitconfig
 RUN    git clone https://github.com/SmartBrave/dev-env-linux ${CLONE_PATH}/dev-env-linux \
        && cd ${CLONE_PATH}/dev-env-linux \
-       && cp .ssh_config ~/.ssh/config
-       && cp .bash_profile .bashrc .gitconfig .tigrc .tmux.conf .vimrc ~
-       #&& vim +PlugInstall +qall
+       && sudo chown $NORMAL_USER $HOME/\.* \
+       && cp .ssh_config ~/.ssh/config \
+       && cp .bash_profile .bashrc .gitconfig .tigrc .tmux.conf .vimrc ~ \
+       && echo -ne '\n' | vim +PlugInstall +GoInstallBinaries +qall
 
 RUN    git clone https://github.com/kevinschoon/pomo.git ${CLONE_PATH}/pomo \
        && cd ${CLONE_PATH}/pomo \
@@ -386,5 +387,4 @@ RUN    ~/.cargo/bin/cargo install --git https://github.com/Peltoche/lsd.git --br
 #https://github.com/alebcay/awesome-shell
 
 USER root
-RUN chown -R $NORMAL_USER $HOME
 CMD /usr/sbin/init
