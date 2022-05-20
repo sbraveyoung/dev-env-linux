@@ -271,7 +271,7 @@ RUN    git clone https://github.com/SmartBrave/dev-env-linux ${CLONE_PATH}/dev-e
        && cd ${CLONE_PATH}/dev-env-linux \
        && sudo chown $NORMAL_USER $HOME/\.* \
        && cp .ssh_config ~/.ssh/config \
-       && cp .bash_profile .bashrc .gitconfig .tigrc .tmux.conf .vimrc ~ \
+       && cp .bash_profile .bashrc .gitconfig .tigrc .tmux.conf .vimrc relay.sh login ~ \
        && echo -ne '\n' | vim +PlugInstall +GoInstallBinaries +qall
 
 RUN    git clone https://github.com/kevinschoon/pomo.git ${CLONE_PATH}/pomo \
