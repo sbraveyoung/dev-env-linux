@@ -7,6 +7,7 @@ A modern linux development environment based on docker, inspired by [the-art-of-
 * Awesome ssh to connect other mechine including your local host and remote host, support relay mode.
 * Useful bash alias and function definition in `~/.bashrc`.
 * All tools introduce in [modern-unix](https://github.com/ibraheemdev/modern-unix).
+* GUI support with X11.
 * more waiting for you to discover.
 
 ## build
