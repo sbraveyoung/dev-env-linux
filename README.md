@@ -54,6 +54,16 @@ docker run -it --name ${CONTAINER_NAME} -e HOST_USER -e HOST_PASSWD -e COMPANY_U
 ## TODO
 1. If you want to use tmux, need to invoke `tmux source ~/.tmux.conf` in command line and `<Ctrl-b>+I` in tmux after login with normal user;
 2. You need to update your user_name and email of git in .gitconfig located `/home/${NORMAL_USER}/`;
+3. If you want to show GUI, please install `xquartz` on your host:
+```shell
+brew install --cask xquartz socat
+open -a XQuartz
+```
+and then, check `Allow connections from network clients` in Preferences - Security and restart xquartx.
+last step, run:
+```shell
+socat TCP-LISTEN:6000,reuseaddr,fork UNIX-CLIENT:\"$DISPLAY\"
+```
 
 ## suggection
 If you want to mount volumns on MacOS, use `mutagen` or `docker-sync` instead of `-v` args, like:
