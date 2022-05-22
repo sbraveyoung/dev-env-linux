@@ -1,10 +1,10 @@
-#!/bin/bash -x
+#!/bin/bash
 
 case $1 in
     mac)
         user=${HOST_USER}
         passwd=${HOST_PASSWD}
-        mechine=${HOST_IP}
+        mechine=host.docker.internal # or gateway.docker.internal
         relay=""
         ;;
     *) #mechine of company

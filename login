@@ -1,12 +1,9 @@
 #!/usr/bin/expect
-set argv_index 3
 set host    [lindex $argv 0]
 set user    [lindex $argv 1]
 set passwd  [lindex $argv 2]
 set relay   [lindex $argv 3]
 set timeout 10
-
-puts $relay
 
 if { $relay != "" } {
     spawn kinit
@@ -22,6 +19,7 @@ if { $relay != "" } {
 } else {
     spawn ssh -l $user $host
     expect {
+        "*Are you sure you want to continue connecting (yes/no/*" { send "yes\r" }
         "*Password*" { send "$passwd\r" }
         "*Last login*" {}
     }
