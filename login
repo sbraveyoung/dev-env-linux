@@ -20,6 +20,11 @@ if { $relay != "" } {
     spawn ssh -l $user $host
     expect {
         "*Are you sure you want to continue connecting (yes/no/*" { send "yes\r" }
+            send "yes\r"
+            expect {
+                "*Password*" { send "$passed\r" }
+            }
+        }
         "*Password*" { send "$passwd\r" }
         "*Last login*" {}
     }
