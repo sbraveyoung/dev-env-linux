@@ -26,12 +26,12 @@ RUN    dnf -y install dnf-plugins-core \
           tcl-devel net-tools llvm clang-libs clang-devel which libX11-devel libXcursor-devel libXrandr-devel \
           libXinerama-devel mesa-libGL-devel mesa-libGLU-devel freeglut-devel libXi-devel libevent \
           libevent-devel asciidoc pcre-devel xz-devel bind-utils freetype-devel glib2-devel fontconfig-devel \
-          pango-devel libwebp-devel libde265  libheif* privoxy initscripts cscope \
+          pango-devel libwebp-devel libde265  libheif* privoxy initscripts cscope SDL2-devel \
     && dnf -y install libpng libpng-devel libjpeg-devel ghostscript-devel libtiff-devel libwmf-devel \
-          protobuf-devel \
+          protobuf-devel mesa-dri-drivers coreutils \
     && dnf -y groupinstall "Development Tools" \
     && dnf -y install git sudo gcc gcc-c++ gdb make unzip ctags vim expect passwd wget cmake figlet ncdu \
-        nnn gh kakoune colordiff \
+        nnn gh kakoune colordiff git-lfs \
     && dnf -y install perl nodejs rust python2 python2-pip python2-devel \
           python3 python3-pip python3-devel ruby lua luajit zsh \
     && ln -s /usr/bin/python3 /usr/bin/python \
@@ -45,7 +45,7 @@ RUN    dnf -y install dnf-plugins-core \
 RUN    git clone https://github.com/ImageMagick/ImageMagick ${CLONE_PATH}/ImageMagick \
        && cd ${CLONE_PATH}/ImageMagick \
        && ./configure --prefix=${APP_PATH}/ImageMagick --with-heic=yes --with-jxl=yes --with-jpeg=yes --with-png=yes --with-webp=yes \
-       && make -j 10 \
+       && make -j $(nproc) \
        && make install \
        && ln -s ${APP_PATH}/ImageMagick/bin/magick ${BIN_PATH}/magick \
        && ln -s ${APP_PATH}/ImageMagick/bin/animate ${BIN_PATH}/animate \
@@ -76,21 +76,17 @@ RUN    wget https://github.com/axel-download-accelerator/axel/releases/download/
        && cd axel-2.17.7 \
        && cd ${CLONE_PATH}/axel-2.17.7 \
        && ./configure --prefix=${APP_PATH}/axel-2.17.7 \
-       && make -j 10 \
+       && make -j $(nproc) \
        && make install \
        && ln -s ${APP_PATH}/axel-2.17.7/bin/axel ${BIN_PATH}/axel
 
-RUN    sudo git clone https://github.com/jarun/bcal ${CLONE_PATH}/bcal \
+RUN    git clone https://github.com/jarun/bcal ${CLONE_PATH}/bcal \
        && cd ${CLONE_PATH}/bcal \
-       && make -j 10 \
+       && make -j $(nproc) \
        && make strip install
 
-RUN    sudo git clone https://github.com/so-fancy/diff-so-fancy ${CLONE_PATH}/diff-so-fancy \
+RUN    git clone https://github.com/so-fancy/diff-so-fancy ${CLONE_PATH}/diff-so-fancy \
        && ln -s ${CLONE_PATH}/diff-so-fancy/diff-so-fancy ${BIN_PATH}/diff-so-fancy
-
-RUN    git clone https://github.com/clvv/fasd ${CLONE_PATH}/fasd \
-       && cd ${CLONE_PATH}/fasd \
-       && make install
 
 RUN    git clone https://github.com/dylanaraps/fff ${CLONE_PATH}/fff \
        && cd ${CLONE_PATH}/fff \
@@ -105,7 +101,7 @@ RUN    git clone https://github.com/hishamhm/htop ${CLONE_PATH}/htop \
        && cd ${CLONE_PATH}/htop \
        && ./autogen.sh \
        && ./configure --prefix=${APP_PATH}/htop \
-       && make -j 10 \
+       && make -j $(nproc) \
        && make install \
        && ln -s ${APP_PATH}/htop/bin/htop ${BIN_PATH}/htop
 
@@ -116,7 +112,7 @@ RUN    git clone https://github.com/stedolan/jq ${CLONE_PATH}/jq \
        && git submodule update --init \
        && autoreconf -fi \
        && ./configure --prefix=${APP_PATH}/jq --with-oniguruma=builtin \
-       && make -j 10 \
+       && make -j $(nproc) \
        && make check \
        && make install \
        && ln -s ${APP_PATH}/jq/bin/jq ${BIN_PATH}/jq
@@ -139,7 +135,7 @@ RUN    git clone https://github.com/tmux/tmux ${CLONE_PATH}/tmux \
        && cd ${CLONE_PATH}/tmux \
        && sh autogen.sh \
        && ./configure --prefix=${APP_PATH}/tmux \
-       && make -j 10 \
+       && make -j $(nproc) \
        && make install \
        && ln -s ${APP_PATH}/tmux/bin/tmux ${BIN_PATH}/tmux
 
@@ -194,18 +190,26 @@ RUN    git clone https://github.com/arzzen/git-quick-stats.git ${CLONE_PATH}/git
 
 RUN    git clone https://github.com/brendangregg/FlameGraph.git ${APP_PATH}/FlameGraph
 
-RUN    git clone https://git.ffmpeg.org/ffmpeg.git ${CLONE_PATH}/ffmpeg \
+RUN    git clone https://github.com/libsdl-org/SDL.git ${CLONE_PATH}/sdl \
+       && cd ${CLONE_PATH}/sdl \
+       && ./configure --prefix=${APP_PATH}/sdl \
+       && make -j $(nproc) \
+       && make install
+
+RUN    yum remove mesa-libGL mesa-libGL-devel \
+       && git clone https://git.ffmpeg.org/ffmpeg.git ${CLONE_PATH}/ffmpeg \
        && cd ${CLONE_PATH}/ffmpeg \
-       && ./configure --prefix=${APP_PATH}/ffmpeg --enable-openssl --disable-x86asm \
-       && make -j 10 \
+       && PKG_CONFIG_PATH=$PKG_CONFIG_PATH:${APP_PATH}/sdl/lib/pkgconfig ./configure --prefix=${APP_PATH}/ffmpeg --enable-openssl --disable-x86asm --extra-cflags=-I${APP_PATH}/sdl/include --extra-ldflags=-L${APP_PATH}/sdl/lib \
+       && make -j $(nproc) \
        && make install \
-       && sudo ln -s ${APP_PATH}/ffmpeg/bin/ffmpeg ${BIN_PATH}/ffmpeg \
-       && sudo ln -s ${APP_PATH}/ffmpeg/bin/ffprobe ${BIN_PATH}/ffprobe
+       && ln -s ${APP_PATH}/ffmpeg/bin/ffmpeg ${BIN_PATH}/ffmpeg \
+       && ln -s ${APP_PATH}/ffmpeg/bin/ffprobe ${BIN_PATH}/ffprobe \
+       && ln -s ${APP_PATH}/ffmpeg/bin/ffplay ${BIN_PATH}/ffplay
 
 RUN    git clone https://github.com/vim/vim.git ${CLONE_PATH}/vim \
        && cd ${CLONE_PATH}/vim \
        && ./configure --prefix=${APP_PATH}/vim --with-features=huge --enable-multibyte --enable-python3interp=yes --with-python3-config-dir=/usr/lib64/python3.6/config-3.6m-x86_64-linux-gnu --enable-gui=gtk2 --enable-cscope \
-       && make -j6 \
+       && make -j $(nproc) \
        && make install \
        && mv /usr/bin/vim /usr/bin/vim.bak \
        && ln -s ${APP_PATH}/vim/bin/vim ${BIN_PATH}/vim \
@@ -290,9 +294,7 @@ RUN    git clone https://github.com/muesli/duf.git ${CLONE_PATH}/duf \
        && cd ${CLONE_PATH}/duf \
        && go install
 
-RUN    git clone https://github.com/wting/autojump ${CLONE_PATH}/autojump \
-       && cd ${CLONE_PATH}/autojump \
-       && SHELL=/bin/bash ./install.py
+RUN    git clone https://github.com/rupa/z.git ${APP_PATH}/z
 
 #TODO:  need to install tmux plugins with `prefix+I` in tmux
 #install tmux plugins automatically
