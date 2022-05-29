@@ -263,6 +263,7 @@ RUN    go install github.com/tomnomnom/gron@latest \
        && go install github.com/mikefarah/yq/v3@latest \
        && go install github.com/cheat/cheat/cmd/cheat@latest \
        && go install github.com/wader/fq@latest \
+       && go install github.com/mikefarah/yq/v4@latest \
        && go install github.com/jesseduffield/lazydocker@latest
        #&& go get -u -v github.com/liamg/aminal \
 
@@ -294,6 +295,10 @@ RUN    git clone https://github.com/muesli/duf.git ${CLONE_PATH}/duf \
        && cd ${CLONE_PATH}/duf \
        && go install
 
+RUN    git clone https://github.com/multiprocessio/dsq ${CLONE_PATH}/dsq \
+       && cd ${CLONE_PATH}/dsq \
+       && go install .
+
 RUN    git clone https://github.com/rupa/z.git ${APP_PATH}/z
 
 #TODO:  need to install tmux plugins with `prefix+I` in tmux
@@ -309,13 +314,18 @@ RUN    curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs > ${CLONE_PATH}
 RUN    git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf \
        && ~/.fzf/install
 
+#similar to https://github.com/bigH/git-fuzzy
+RUN    mkdir ${APP_PATH}/forgit \
+       cd ${APP_PATH}/forgit \
+       wget git.io/forgit
+
 #zoxide need to configure
 RUN    ~/.cargo/bin/cargo install --git https://github.com/Peltoche/lsd.git --branch master \
     && ~/.cargo/bin/cargo install broot exa fd-find hexyl ripgrep sd bat procs gping bottom choose du-dust \
-    && ~/.cargo/bin/cargo install onefetch tealdeer pastel hyperfine git-delta xh zoxide
+    && ~/.cargo/bin/cargo install onefetch tealdeer pastel hyperfine git-delta xh zoxide fselect
 
 ########################## other funny tools ########################## 
-#starship/manimlib/gor/mediainfo/ssh-chat/FlameGraph/ohmyzsh/ccache/prettyping/neovim
+#starship/manimlib/gor/mediainfo/ssh-chat/FlameGraph/ohmyzsh/ccache/prettyping/neovim/zellij
 #https://github.com/amix/vimrc.git
 #github.com/liamg/aminal
 #https://github.com/github/hub.git

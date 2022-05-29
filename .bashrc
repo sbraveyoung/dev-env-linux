@@ -87,7 +87,7 @@ alias mysql="mycli"
 alias wget="axel"
 alias tig="/usr/local/bin/tig"
 alias relay="$HOME/.ssh/relay.sh"
- alias ssh="relay"
+alias ssh="relay"
 #alias find=fd
 alias www="python -m SimpleHTTPServer 8000"
 alias of="onefetch"
@@ -101,16 +101,6 @@ alias status="git status"
 alias branch="git branch"
 alias checkout="git checkout"
 
-# fasd
-alias a='fasd -a'        # any
-alias s='fasd -si'       # show / search / select
-alias d='fasd -d'        # directory
-alias f='fasd -f'        # file
-alias sd='fasd -sid'     # interactive directory selection
-alias sf='fasd -sif'     # interactive file selection
-alias z='fasd_cd -d'     # cd, same functionality as j in autojump
-alias zz='fasd_cd -d -i' # cd with interactive selection
-#alias v='f -e vim' # quick opening files with vim
 bind -x '"\C-l": clear'
 #################### aliases ####################
 
@@ -133,6 +123,7 @@ export MCFLY_FUZZY=true
 export MCFLY_RESULTS=50
 export BAT_THEME="Coldark-Dark"
 export TERM=xterm-256color
+export DISPLAY=host.docker.internal:0
 # export PS1="\u@\h \W \[\033[31m\][\$(echo_sentence)]\[\033[00m\] \[\033[33m\][\$(echo_date)]\[\033[00m\]\[\033[32m\]\$(parse_git_branch)\[\033[00m\] $"
 export PS1="\u@\h \W \[\033[33m\][\$(echo_date)]\[\033[00m\]\[\033[32m\]\$(parse_git_branch)\[\033[00m\] $"
 #################### environments ####################
@@ -140,7 +131,6 @@ export PS1="\u@\h \W \[\033[33m\][\$(echo_date)]\[\033[00m\]\[\033[32m\]\$(parse
 
 #################### source application config ####################
 eval $(thefuck --alias 2>/dev/null)
-# eval "$(fasd --init auto)"
 # source <(fx-completion --bash)
 # source $HOME/.config/broot/launcher/bash/br
 # Generated for envman. Do not edit.
@@ -149,5 +139,7 @@ eval $(thefuck --alias 2>/dev/null)
 [ -f ~/.fzf.bash ] && source ~/.fzf.bash
 [[ -s $HOME/.autojump/etc/profile.d/autojump.sh ]] && source $HOME/.autojump/etc/profile.d/autojump.sh
 . "$HOME/.cargo/env"
+. ${APP_PATH}/z/z.sh
+source ${APP_PATH}/forgit/forgit
 set -o vi
 #################### source application config ####################
