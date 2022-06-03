@@ -141,5 +141,6 @@ eval $(thefuck --alias 2>/dev/null)
 . "$HOME/.cargo/env"
 . ${APP_PATH}/z/z.sh
 source ${APP_PATH}/forgit/forgit
+source ${APP_PATH}/git-flow-completion/git-flow-completion.bash
 set -o vi
 #################### source application config ####################

@@ -34,23 +34,23 @@ export RELAY_ADDR       = relay_addr_in_company
 
 #### centos
 ```shell
-docker build -t ${USER_NAME}/${IMAGE_NAME}:${IMAGE_VERSION} --build-arg NORMAL_USER=${NORMAL_USER} --build-arg NORMAL_PASSWD=${NORMAL_PASSWD} --build-arg ROOT_PASSWD=${ROOT_PASSWD} -f dockerfile_centos .
+docker build -t ${USER_NAME}/${IMAGE_NAME}:${IMAGE_VERSION} --network=host --build-arg NORMAL_USER=${NORMAL_USER} --build-arg NORMAL_PASSWD=${NORMAL_PASSWD} --build-arg ROOT_PASSWD=${ROOT_PASSWD} --build-arg proxy='socks5://host.docker.internal:1080' -f dockerfile_centos .
 ```
 
 #### ubuntu
 ```shell
-docker build -t ${USER_NAME}/${IMAGE_NAME}:${IMAGE_VERSION} --build-arg NORMAL_USER=${NORMAL_USER} --build-arg NORMAL_PASSWD=${NORMAL_PASSWD} --build-arg ROOT_PASSWD=${ROOT_PASSWD} -f dockerfile_ubuntu .
+docker build -t ${USER_NAME}/${IMAGE_NAME}:${IMAGE_VERSION} --network=host --build-arg NORMAL_USER=${NORMAL_USER} --build-arg NORMAL_PASSWD=${NORMAL_PASSWD} --build-arg ROOT_PASSWD=${ROOT_PASSWD} --build-arg proxy='socks5://host.docker.internal:1080' -f dockerfile_ubuntu .
 ```
 
 ## run
 #### centos
 ```shell
-docker exec -it `docker run -d --name ${CONTAINER_NAME} -e HOST_USER -e HOST_PASSWD -e COMPANY_USER -e COMPANY_PASSWD -e RELAY_ADDR --privileged=true ${USER_NAME}/${IMAGE_NAME}:${IMAGE_VERSION}` /bin/bash
+docker exec -it `docker run -d --name ${CONTAINER_NAME} --network=host -e HOST_USER -e HOST_PASSWD -e COMPANY_USER -e COMPANY_PASSWD -e RELAY_ADDR --privileged=true ${USER_NAME}/${IMAGE_NAME}:${IMAGE_VERSION}` /bin/bash
 ```
 
 #### ubuntu
 ```shell
-docker run -it --name ${CONTAINER_NAME} -e HOST_USER -e HOST_PASSWD -e COMPANY_USER -e COMPANY_PASSWD -e RELAY_ADDR --privileged=true ${USER_NAME}/${IMAGE_NAME}:${IMAGE_VERSION} /bin/bash
+docker run -it --name ${CONTAINER_NAME} --network=host -e HOST_USER -e HOST_PASSWD -e COMPANY_USER -e COMPANY_PASSWD -e RELAY_ADDR --privileged=true ${USER_NAME}/${IMAGE_NAME}:${IMAGE_VERSION} /bin/bash
 ```
 
 ## TODO
@@ -58,7 +58,7 @@ docker run -it --name ${CONTAINER_NAME} -e HOST_USER -e HOST_PASSWD -e COMPANY_U
 2. You need to update your user_name and email of git in .gitconfig located `/home/${NORMAL_USER}/`;
 3. If you want to show GUI, please install `xquartz` on your host:
 ```shell
-brew install --cask xquartz socat
+brew install xquartz socat
 open -a XQuartz
 ```
 and then, check `Allow connections from network clients` in Preferences - Security and restart xquartx.

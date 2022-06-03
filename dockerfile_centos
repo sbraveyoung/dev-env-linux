@@ -4,12 +4,14 @@ MAINTAINER SmartBrave <SmartBraveCoder@gmail.com>
 ARG  NORMAL_USER=test_user
 ARG  NORMAL_PASSWD=test_passwd
 ARG  ROOT_PASSWD=root_passwd
+ARG  PROXY
 
 ENV HOME=/home/$NORMAL_USER \
     GOPATH=/home/$NORMAL_USER/code \
     CLONE_PATH=/usr/local/src \
     APP_PATH=/usr/local/app \
-    BIN_PATH=/usr/local/bin
+    BIN_PATH=/usr/local/bin \
+    ALL_PROXY=${PROXY}
 
 RUN    sed -i 's/mirrorlist/#mirrorlist/g' /etc/yum.repos.d/CentOS-* \
     && sed -i 's|#baseurl=http://mirror.centos.org|baseurl=http://vault.centos.org|g' /etc/yum.repos.d/CentOS-*
@@ -27,13 +29,14 @@ RUN    dnf -y install dnf-plugins-core \
           libXinerama-devel mesa-libGL-devel mesa-libGLU-devel freeglut-devel libXi-devel libevent \
           libevent-devel asciidoc pcre-devel xz-devel bind-utils freetype-devel glib2-devel fontconfig-devel \
           pango-devel libwebp-devel libde265  libheif* privoxy initscripts cscope SDL2-devel \
-    && dnf -y install libpng libpng-devel libjpeg-devel ghostscript-devel libtiff-devel libwmf-devel \
+    && dnf -y --skip-broken install libpng libpng-devel libjpeg-devel ghostscript-devel libtiff-devel libwmf-devel \
           protobuf-devel mesa-dri-drivers coreutils \
     && dnf -y groupinstall "Development Tools" \
     && dnf -y install git sudo gcc gcc-c++ gdb make unzip ctags vim expect passwd wget cmake figlet ncdu \
         nnn gh kakoune colordiff git-lfs \
     && dnf -y install perl nodejs rust python2 python2-pip python2-devel \
           python3 python3-pip python3-devel ruby lua luajit zsh \
+    && dnf -y remove mesa-libGL mesa-libGL-devel \
     && ln -s /usr/bin/python3 /usr/bin/python \
        && ln -s /usr/bin/pip3 /usr/bin/pip \
     && sed -i '/Defaults/s/env_reset/\!env_reset/g' /etc/sudoers \
@@ -171,6 +174,8 @@ RUN    cd ${CLONE_PATH} \
        && chmod +x gitflow-installer.sh \
        && REPO_HOST=git@github.com:nvie/gitflow ./gitflow-installer.sh
 
+RUN    git clone https://github.com/bobthecow/git-flow-completion.git ${APP_PATH}/git-flow-completion
+
 RUN    git clone https://github.com/ggreer/the_silver_searcher ${CLONE_PATH}/the_silver_searcher \
        && cd ${CLONE_PATH}/the_silver_searcher \
        && ./build.sh \
@@ -196,8 +201,7 @@ RUN    git clone https://github.com/libsdl-org/SDL.git ${CLONE_PATH}/sdl \
        && make -j $(nproc) \
        && make install
 
-RUN    yum remove mesa-libGL mesa-libGL-devel \
-       && git clone https://git.ffmpeg.org/ffmpeg.git ${CLONE_PATH}/ffmpeg \
+RUN    git clone https://git.ffmpeg.org/ffmpeg.git ${CLONE_PATH}/ffmpeg \
        && cd ${CLONE_PATH}/ffmpeg \
        && PKG_CONFIG_PATH=$PKG_CONFIG_PATH:${APP_PATH}/sdl/lib/pkgconfig ./configure --prefix=${APP_PATH}/ffmpeg --enable-openssl --disable-x86asm --extra-cflags=-I${APP_PATH}/sdl/include --extra-ldflags=-L${APP_PATH}/sdl/lib \
        && make -j $(nproc) \
@@ -228,6 +232,12 @@ RUN    git clone https://github.com/mobile-shell/mosh ${CLONE_PATH}/mosh \
        && ln -s ${APP_PATH}/mosh/bin/mosh ${BIN_PATH}/mosh \
        && ln -s ${APP_PATH}/mosh/bin/mosh-client ${BIN_PATH}/mosh-client \
        && ln -s ${APP_PATH}/mosh/bin/mosh-server ${BIN_PATH}/mosh-server
+
+RUN    git clone https://github.com/eradman/entr.git ${CLONE_PATH}/entr \
+       && cd ${CLONE_PATH}/entr \
+       && ./configure \
+       && make test \
+       && make install
 
 #python
 RUN    pip install --upgrade setuptools \
@@ -260,7 +270,7 @@ RUN    cd ${CLONE_PATH} \
 RUN    go install github.com/tomnomnom/gron@latest \
        && go install github.com/jingweno/ccat@latest \
        && go install github.com/go-delve/delve/cmd/dlv@latest \
-       && go install github.com/mikefarah/yq/v3@latest \
+       && go install github.com/mikefarah/yq/v4@latest \
        && go install github.com/cheat/cheat/cmd/cheat@latest \
        && go install github.com/wader/fq@latest \
        && go install github.com/mikefarah/yq/v4@latest \
@@ -276,7 +286,8 @@ RUN    git clone https://github.com/SmartBrave/dev-env-linux ${CLONE_PATH}/dev-e
        && cd ${CLONE_PATH}/dev-env-linux \
        && sudo chown $NORMAL_USER $HOME/\.* \
        && cp .ssh_config ~/.ssh/config \
-       && cp .bash_profile .bashrc .gitconfig .tigrc .tmux.conf .vimrc relay.sh login ~ \
+       && cp .bash_profile .bashrc .gitconfig .tigrc .tmux.conf .vimrc ~ \
+       && cp relay.sh login ~/.ssh \
        && echo -ne '\n' | vim +PlugInstall +GoInstallBinaries +qall
 
 RUN    git clone https://github.com/kevinschoon/pomo.git ${CLONE_PATH}/pomo \
@@ -338,5 +349,6 @@ RUN    ~/.cargo/bin/cargo install --git https://github.com/Peltoche/lsd.git --br
 #https://github.com/p-e-w/hegemon.git
 ########################## other funny tools ########################## 
 
+ENV ALL_PROXY=
 USER root
 CMD /usr/sbin/init
