@@ -33,7 +33,7 @@ RUN    dnf -y install dnf-plugins-core \
           protobuf-devel mesa-dri-drivers coreutils \
     && dnf -y groupinstall "Development Tools" \
     && dnf -y install git sudo gcc gcc-c++ gdb make unzip ctags vim expect passwd wget cmake figlet ncdu \
-        nnn gh kakoune colordiff git-lfs \
+        nnn gh kakoune colordiff git-lfs the_silver_searcher ack \
     && dnf -y install perl nodejs rust python2 python2-pip python2-devel \
           python3 python3-pip python3-devel ruby lua luajit zsh \
     && dnf -y remove mesa-libGL mesa-libGL-devel \
@@ -43,10 +43,16 @@ RUN    dnf -y install dnf-plugins-core \
     && useradd --create-home $NORMAL_USER --password $NORMAL_PASSWD && echo "$NORMAL_USER ALL=(ALL) NOPASSWD:ALL" >>/etc/sudoers \
     && echo "root:$ROOT_PASSWD" | chpasswd \
     && mkdir ${APP_PATH} \
+    && chmod a+w ${CLONE_PATH} ${APP_PATH} ${BIN_PATH} \
     && ln -sf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
+
+USER    $NORMAL_USER
+WORKDIR ${HOME}
+RUN     mkdir $GOPATH
 
 RUN    git clone https://github.com/ImageMagick/ImageMagick ${CLONE_PATH}/ImageMagick \
        && cd ${CLONE_PATH}/ImageMagick \
+       && git checkout 7.1.0-36 \
        && ./configure --prefix=${APP_PATH}/ImageMagick --with-heic=yes --with-jxl=yes --with-jpeg=yes --with-png=yes --with-webp=yes \
        && make -j $(nproc) \
        && make install \
@@ -66,15 +72,15 @@ RUN    git clone https://github.com/ImageMagick/ImageMagick ${CLONE_PATH}/ImageM
 
 RUN    cd ${CLONE_PATH} \
        && curl -OL https://github.com/wagoodman/dive/releases/download/v0.9.2/dive_0.9.2_linux_amd64.rpm \
-       && rpm -i dive_0.9.2_linux_amd64.rpm
+       && sudo rpm -i dive_0.9.2_linux_amd64.rpm
 
 RUN    cd ${CLONE_PATH} \
        && wget https://github.com/rgburke/grv/releases/download/v0.3.2/grv_v0.3.2_linux64 \
        && chmod +x grv_v0.3.2_linux64 \
        && cp grv_v0.3.2_linux64 ${APP_PATH}/grv
 
-RUN    wget https://github.com/axel-download-accelerator/axel/releases/download/v2.17.7/axel-2.17.7.tar.gz -O ${CLONE_PATH}/axel-2.17.7.tar.gz \
-       && cd ${CLONE_PATH} \
+RUN    cd ${CLONE_PATH} \
+       && wget https://github.com/axel-download-accelerator/axel/releases/download/v2.17.7/axel-2.17.7.tar.gz \
        && tar -zxvf axel-2.17.7.tar.gz \
        && cd axel-2.17.7 \
        && cd ${CLONE_PATH}/axel-2.17.7 \
@@ -86,10 +92,10 @@ RUN    wget https://github.com/axel-download-accelerator/axel/releases/download/
 RUN    git clone https://github.com/jarun/bcal ${CLONE_PATH}/bcal \
        && cd ${CLONE_PATH}/bcal \
        && make -j $(nproc) \
-       && make strip install
+       && make strip install PREFIX=${APP_PATH}/bcal
 
-RUN    git clone https://github.com/so-fancy/diff-so-fancy ${CLONE_PATH}/diff-so-fancy \
-       && ln -s ${CLONE_PATH}/diff-so-fancy/diff-so-fancy ${BIN_PATH}/diff-so-fancy
+RUN    git clone https://github.com/so-fancy/diff-so-fancy ${APP_PATH}/diff-so-fancy \
+       && ln -s ${APP_PATH}/diff-so-fancy/diff-so-fancy ${BIN_PATH}/diff-so-fancy
 
 RUN    git clone https://github.com/dylanaraps/fff ${CLONE_PATH}/fff \
        && cd ${CLONE_PATH}/fff \
@@ -98,7 +104,7 @@ RUN    git clone https://github.com/dylanaraps/fff ${CLONE_PATH}/fff \
 
 RUN    git clone https://github.com/golbin/git-commander ${CLONE_PATH}/git-commander \
        && cd ${CLONE_PATH}/git-commander \
-       && npm -g install blessed lodash git-commander
+       && sudo npm -g install blessed lodash git-commander
 
 RUN    git clone https://github.com/hishamhm/htop ${CLONE_PATH}/htop \
        && cd ${CLONE_PATH}/htop \
@@ -107,8 +113,6 @@ RUN    git clone https://github.com/hishamhm/htop ${CLONE_PATH}/htop \
        && make -j $(nproc) \
        && make install \
        && ln -s ${APP_PATH}/htop/bin/htop ${BIN_PATH}/htop
-
-RUN    curl -L https://bit.ly/glances | /bin/bash
 
 RUN    git clone https://github.com/stedolan/jq ${CLONE_PATH}/jq \
        && cd ${CLONE_PATH}/jq \
@@ -120,13 +124,11 @@ RUN    git clone https://github.com/stedolan/jq ${CLONE_PATH}/jq \
        && make install \
        && ln -s ${APP_PATH}/jq/bin/jq ${BIN_PATH}/jq
 
-RUN    git clone https://github.com/hackerb9/lsix ${CLONE_PATH}/lsix \
-       && cd ${CLONE_PATH}/lsix \
-       && ln -s ${CLONE_PATH}/lsix ${BIN_PATH}/lsix
+RUN    git clone https://github.com/hackerb9/lsix ${APP_PATH}/lsix \
+       && ln -s ${APP_PATH}/lsix ${BIN_PATH}/lsix
 
-RUN    git clone https://github.com/facebook/PathPicker ${CLONE_PATH}/PathPicker \
-       && cd ${CLONE_PATH}/PathPicker \
-       && ln -s fpp ${BIN_PATH}/fpp
+RUN    git clone https://github.com/facebook/PathPicker ${APP_PATH}/PathPicker \
+       && ln -s ${APP_PATH}/PathPicker/fpp ${BIN_PATH}/fpp
 
 RUN    git clone https://github.com/jonas/tig ${CLONE_PATH}/tig \
        && cd ${CLONE_PATH}/tig \
@@ -144,7 +146,7 @@ RUN    git clone https://github.com/tmux/tmux ${CLONE_PATH}/tmux \
 
 RUN    git clone https://github.com/andreafrancia/trash-cli ${CLONE_PATH}/trash-cli \
        && cd ${CLONE_PATH}/trash-cli \
-       && python setup.py install
+       && sudo python setup.py install
 
 RUN    git clone https://github.com/vifm/vifm ${CLONE_PATH}/vifm \
        && cd ${CLONE_PATH}/vifm \
@@ -156,42 +158,23 @@ RUN    git clone https://github.com/vifm/vifm ${CLONE_PATH}/vifm \
 
 RUN    git clone https://github.com/mptre/yank ${CLONE_PATH}/yank \
        && cd ${CLONE_PATH}/yank \
-       && make PREFIX=${APP_PATH}/yank install \
+       && make install PREFIX=${APP_PATH}/yank \
        && ln -s ${APP_PATH}/yank/bin/yank ${BIN_PATH}/yank
 
-RUN    cd ${CLONE_PATH} \
-       && wget https://github.com/sharkdp/insect/releases/download/v5.3.0/insect-linux-x64 \
-       && ln -s ./insect-linux-x64 ${BIN_PATH}/insect
+RUN    wget https://github.com/sharkdp/insect/releases/download/v5.3.0/insect-linux-x64 -O ${APP_PATH}/insect-linux-x64 \
+       && ln -s ${APP_PATH}/insect-linux-x64 ${BIN_PATH}/insect
 
 RUN    cd ${CLONE_PATH} \
        && wget https://github.com/koalaman/shellcheck/releases/download/stable/shellcheck-stable.linux.x86_64.tar.xz \
        && tar xf shellcheck-stable.linux.x86_64.tar.xz \
        && ln -s ./shellcheck-stable/shellcheck ${BIN_PATH}/shellcheck
 
-RUN    cd ${CLONE_PATH} \
-       && git config --global url."https://".insteadOf git:// \
-       && curl -OL https://raw.github.com/nvie/gitflow/develop/contrib/gitflow-installer.sh \
-       && chmod +x gitflow-installer.sh \
-       && REPO_HOST=git@github.com:nvie/gitflow ./gitflow-installer.sh
-
 RUN    git clone https://github.com/bobthecow/git-flow-completion.git ${APP_PATH}/git-flow-completion
-
-RUN    git clone https://github.com/ggreer/the_silver_searcher ${CLONE_PATH}/the_silver_searcher \
-       && cd ${CLONE_PATH}/the_silver_searcher \
-       && ./build.sh \
-       && make install
-
-RUN    git clone https://github.com/beyondgrep/ack2 ${CLONE_PATH}/ack2 \
-       && cpan install File::Next \
-       && cd ${CLONE_PATH}/ack2 \
-       && perl Makefile.PL \
-       && make \
-       && make test \
-       && make install
 
 RUN    git clone https://github.com/arzzen/git-quick-stats.git ${CLONE_PATH}/git-quick-stats \
        && cd ${CLONE_PATH}/git-quick-stats \
-       && make install
+       && make install PREFIX=${APP_PATH}/git-quick-stats \
+       && ln -s ${APP_PATH}/git-quick-stats ${BIN_PATH}/git-quick-stats
 
 RUN    git clone https://github.com/brendangregg/FlameGraph.git ${APP_PATH}/FlameGraph
 
@@ -206,16 +189,16 @@ RUN    git clone https://git.ffmpeg.org/ffmpeg.git ${CLONE_PATH}/ffmpeg \
        && PKG_CONFIG_PATH=$PKG_CONFIG_PATH:${APP_PATH}/sdl/lib/pkgconfig ./configure --prefix=${APP_PATH}/ffmpeg --enable-openssl --disable-x86asm --extra-cflags=-I${APP_PATH}/sdl/include --extra-ldflags=-L${APP_PATH}/sdl/lib \
        && make -j $(nproc) \
        && make install \
-       && ln -s ${APP_PATH}/ffmpeg/bin/ffmpeg ${BIN_PATH}/ffmpeg \
-       && ln -s ${APP_PATH}/ffmpeg/bin/ffprobe ${BIN_PATH}/ffprobe \
-       && ln -s ${APP_PATH}/ffmpeg/bin/ffplay ${BIN_PATH}/ffplay
+       && sudo ln -s ${APP_PATH}/ffmpeg/bin/ffmpeg ${BIN_PATH}/ffmpeg \
+       && sudo ln -s ${APP_PATH}/ffmpeg/bin/ffprobe ${BIN_PATH}/ffprobe \
+       && sudo ln -s ${APP_PATH}/ffmpeg/bin/ffplay ${BIN_PATH}/ffplay
 
 RUN    git clone https://github.com/vim/vim.git ${CLONE_PATH}/vim \
        && cd ${CLONE_PATH}/vim \
        && ./configure --prefix=${APP_PATH}/vim --with-features=huge --enable-multibyte --enable-python3interp=yes --with-python3-config-dir=/usr/lib64/python3.6/config-3.6m-x86_64-linux-gnu --enable-gui=gtk2 --enable-cscope \
        && make -j $(nproc) \
        && make install \
-       && mv /usr/bin/vim /usr/bin/vim.bak \
+       && sudo mv /usr/bin/vim /usr/bin/vim.bak \
        && ln -s ${APP_PATH}/vim/bin/vim ${BIN_PATH}/vim \
        && ln -s ${APP_PATH}/vim/bin/vimdiff ${BIN_PATH}/vimdiff \
        && ln -s ${APP_PATH}/vim/bin/xxd ${BIN_PATH}/xxd \
@@ -233,48 +216,30 @@ RUN    git clone https://github.com/mobile-shell/mosh ${CLONE_PATH}/mosh \
        && ln -s ${APP_PATH}/mosh/bin/mosh-client ${BIN_PATH}/mosh-client \
        && ln -s ${APP_PATH}/mosh/bin/mosh-server ${BIN_PATH}/mosh-server
 
-RUN    git clone https://github.com/eradman/entr.git ${CLONE_PATH}/entr \
-       && cd ${CLONE_PATH}/entr \
-       && ./configure \
-       && make test \
-       && make install
+#nodejs
+RUN    sudo npm install -g fx fx-completion cloc svg-term-cli zx @squoosh/cli
 
 #python
-RUN    pip install --upgrade setuptools \
-       && python -m pip install --upgrade pip \
-       && pip2 install percol
-
-RUN    pip3 install pybind11 git+https://github.com/jeffkaufman/icdiff.git iredis ranger-fm mdv thefuck mycli asciinema http-prompt yapf \
-    && pip3 install --upgrade httpie
-
-#nodejs
-RUN    npm install -g fx fx-completion cloc svg-term-cli zx @squoosh/cli
-
-RUN    chmod a+w ${CLONE_PATH} \
-       && chmod a+w ${APP_PATH} \
-       && chmod a+w ${BIN_PATH}
-
-USER    $NORMAL_USER
-WORKDIR ${HOME}
-RUN     mkdir $GOPATH
+RUN    unset ALL_PROXY && sudo python -m pip install --upgrade setuptools pip \
+       && sudo pip2 install percol \
+       && sudo pip3 install --upgrade httpie pybind11 iredis ranger-fm mdv thefuck mycli asciinema http-prompt yapf icdiff
 
 RUN    ssh-keygen -t rsa -N "" -f ~/.ssh/id_rsa
 
 #go
-RUN    cd ${CLONE_PATH} \
-       && sudo wget https://dl.google.com/go/go1.18.linux-amd64.tar.gz \
-       && sudo tar -zxvf go1.18.linux-amd64.tar.gz -C ${APP_PATH} \
-       && sudo ln -s ${APP_PATH}/go/bin/go ${BIN_PATH}/go \
-       && sudo ln -s ${APP_PATH}/go/bin/gofmt ${BIN_PATH}/gofmt
+RUN    wget https://dl.google.com/go/go1.18.linux-amd64.tar.gz -O ${CLONE_PATH}/go1.18.linux-amd64.tar.gz \
+       && tar -zxvf ${CLONE_PATH}/go1.18.linux-amd64.tar.gz -C ${APP_PATH} \
+       && ln -s ${APP_PATH}/go/bin/go ${BIN_PATH}/go \
+       && ln -s ${APP_PATH}/go/bin/gofmt ${BIN_PATH}/gofmt
 
-RUN    go install github.com/tomnomnom/gron@latest \
-       && go install github.com/jingweno/ccat@latest \
-       && go install github.com/go-delve/delve/cmd/dlv@latest \
-       && go install github.com/mikefarah/yq/v4@latest \
-       && go install github.com/cheat/cheat/cmd/cheat@latest \
-       && go install github.com/wader/fq@latest \
-       && go install github.com/mikefarah/yq/v4@latest \
-       && go install github.com/jesseduffield/lazydocker@latest
+RUN    go install -x github.com/tomnomnom/gron@latest \
+       && go -x install github.com/jingweno/ccat@latest \
+       && go -x install github.com/go-delve/delve/cmd/dlv@latest \
+       && go -x install github.com/mikefarah/yq/v4@latest \
+       && go -x install github.com/cheat/cheat/cmd/cheat@latest \
+       && go -x install github.com/wader/fq@latest \
+       && go -x install github.com/mikefarah/yq/v4@latest \
+       && go -x install github.com/jesseduffield/lazydocker@latest
        #&& go get -u -v github.com/liamg/aminal \
 
 RUN    git clone https://github.com/adwpc/xvim.git ${CLONE_PATH}/xvim \
@@ -284,15 +249,16 @@ RUN    git clone https://github.com/adwpc/xvim.git ${CLONE_PATH}/xvim \
 #TODO: need to update your user_name and email in .gitconfig
 RUN    git clone https://github.com/SmartBrave/dev-env-linux ${CLONE_PATH}/dev-env-linux \
        && cd ${CLONE_PATH}/dev-env-linux \
-       && sudo chown $NORMAL_USER $HOME/\.* \
        && cp .ssh_config ~/.ssh/config \
-       && cp .bash_profile .bashrc .gitconfig .tigrc .tmux.conf .vimrc ~ \
        && cp relay.sh login ~/.ssh \
+       && cp .bash_profile .bashrc .gitconfig .tigrc .tmux.conf .vimrc ~ \
        && echo -ne '\n' | vim +PlugInstall +GoInstallBinaries +qall
 
 RUN    git clone https://github.com/kevinschoon/pomo.git ${CLONE_PATH}/pomo \
        && cd ${CLONE_PATH}/pomo \
        && make
+
+RUN    unset ALL_PROXY && curl -L https://bit.ly/glances | /bin/bash
 
 RUN    git clone https://github.com/charmbracelet/glow.git ${CLONE_PATH}/glow \
        && cd ${CLONE_PATH}/glow \
@@ -337,6 +303,7 @@ RUN    ~/.cargo/bin/cargo install --git https://github.com/Peltoche/lsd.git --br
 
 ########################## other funny tools ########################## 
 #starship/manimlib/gor/mediainfo/ssh-chat/FlameGraph/ohmyzsh/ccache/prettyping/neovim/zellij
+#gitflow
 #https://github.com/amix/vimrc.git
 #github.com/liamg/aminal
 #https://github.com/github/hub.git
@@ -350,5 +317,4 @@ RUN    ~/.cargo/bin/cargo install --git https://github.com/Peltoche/lsd.git --br
 ########################## other funny tools ########################## 
 
 ENV ALL_PROXY=
-USER root
 CMD /usr/sbin/init

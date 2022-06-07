@@ -5,7 +5,7 @@ case $1 in
         user=${HOST_USER}
         passwd=${HOST_PASSWD}
         mechine=host.docker.internal # or gateway.docker.internal
-        relay=""
+        relay="-"
         ;;
     *) #mechine of company
         user=${COMPANY_USER}
@@ -15,4 +15,14 @@ case $1 in
         ;;
 esac
 
-${HOME}/.ssh/login ${mechine} ${user} ${passwd} ${relay}
+shift
+
+case $1 in
+    status)
+        set -- "/usr/local/bin/mutagen sync list"
+        ;;
+    *)
+        ;;
+esac
+
+${HOME}/.ssh/login ${mechine} ${user} ${passwd} ${relay} $@

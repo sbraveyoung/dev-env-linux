@@ -5,7 +5,7 @@ set passwd  [lindex $argv 2]
 set relay   [lindex $argv 3]
 set timeout 10
 
-if { $relay != "" } {
+if { $relay != "-" } {
     spawn kinit
     expect {
         "*Password for*" { 
@@ -14,19 +14,20 @@ if { $relay != "" } {
     }
     spawn ssh $relay
     expect {
-        "*relay_server*" { send "$host\r" }
+        "*relay_server$*" { send "$host\r" }
     }
 } else {
-    spawn ssh -l $user $host
+    # spawn ssh -l $user $host
+    spawn ssh -t $user@$host [lrange $argv 4 end]
     expect {
-        "*Are you sure you want to continue connecting (yes/no/*" { send "yes\r" }
+        "*Are you sure you want to continue connecting (yes/no/*" {
             send "yes\r"
             expect {
-                "*Password*" { send "$passed\r" }
+                "*\[Pp\]assword*" { send "$passed\r" }
             }
         }
-        "*Password*" { send "$passwd\r" }
-        "*Last login*" {}
+        "*\[Pp\]assword*" { send "$passwd\r" }
+        "*" {}
     }
 }
 

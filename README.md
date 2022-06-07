@@ -1,13 +1,14 @@
 # dev-env-linux
 A modern linux development environment based on docker, inspired by [the-art-of-command-line](https://github.com/jlevy/the-art-of-command-line), [awesome-shell](https://github.com/alebcay/awesome-shell) and [modern-unix](https://github.com/ibraheemdev/modern-unix), but more than that.
 
-## feature
+## features
 * Awesome vim from [xvim](https://github.com/adwpc/xvim).
 * Awesome tmux with true color support.
 * Awesome ssh to connect other mechine including your local host and remote host, support relay mode.
 * Useful bash alias and function definition in `.bashrc`.
 * All tools introduce in [modern-unix](https://github.com/ibraheemdev/modern-unix).
 * GUI support driven by X11.
+* More lightweight than virtual machines.
 * Build once, run anywhere. Especially handy when you get a new computer.
 * more waiting for you to discover.
 
@@ -32,14 +33,16 @@ export COMPANY_PASSWD   = your_passwd_in_company
 export RELAY_ADDR       = relay_addr_in_company
 ```
 
+*If you have a VPN, you may need to add the `--build-arg proxy='socks5://host.docker.internal:1080'` parameter when build the image.*
+
 #### centos
 ```shell
-docker build -t ${USER_NAME}/${IMAGE_NAME}:${IMAGE_VERSION} --network=host --build-arg NORMAL_USER=${NORMAL_USER} --build-arg NORMAL_PASSWD=${NORMAL_PASSWD} --build-arg ROOT_PASSWD=${ROOT_PASSWD} --build-arg proxy='socks5://host.docker.internal:1080' -f dockerfile_centos .
+docker build -t ${USER_NAME}/${IMAGE_NAME}:${IMAGE_VERSION} --network=host --build-arg NORMAL_USER=${NORMAL_USER} --build-arg NORMAL_PASSWD=${NORMAL_PASSWD} --build-arg ROOT_PASSWD=${ROOT_PASSWD} -f dockerfile_centos .
 ```
 
 #### ubuntu
 ```shell
-docker build -t ${USER_NAME}/${IMAGE_NAME}:${IMAGE_VERSION} --network=host --build-arg NORMAL_USER=${NORMAL_USER} --build-arg NORMAL_PASSWD=${NORMAL_PASSWD} --build-arg ROOT_PASSWD=${ROOT_PASSWD} --build-arg proxy='socks5://host.docker.internal:1080' -f dockerfile_ubuntu .
+docker build -t ${USER_NAME}/${IMAGE_NAME}:${IMAGE_VERSION} --network=host --build-arg NORMAL_USER=${NORMAL_USER} --build-arg NORMAL_PASSWD=${NORMAL_PASSWD} --build-arg ROOT_PASSWD=${ROOT_PASSWD} -f dockerfile_ubuntu .
 ```
 
 ## run
