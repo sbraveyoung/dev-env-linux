@@ -15,20 +15,19 @@ echo_date(){
 }
 
 echo_sentence(){
-    quo="逝者如斯夫,不舍昼夜!"
-    # quo=`fortune -s`
+    quo=`fortune -s`
     echo $quo
     #echo `trans $quo` # toooooo slow!
 }
 
 save_origin_env(){
-    export ORIGIN_$1=`echo $1`
+    eval ORIGIN_$1=\${$1}
 }
 
 restore_origin_env(){
-    ORIGIN_VALUE_KEY=`echo ORIGIN_$1`
-    export `echo $1`=${!ORIGIN_VALUE_KEY}
-    unset ${ORIGIN_VALUE_KEY}
+    ORIGIN_KEY=`echo ORIGIN_$1`
+    eval `echo $1`=${!ORIGIN_KEY}
+    unset ORIGIN_$1
 }
 
 #smart cd: can import environment variable you need automatically
@@ -41,7 +40,7 @@ scd(){
 }
 
 cdls(){
-    cd $1
+    scd $1
     exa --all
 }
 
@@ -61,6 +60,7 @@ mkdir_and_cd(){
     [ $? -eq 0 ] && cd ${!dir_count} #cd the last dir
 }
 
+#maybe watch command is better!
 every(){
     t=$1
     shift
@@ -70,6 +70,14 @@ every(){
         $@
         sleep $t
     done
+}
+
+echo_last_status(){
+    [ $1 -ne 0 ] && echo x || echo y
+}
+
+timestamp(){
+    date --rfc-3339=s -d @$1
 }
 #################### functions ####################
 
@@ -123,9 +131,27 @@ export MCFLY_FUZZY=true
 export MCFLY_RESULTS=50
 export BAT_THEME="Coldark-Dark"
 export TERM=xterm-256color
-export DISPLAY=host.docker.internal:0
-# export PS1="\u@\h \W \[\033[31m\][\$(echo_sentence)]\[\033[00m\] \[\033[33m\][\$(echo_date)]\[\033[00m\]\[\033[32m\]\$(parse_git_branch)\[\033[00m\] $"
-export PS1="\u@\h \W \[\033[33m\][\$(echo_date)]\[\033[00m\]\[\033[32m\]\$(parse_git_branch)\[\033[00m\] $"
+
+## PS1
+   COLOR_GRAY='\[\033[1;30m\]'
+    COLOR_RED='\[\033[1;31m\]'
+  COLOR_GREEN='\[\033[1;32m\]'
+ COLOR_YELLOW='\[\033[1;33m\]'
+   COLOR_BLUE='\[\033[1;34m\]'
+COLOR_MAGENTA='\[\033[1;35m\]'
+   COLOR_CYAN='\[\033[1;36m\]'
+  COLOR_WHITE='\[\033[1;37m\]'
+   COLOR_NONE='\[\033[m\]'
+
+#PS1_USER="${COLOR_MAGENTA}\u${COLOR_NONE}"
+#PS1_HOST="${COLOR_CYAN}\h${COLOR_NONE}"
+#PS1_PWD="${COLOR_YELLOW}\W${COLOR_NONE}"
+PS1_SENTENCE="${COLOR_RED}[\$(echo_sentence)]${COLOR_NONE}"
+PS1_DATE="${COLOR_YELLOW}[\$(echo_date)]${COLOR_NONE}"
+PS1_GIT="${COLOR_GREEN}\$(parse_git_branch)${COLOR_NONE}"
+PS1_STATUS="${COLOR_CYAN}[\$(echo_last_status \$?)]${COLOR_NONE}"
+
+export PS1="${PS1_STATUS}\u@\h \W ${PS1_SENTENCE} ${PS1_DATE}${PS1_GIT} \$"
 #################### environments ####################
 
 

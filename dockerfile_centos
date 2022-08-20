@@ -33,7 +33,7 @@ RUN    dnf -y install dnf-plugins-core \
           protobuf-devel mesa-dri-drivers coreutils \
     && dnf -y groupinstall "Development Tools" \
     && dnf -y install git sudo gcc gcc-c++ gdb make unzip ctags vim expect passwd wget cmake figlet ncdu \
-        nnn gh kakoune colordiff git-lfs the_silver_searcher ack \
+        nnn gh kakoune colordiff git-lfs the_silver_searcher ack fortune-mod \
     && dnf -y install perl nodejs rust python2 python2-pip python2-devel \
           python3 python3-pip python3-devel ruby lua luajit zsh \
     && dnf -y remove mesa-libGL mesa-libGL-devel \
@@ -186,7 +186,7 @@ RUN    git clone https://github.com/libsdl-org/SDL.git ${CLONE_PATH}/sdl \
 
 RUN    git clone https://git.ffmpeg.org/ffmpeg.git ${CLONE_PATH}/ffmpeg \
        && cd ${CLONE_PATH}/ffmpeg \
-       && PKG_CONFIG_PATH=$PKG_CONFIG_PATH:${APP_PATH}/sdl/lib/pkgconfig ./configure --prefix=${APP_PATH}/ffmpeg --enable-openssl --disable-x86asm --extra-cflags=-I${APP_PATH}/sdl/include --extra-ldflags=-L${APP_PATH}/sdl/lib \
+       && PKG_CONFIG_PATH=$PKG_CONFIG_PATH:${APP_PATH}/sdl/lib/pkgconfig ./configure --prefix=${APP_PATH}/ffmpeg --enable-gpl --enable-libx264 --disable-x86asm --extra-cflags=-I${APP_PATH}/sdl/include --extra-ldflags=-L${APP_PATH}/sdl/lib --enable_shared \
        && make -j $(nproc) \
        && make install \
        && sudo ln -s ${APP_PATH}/ffmpeg/bin/ffmpeg ${BIN_PATH}/ffmpeg \
@@ -217,11 +217,11 @@ RUN    git clone https://github.com/mobile-shell/mosh ${CLONE_PATH}/mosh \
        && ln -s ${APP_PATH}/mosh/bin/mosh-server ${BIN_PATH}/mosh-server
 
 #nodejs
-RUN    sudo npm install -g fx fx-completion cloc svg-term-cli zx @squoosh/cli
+RUN    sudo npm install -g fx fx-completion cloc svg-term-cli zx @squoosh/cli bash-language-server
 
 #python
 RUN    unset ALL_PROXY && sudo python -m pip install --upgrade setuptools pip \
-       && sudo pip2 install percol \
+       && sudo pip2 install percol flvlib \
        && sudo pip3 install --upgrade httpie pybind11 iredis ranger-fm mdv thefuck mycli asciinema http-prompt yapf icdiff
 
 RUN    ssh-keygen -t rsa -N "" -f ~/.ssh/id_rsa

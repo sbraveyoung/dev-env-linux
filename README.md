@@ -2,11 +2,11 @@
 A modern linux development environment based on docker, inspired by [the-art-of-command-line](https://github.com/jlevy/the-art-of-command-line), [awesome-shell](https://github.com/alebcay/awesome-shell) and [modern-unix](https://github.com/ibraheemdev/modern-unix), but more than that.
 
 ## features
-* Awesome vim from [xvim](https://github.com/adwpc/xvim).
+* Awesome vim powered by [xvim](https://github.com/adwpc/xvim).
 * Awesome tmux with true color support.
 * Awesome ssh to connect other mechine including your local host and remote host, support relay mode.
 * Useful bash alias and function definition in `.bashrc`.
-* All tools introduce in [modern-unix](https://github.com/ibraheemdev/modern-unix).
+* All tools introduced in [modern-unix](https://github.com/ibraheemdev/modern-unix).
 * GUI support driven by X11.
 * More lightweight than virtual machines.
 * Build once, run anywhere. Especially handy when you get a new computer.
@@ -56,7 +56,7 @@ docker exec -it `docker run -d --name ${CONTAINER_NAME} --network=host -e HOST_U
 docker run -it --name ${CONTAINER_NAME} --network=host -e HOST_USER -e HOST_PASSWD -e COMPANY_USER -e COMPANY_PASSWD -e RELAY_ADDR --privileged=true ${USER_NAME}/${IMAGE_NAME}:${IMAGE_VERSION} /bin/bash
 ```
 
-## TODO
+## Keep in View
 1. If you want to use tmux, need to invoke `tmux source ~/.tmux.conf` in command line and `<Ctrl-b>+I` in tmux after login with normal user;
 2. You need to update your user_name and email of git in .gitconfig located `/home/${NORMAL_USER}/`;
 3. If you want to show GUI, please install `xquartz` on your host:

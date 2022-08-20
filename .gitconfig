@@ -31,3 +31,5 @@
 	options = --highlight --line-numbers
 [push]
 	default = matching
+[pull]
+    rebase = true
