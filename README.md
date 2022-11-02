@@ -10,6 +10,7 @@ A modern linux development environment based on docker, inspired by [the-art-of-
 * GUI support driven by X11.
 * More lightweight than virtual machines.
 * Build once, run anywhere. Especially handy when you get a new computer.
+* Works out of the box.
 * more waiting for you to discover.
 
 ## build
@@ -48,15 +49,15 @@ docker build -t ${USER_NAME}/${IMAGE_NAME}:${IMAGE_VERSION} --network=host --bui
 ## run
 #### centos
 ```shell
-docker exec -it `docker run -d --name ${CONTAINER_NAME} --network=host -e HOST_USER -e HOST_PASSWD -e COMPANY_USER -e COMPANY_PASSWD -e RELAY_ADDR --privileged=true ${USER_NAME}/${IMAGE_NAME}:${IMAGE_VERSION}` /bin/bash
+docker exec -it `docker run -d --name ${CONTAINER_NAME} -v /Users/${HOST_USER}/Downloads:/home/${USER_NAME}/downloads -w /home/${USER_NAME}/downloads --network=host -e HOST_USER -e HOST_PASSWD -e COMPANY_USER -e COMPANY_PASSWD -e RELAY_ADDR --privileged=true ${USER_NAME}/${IMAGE_NAME}:${IMAGE_VERSION}` /bin/bash
 ```
 
 #### ubuntu
 ```shell
-docker run -it --name ${CONTAINER_NAME} --network=host -e HOST_USER -e HOST_PASSWD -e COMPANY_USER -e COMPANY_PASSWD -e RELAY_ADDR --privileged=true ${USER_NAME}/${IMAGE_NAME}:${IMAGE_VERSION} /bin/bash
+docker run -it --name ${CONTAINER_NAME} -v /Users/${HOST_USER}/Downloads:/home/${USER_NAME}/downloads -w /home/${USER_NAME}/downloads --network=host -e HOST_USER -e HOST_PASSWD -e COMPANY_USER -e COMPANY_PASSWD -e RELAY_ADDR --privileged=true ${USER_NAME}/${IMAGE_NAME}:${IMAGE_VERSION} /bin/bash
 ```
 
-## Keep in View
+## keep in view
 1. If you want to use tmux, need to invoke `tmux source ~/.tmux.conf` in command line and `<Ctrl-b>+I` in tmux after login with normal user;
 2. You need to update your user_name and email of git in .gitconfig located `/home/${NORMAL_USER}/`;
 3. If you want to show GUI, please install `xquartz` on your host:
@@ -73,5 +74,5 @@ socat TCP-LISTEN:6000,reuseaddr,fork UNIX-CLIENT:\"$DISPLAY\"
 ## suggection
 If you want to mount volumns on MacOS, use `mutagen` or `docker-sync` instead of `-v` args, like:
 ```shell
-mutagen sync create --name ${SESSION_NAME} --symlink-mode=posix-raw ${CODE_PATH_ON_HOST} docker://${NORMAL_USER}@${CONTAINER_NAME}${CODE_PATH_ON_CONTAINER}
+mutagen sync create --name ${SESSION_NAME} --sync-mode=two-way-safe --symlink-mode=posix-raw --ignore .DS_Store --ignore "*.sw[a-p]" ${CODE_PATH_ON_HOST} docker://${NORMAL_USER}@${CONTAINER_NAME}${CODE_PATH_ON_CONTAINER}
 ```

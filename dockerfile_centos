@@ -28,7 +28,7 @@ RUN    dnf -y install dnf-plugins-core \
           tcl-devel net-tools llvm clang-libs clang-devel which libX11-devel libXcursor-devel libXrandr-devel \
           libXinerama-devel mesa-libGL-devel mesa-libGLU-devel freeglut-devel libXi-devel libevent \
           libevent-devel asciidoc pcre-devel xz-devel bind-utils freetype-devel glib2-devel fontconfig-devel \
-          pango-devel libwebp-devel libde265  libheif* privoxy initscripts cscope SDL2-devel \
+          pango-devel libwebp-devel libde265  libheif* privoxy initscripts cscope SDL2-devel x264-devel x264-libs \
     && dnf -y --skip-broken install libpng libpng-devel libjpeg-devel ghostscript-devel libtiff-devel libwmf-devel \
           protobuf-devel mesa-dri-drivers coreutils \
     && dnf -y groupinstall "Development Tools" \
@@ -144,7 +144,7 @@ RUN    git clone https://github.com/tmux/tmux ${CLONE_PATH}/tmux \
        && make install \
        && ln -s ${APP_PATH}/tmux/bin/tmux ${BIN_PATH}/tmux
 
-RUN    git clone https://github.com/andreafrancia/trash-cli ${CLONE_PATH}/trash-cli \
+RUN   git clone https://github.com/andreafrancia/trash-cli ${CLONE_PATH}/trash-cli \
        && cd ${CLONE_PATH}/trash-cli \
        && sudo python setup.py install
 
@@ -186,7 +186,7 @@ RUN    git clone https://github.com/libsdl-org/SDL.git ${CLONE_PATH}/sdl \
 
 RUN    git clone https://git.ffmpeg.org/ffmpeg.git ${CLONE_PATH}/ffmpeg \
        && cd ${CLONE_PATH}/ffmpeg \
-       && PKG_CONFIG_PATH=$PKG_CONFIG_PATH:${APP_PATH}/sdl/lib/pkgconfig ./configure --prefix=${APP_PATH}/ffmpeg --enable-gpl --enable-libx264 --disable-x86asm --extra-cflags=-I${APP_PATH}/sdl/include --extra-ldflags=-L${APP_PATH}/sdl/lib --enable_shared \
+       && PKG_CONFIG_PATH=$PKG_CONFIG_PATH:${APP_PATH}/sdl/lib/pkgconfig ./configure --prefix=${APP_PATH}/ffmpeg --enable-gpl --enable-libx264 --disable-x86asm --extra-cflags=-I${APP_PATH}/sdl/include --extra-ldflags=-L${APP_PATH}/sdl/lib --enable-shared \
        && make -j $(nproc) \
        && make install \
        && sudo ln -s ${APP_PATH}/ffmpeg/bin/ffmpeg ${BIN_PATH}/ffmpeg \
@@ -232,14 +232,14 @@ RUN    wget https://dl.google.com/go/go1.18.linux-amd64.tar.gz -O ${CLONE_PATH}/
        && ln -s ${APP_PATH}/go/bin/go ${BIN_PATH}/go \
        && ln -s ${APP_PATH}/go/bin/gofmt ${BIN_PATH}/gofmt
 
-RUN    go install -x github.com/tomnomnom/gron@latest \
-       && go -x install github.com/jingweno/ccat@latest \
-       && go -x install github.com/go-delve/delve/cmd/dlv@latest \
-       && go -x install github.com/mikefarah/yq/v4@latest \
-       && go -x install github.com/cheat/cheat/cmd/cheat@latest \
-       && go -x install github.com/wader/fq@latest \
-       && go -x install github.com/mikefarah/yq/v4@latest \
-       && go -x install github.com/jesseduffield/lazydocker@latest
+RUN    go install github.com/tomnomnom/gron@latest \
+       && go install github.com/jingweno/ccat@latest \
+       && go install github.com/go-delve/delve/cmd/dlv@latest \
+       && go install github.com/mikefarah/yq/v4@latest \
+       && go install github.com/cheat/cheat/cmd/cheat@latest \
+       && go install github.com/wader/fq@latest \
+       && go install github.com/mikefarah/yq/v4@latest \
+       && go install github.com/jesseduffield/lazydocker@latest
        #&& go get -u -v github.com/liamg/aminal \
 
 RUN    git clone https://github.com/adwpc/xvim.git ${CLONE_PATH}/xvim \
@@ -251,7 +251,7 @@ RUN    git clone https://github.com/SmartBrave/dev-env-linux ${CLONE_PATH}/dev-e
        && cd ${CLONE_PATH}/dev-env-linux \
        && cp .ssh_config ~/.ssh/config \
        && cp relay.sh login ~/.ssh \
-       && cp .bash_profile .bashrc .gitconfig .tigrc .tmux.conf .vimrc ~ \
+       && cp .bash_profile .bashrc .gitconfig .gitignore .tigrc .tmux.conf .vimrc ~ \
        && echo -ne '\n' | vim +PlugInstall +GoInstallBinaries +qall
 
 RUN    git clone https://github.com/kevinschoon/pomo.git ${CLONE_PATH}/pomo \
@@ -297,11 +297,11 @@ RUN    mkdir ${APP_PATH}/forgit \
        wget git.io/forgit
 
 #zoxide need to configure
-RUN    ~/.cargo/bin/cargo install --git https://github.com/Peltoche/lsd.git --branch master \
-    && ~/.cargo/bin/cargo install broot exa fd-find hexyl ripgrep sd bat procs gping bottom choose du-dust \
-    && ~/.cargo/bin/cargo install onefetch tealdeer pastel hyperfine git-delta xh zoxide fselect
+#RUN    ~/.cargo/bin/cargo install --git https://github.com/Peltoche/lsd.git --branch master \
+#    && ~/.cargo/bin/cargo install broot exa fd-find hexyl ripgrep sd bat procs gping bottom choose du-dust \
+#    && ~/.cargo/bin/cargo install onefetch tealdeer pastel hyperfine git-delta xh zoxide fselect
 
-########################## other funny tools ########################## 
+########################## other funny tools ##########################
 #starship/manimlib/gor/mediainfo/ssh-chat/FlameGraph/ohmyzsh/ccache/prettyping/neovim/zellij
 #gitflow
 #https://github.com/amix/vimrc.git
@@ -314,7 +314,7 @@ RUN    ~/.cargo/bin/cargo install --git https://github.com/Peltoche/lsd.git --br
 #https://github.com/peco/peco
 #https://github.com/ogham/dog.git
 #https://github.com/p-e-w/hegemon.git
-########################## other funny tools ########################## 
+########################## other funny tools ##########################
 
 ENV ALL_PROXY=
 CMD /usr/sbin/init

@@ -107,9 +107,10 @@ alias mkdir="mkdir_and_cd"
 #about git
 alias status="git status"
 alias branch="git branch"
-alias checkout="git checkout"
+alias checkout="git checkout \$(git branch -a | fzf)"
 
 bind -x '"\C-l": clear'
+bind 'TAB:menu-complete'
 #################### aliases ####################
 
 
