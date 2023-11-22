@@ -1,0 +1,16 @@
+FROM centos:8
+MAINTAINER sbrave <sbraveyoung@gmail.com>
+
+ARG NORMAL_USER=default
+ARG NORMAL_PASSWD=default
+ARG ROOT_PASSWD=default
+
+RUN    sed -i 's/mirrorlist/#mirrorlist/g' /etc/yum.repos.d/CentOS-* \
+    && sed -i 's|#baseurl=http://mirror.centos.org|baseurl=http://vault.centos.org|g' /etc/yum.repos.d/CentOS-*
+
+RUN    sed -i '/Defaults/s/env_reset/\!env_reset/g' /etc/sudoers \
+    && useradd --create-home $NORMAL_USER --password $NORMAL_PASSWD && echo "$NORMAL_USER ALL=(ALL) NOPASSWD:ALL" >>/etc/sudoers \
+    && echo "root:$ROOT_PASSWD" | chpasswd
+
+# TODO
+RUN ./build.sh

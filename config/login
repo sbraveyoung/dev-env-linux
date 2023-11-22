@@ -14,7 +14,7 @@ if { $relay == "-" } {
             "*Are you sure you want to continue connecting (yes/no/*" {
                 send "yes\r"
                 expect {
-                    "*\[Pp\]assword*" { send "$passed\r" }
+                    "*\[Pp\]assword*" { send "$passwd\r" }
                 }
             }
             "*\[Pp\]assword*" { send "$passwd\r" }

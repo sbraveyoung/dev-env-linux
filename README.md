@@ -15,23 +15,27 @@ A modern linux development environment based on docker, inspired by [the-art-of-
 
 ## build
 
+### for general user
+Call `./build.sh` only.
+
+### for geeks
 #### environments
 You should prepare those environments first:
 ```shell
-export USER_NAME      = your_dockerhub_user
-export IMAGE_NAME     = image_name_you_want
-export IMAGE_VERSION  = image_version_you_want
-export NORMAL_USER    = normal_user_name_you_want
-export NORMAL_PASSED  = normal_user_password_you_want
-export ROOT_PASSWD    = root_password_you_want
-export CONTAINER_NAME = dev-linux-env #or any name you want
+export USER_NAME=your_dockerhub_user
+export IMAGE_NAME=image_name_you_want
+export IMAGE_VERSION=image_version_you_want
+export NORMAL_USER=normal_user_name_you_want
+export NORMAL_PASSWD=normal_user_password_you_want
+export ROOT_PASSWD=root_password_you_want
+export CONTAINER_NAME=dev-linux-env#oranynameyouwant
 
 #If you want to use ssh easily, prepare:
-export HOST_USER        = your_host_user
-export HOST_PASSWD      = your_host_passwd
-export COMPANY_USER     = your_name_in_company
-export COMPANY_PASSWD   = your_passwd_in_company
-export RELAY_ADDR       = relay_addr_in_company
+export HOST_USER=your_host_user
+export HOST_PASSWD=your_host_passwd
+export COMPANY_USER=your_name_in_company
+export COMPANY_PASSWD=your_passwd_in_company
+export RELAY_ADDR=relay_addr_in_company
 ```
 
 *If you have a VPN, you may need to add the `--build-arg proxy='socks5://host.docker.internal:1080'` parameter when build the image.*

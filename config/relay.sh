@@ -1,4 +1,6 @@
-#!/bin/bash
+#!/usr/bin/env bash
+
+#XXX: use ssh config file
 
 case $1 in
     mac)
