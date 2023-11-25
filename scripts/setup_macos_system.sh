@@ -2,6 +2,10 @@
 
 set -exuo pipefail
 
+# make necessary file and directories
+execute_if_not_success sudo mkdir -p ${GOPATH} ${CLONE_PATH} ${APP_PATH} ${BIN_PATH}
+execute_if_not_success sudo chmod a+w ${CLONE_PATH} ${APP_PATH} ${BIN_PATH}
+
 # 触摸板轻点,不用重按
 defaults write com.apple.AppleMultitouchTrackpad Clicking -int 1
 defaults -currentHost write NSGlobalDomain com.apple.mouse.tapBehavior -int 1

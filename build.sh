@@ -16,8 +16,8 @@ export TIMEOUT=7200 # 2hours
 declare -A APP_FLAGS
 export APP_FLAGS
 export SYSTEM=$(uname -s | tr 'A-Z' 'a-z')
-#export CACHE_FILE=~/.$(basename $(git rev-parse --show-toplevel)) # git command is not exist in new mechine
-export CACHE_FILE=$(basename $(pwd))
+export REPO_ROOT=$(pwd)
+export CACHE_FILE=${REPO_ROOT}/.$(basename ${REPO_ROOT})
 
 [ $# -gt 0 ] && {
 	for arg in "$@"; do
@@ -40,7 +40,16 @@ export CACHE_FILE=$(basename $(pwd))
 			esac
 			;;
 		--with-linux=*)
-			WITH_LINUX=${arg#--with-linux=}
+			# vm or docker
+      case ${arg#--with-linux=} in
+        vm | docker)
+          WITH_LINUX=${arg#--with-linux=}
+          ;;
+        *)
+          printf2stderr "error" "invalid valud of argument --with-linux: %s\n" "${arg$--with-linux=}"
+          exit 1
+          ;;
+      esac
 			;;
 		--linux_env_name=*)
 			LINUX_ENV_NAME=${arg#--linux_env_name=}

@@ -6,7 +6,7 @@ set -exuo pipefail
 # base libraries
 dnf_apps=(libgcc.i686 glibc-devel bison flex texinfo libtool zlib-devel bzip2-devel openssl-devel sqlite-devel readline-devel tk-devel xz-devel gettext pkg-config autoconf automake txt2man ncurses ncurses-devel tcl-devel net-tools llvm clang-libs clang-devel libX11-devel libXcursor-devel libXrandr-devel libXinerama-devel mesa-libGL-devel mesa-libGLU-devel freeglut-devel libXi-devel libevent libevent-devel asciidoc pcre-devel xz-devel bind-utils freetype-devel glib2-devel fontconfig-devel pango-devel privoxy initscripts cscope SDL2-devel mesa-dri-drivers coreutils protobuf-devel libwmf-devel ghostscript-devel gdbm-devel ninja-build)
 # base tools
-dnf_apps=("${dnf_apps[@]}" which git sudo gcc gcc-c++ gdb make unzip ctags expect passwd wget cmake figlet pkgconfig curl zsh)
+dnf_apps=("${dnf_apps[@]}" which sudo gcc gcc-c++ gdb git make unzip ctags expect passwd wget cmake figlet pkgconfig curl zsh)
 # languages
 dnf_apps=("${dnf_apps[@]}" perl nodejs python3 python3-pip python3-devel ruby lua luajit)
 customized_apps=(axel bcal diff-so-fancy fff git-commander jq lsix PathPicker tig tmux neovim vifm yank insect shellcheck git-flow-completion git-quick-stats sdl ffmpeg mcfly mosh cloc svg-term-cli zx squoosh_cli bash-language-server setuptools httpie pybind11 iredis ranger-fm mdv thefuck mycli asciinema http-prompt yapf icdiff golang gron ccat dlv cheat fx fq yq lazydocker this-repo glances glow curlie duf dsq z rust fzf forgit lsd broot exa fd-find hexyl ripgrep sd bat procs gping bottom choose du-dust onefetch tealdeer pastel hyperfine git-delta xh zoxide fselect)
@@ -43,7 +43,7 @@ if [[ ${#DISABLE_APPS[@]} -ne 0 ]]; then
 fi
 ########################## other funny tools ##########################
 #starship/manimlib/gor/mediainfo/ssh-chat/FlameGraph/ohmyzsh/ccache/prettyping/zellij
-#gitflow
+#gitflow/bash-it
 #dnf install failed: python2 python2-pip python2-devel
 #customized install failed: htop/github.com/liamg/aminal/pomo/percol/flvlib
 #https://github.com/amix/vimrc.git
@@ -278,9 +278,9 @@ install_linux_sdl() {
 }
 
 preinstall_linux_ffmpeg() {
-	execute_if_not_success wget $(echo "https://pkgs.dyn.su/el9/base/x86_64/raven-release.el9.noarch.rpm" | sed "s/el9/el$(rpm -q --queryformat '%{RELEASE}' rpm | grep -oP 'el\K[0-9]+')/g")
-	execute_if_not_success sudo rpm -ivh raven-release*.rpm && rm -rf raven-release*.rpm
-	execute_if_not_success sudo dnf clean all && sudo dnf update --assumeyes
+	wget $(echo "https://pkgs.dyn.su/el9/base/x86_64/raven-release.el9.noarch.rpm" | sed "s/el9/el$(rpm -q --queryformat '%{RELEASE}' rpm | grep -oP 'el\K[0-9]+')/g")
+	sudo rpm -ivh raven-release*.rpm && rm -rf raven-release*.rpm
+	sudo dnf clean all && sudo dnf update --assumeyes
 }
 
 install_linux_ffmpeg() {
@@ -318,7 +318,7 @@ install_linux_vim() {
 	./configure --prefix=${APP_PATH}/vim --with-features=huge --enable-multibyte --enable-python3interp=yes --with-python3-config-dir=/usr/lib64/python3.6/config-3.6m-x86_64-linux-gnu --enable-gui=gtk2 --enable-cscope
 	make -j $(nproc)
 	make install
-	sudo mv /usr/bin/vim /usr/bin/vim.bak
+	sudo mbak /usr/bin/vim
 	ln -sf ${APP_PATH}/vim/bin/vim ${BIN_PATH}/vim
 	ln -sf ${APP_PATH}/vim/bin/vimdiff ${BIN_PATH}/vimdiff
 	ln -sf ${APP_PATH}/vim/bin/xxd ${BIN_PATH}/xxd
@@ -453,34 +453,34 @@ install_linux_aminal() {
 install_linux_this-repo() {
 	# .bashrc
 	cat >>~/.bashrc <<EOF
-source $(get_self_dir)/sheath/constant.sh
-source $(get_self_dir)/sheath/alias.sh
-source $(get_self_dir)/sheath/environments.sh
-source $(get_self_dir)/sheath/functions.sh
-source $(get_self_dir)/sheath/configuration.sh
+source ${REPO_ROOT}/sheath/constant.sh
+source ${REPO_ROOT}/sheath/alias.sh
+source ${REPO_ROOT}/sheath/environments.sh
+source ${REPO_ROOT}/sheath/functions.sh
+source ${REPO_ROOT}/sheath/configuration.sh
 EOF
 
 	# NOTE: .gitconfig, you need to manually update your git user and email after the installation is complete
 	mbak ~/.gitconfig
-	cp $(get_self_dir)/config/.gitconfig ~/.gitconfig
+	cp ${REPO_ROOT}/config/.gitconfig ~/.gitconfig
 
 	# XXX: about ssh, TBD...(to be determine)
 	# [[ ! -e ~/.ssh ]] && { mkdir -p ~/.ssh }
-	smart_cp $(get_self_dir)/config/relay.sh ~/.ssh/relay.sh
-	smart_cp $(get_self_dir)/config/login ~/.ssh/login
-	smart_cp $(get_self_dir)/config/.ssh_config ~/.ssh/.ssh_config
+	smart_cp ${REPO_ROOT}/config/relay.sh ~/.ssh/relay.sh
+	smart_cp ${REPO_ROOT}/config/login ~/.ssh/login
+	smart_cp ${REPO_ROOT}/config/.ssh_config ~/.ssh/.ssh_config
 
 	# nvim
 	mbak ~/.config/nvim
-	smart_cp -r $(get_self_dir)/config/nvim ~/.config/nvim
+	smart_cp -r ${REPO_ROOT}/config/nvim ~/.config/nvim
 
 	# .tigrc
 	mbak ~/.tigrc
-	cp $(get_self_dir)/config/.tigrc ~/.tigrc
+	cp ${REPO_ROOT}/config/.tigrc ~/.tigrc
 
 	# NOTE: .tmux.conf, you need to manually install tmux plugins with `prefix+I` after the installation is complete
 	# XXX: install tmux plugins automatically
-	cp $(get_self_dir)/config/.tmux.conf ~/.tmux.conf
+	cp ${REPO_ROOT}/config/.tmux.conf ~/.tmux.conf
 
 	# NOTE: .vimrc is deprecated
 }
@@ -609,9 +609,7 @@ install_linux_fselect() {
 ################################ app install/config/upgrade/uninstall functions ################################
 #sudo dnf -y remove mesa-libGL mesa-libGL-devel
 
-#tmp_dir=$(mktemp -d)
 tmp_dir=${CLONE_PATH}
-
 trap "sudo rm -rf ${tmp_dir}" EXIT
 
 (batch_wrapper "${dnf_apps[@]}")

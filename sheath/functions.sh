@@ -18,14 +18,16 @@ set -uo pipefail
 #	exa --all
 #}
 
-get_self_dir() {
-	echo $(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)
-	# XXX: have bug when this script file was imported by `source`
-	# echo $(dirname $(readlink -f "$0"))
-	# echo $(cd "$(dirname "$0")";pwd)
-}
+# get the path of current script, instead of shell path
+#get_self_dir() {
+#	echo $(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)
+#	# XXX: have bug when this script file was imported by `source`
+#	# echo $(dirname $(readlink -f "$0"))
+#	# echo $(cd "$(dirname "$0")" && pwd)
+#}
+#source $(get_self_dir $0)/constant.sh
 
-source $(get_self_dir)/constant.sh
+source ${REPO_ROOT}/sheath/constant.sh
 
 parse_git_branch() {
 	git branch 2>/dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/ [\1]/'
@@ -208,14 +210,16 @@ printf_with_level() {
 # $2: format string
 # $2-: args
 printf2stderr() {
-	printf_with_level /dev/stderr "$@"
+	#printf_with_level /dev/stderr "$@"
+	printf_with_level 2 "$@"
 }
 
 # $1: loglevel
 # $2: format string
 # $3-: args
 printf2stdout() {
-	printf_with_level /dev/stdout "$@"
+	#printf_with_level /dev/stdout "$@"
+	printf_with_level 1 "$@"
 }
 
 is_mac() {
@@ -255,4 +259,13 @@ batch() {
 
 	exec 3<&-
 	exec 3>&-
+}
+
+# $1: if condition
+# $2-: command if condition is true
+do_if() {
+	if $(eval test "$1"); then
+		shift
+		$@
+	fi
 }

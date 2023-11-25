@@ -63,7 +63,7 @@ for brew_app in "${brew_apps[@]}"; do
                 printf2stdout \"verbose\" \"the %s is installed by other ways, continue...\\n\" ${brew_app}
                 return 0
             else
-                printf2stderr \"warning\" \"install %s with command \`brew install %s\` failed.\n\" ${brew_app} ${brew_app}
+                printf2stderr \"warning\" \"install %s with command 'brew install %s' failed.\n\" ${brew_app} ${brew_app}
                 exit 1
             fi
         fi
@@ -115,9 +115,10 @@ config_darwin_fzf() {
 install_darwin_wetype() {
 	#TODO: if the app or zip file is exist, and check the checksum
 	cd "$1"
-	wget https://wetype.wxqcloud.qq.com/app/mac/0.9.8/WeTypeInstaller_0.9.8_201.zip
-	unzip WeTypeInstaller_0.9.8_201.zip
-	mv WeTypeInstaller_0.9.8_201.app /Applications
+	version="0.9.8_201"
+	do_if "! -f ${CLONE_PATH}/WeTypeInstaller_${version}.zip" wget_nx https://wetype.wxqcloud.qq.com/app/mac/0.9.8/WeTypeInstaller_${version}.zip -O ${CLONE_PATH}/WeTypeInstaller_${version}.zip
+	do_if "! -d WeTypeInstaller_${version}.app" unzip WeTypeInstaller_${version}.zip
+	do_if "! -d /Applications/WeTypeInstaller_${version}.app" mv WeTypeInstaller_${version}.app /Applications
 }
 
 install_darwin_He3() {
@@ -125,7 +126,7 @@ install_darwin_He3() {
 	return 0
 }
 
-install_darwin_YuvEyv() {
+install_darwin_YuvEye() {
 	# TODO: implement
 	return 0
 }
@@ -175,8 +176,8 @@ config_darwin_kitty() {
 }
 ################################ app install/config/upgrade/uninstall functions ################################
 
-tmp_dir=$(mktemp -d)
-trap "rm -rf ${tmp_dir}" EXIT
+tmp_dir=${CLONE_PATH}
+trap "sudo rm -rf ${tmp_dir}" EXIT
 
 # install homebrew
 if ! command_exist brew; then

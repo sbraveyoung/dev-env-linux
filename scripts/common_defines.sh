@@ -6,10 +6,13 @@ source ../sheath/functions.sh
 
 # $1-: command to be executed and all of args
 execute_if_not_success() {
-    if ! command_exist git || ! command_exist grep; then
-        # first initial, the needed soft is not installed now.
-        return
-    fi
+	if ! command_exist git || ! command_exist grep; then
+		if is_mac; then
+			sudo brew install git grep
+		elif is_linux; then
+			sudo dnf install -y git grep
+		fi
+	fi
 
 	record_file=${CACHE_FILE}
 	if [[ ! -f ${record_file} ]]; then
@@ -96,6 +99,7 @@ batch_wrapper() {
 	batch "${CONCURRENT}" "${OPERATOR} ${SYSTEM} ${tmp_dir}" "$@"
 }
 
+# TODO: deprecated, using do_if instead
 # $1-(n-1): git url to be clone and git args
 # $n(the last arg): local path
 git_clone_nx() {
@@ -107,6 +111,7 @@ git_clone_nx() {
 	fi
 }
 
+# TODO: deprecated, using do_if instead
 # $1-(n-1): url to be downloaded and wget args
 # $n(the last arg): local path
 wget_nx() {
