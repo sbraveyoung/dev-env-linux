@@ -26,8 +26,8 @@ set -uo pipefail
 #	# echo $(cd "$(dirname "$0")" && pwd)
 #}
 #source $(get_self_dir $0)/constant.sh
-
-source ${REPO_ROOT}/sheath/constant.sh
+#source $(dirname $(readlink -f "$1"))/constant.sh
+source $(dirname ${BASH_SOURCE[0]})/constant.sh
 
 parse_git_branch() {
 	git branch 2>/dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/ [\1]/'
@@ -78,8 +78,11 @@ function save_env() {
 	[ ${exist} -ne 0 ] && {
 		echo "${line}" >>.env
 	}
+
+  # TODO: write to .unenv also?
 }
 
+# deprecated, for autojump
 jls() {
 	j $1
 	exa --all
@@ -92,7 +95,8 @@ jcurl() {
 mkdir_and_cd() {
 	dir_count=$#
 
-	mkdir $@
+	# use command to avoid infinite recursion
+	command mkdir $@
 	[ $? -eq 0 ] && cd ${!dir_count} #cd the last dir
 }
 
@@ -138,6 +142,11 @@ mbak() {
 unbak() {
 	#TODO: compare and replace origin file or not?
 	cp $1 ${1%.bak}
+}
+
+umbak() {
+	#TODO: compare and replace origin file or not?
+	mv $1 ${1%.bak}
 }
 
 touchx() {

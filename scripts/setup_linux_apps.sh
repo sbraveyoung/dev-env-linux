@@ -453,11 +453,11 @@ install_linux_aminal() {
 install_linux_this-repo() {
 	# .bashrc
 	cat >>~/.bashrc <<EOF
-source ${REPO_ROOT}/sheath/constant.sh
-source ${REPO_ROOT}/sheath/alias.sh
-source ${REPO_ROOT}/sheath/environments.sh
-source ${REPO_ROOT}/sheath/functions.sh
-source ${REPO_ROOT}/sheath/configuration.sh
+source (cd ../sheath && pwd)/constant.sh
+source (cd ../sheath && pwd)/alias.sh
+source (cd ../sheath && pwd)/environments.sh
+source (cd ../sheath && pwd)/functions.sh
+source (cd ../sheath && pwd)/configuration.sh
 EOF
 
 	# NOTE: .gitconfig, you need to manually update your git user and email after the installation is complete

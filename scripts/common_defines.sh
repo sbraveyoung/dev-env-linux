@@ -2,7 +2,9 @@
 
 set -exuo pipefail
 
-source ../sheath/functions.sh
+cd ../sheath
+source ./functions.sh
+cd -
 
 # $1-: command to be executed and all of args
 execute_if_not_success() {
