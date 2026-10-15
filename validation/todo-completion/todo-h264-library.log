@@ -1,0 +1,172 @@
+checking build system type... aarch64-unknown-linux-gnu
+checking host system type... aarch64-unknown-linux-gnu
+checking target system type... aarch64-unknown-linux-gnu
+checking for a BSD-compatible install... /usr/bin/install -c
+checking whether build environment is sane... yes
+checking for a race-free mkdir -p... /usr/bin/mkdir -p
+checking for gawk... gawk
+checking whether make sets $(MAKE)... yes
+checking whether make supports nested variables... yes
+checking for gcc... gcc
+checking whether the C compiler works... yes
+checking for C compiler default output file name... a.out
+checking for suffix of executables... 
+checking whether we are cross compiling... no
+checking for suffix of object files... o
+checking whether the compiler supports GNU C... yes
+checking whether gcc accepts -g... yes
+checking for gcc option to enable C11 features... none needed
+checking whether gcc understands -c and -o together... yes
+checking whether make supports the include directive... yes (GNU style)
+checking dependency style of gcc... gcc3
+checking for a sed that does not truncate output... /usr/bin/sed
+checking for grep that handles long lines and -e... /usr/bin/grep
+checking for egrep... /usr/bin/grep -E
+checking for fgrep... /usr/bin/grep -F
+checking how to print strings... printf
+checking for ld used by gcc... /usr/bin/ld
+checking if the linker (/usr/bin/ld) is GNU ld... yes
+checking for BSD- or MS-compatible name lister (nm)... /usr/bin/nm -B
+checking the name lister (/usr/bin/nm -B) interface... BSD nm
+checking whether ln -s works... yes
+checking the maximum length of command line arguments... 1572864
+checking how to convert aarch64-unknown-linux-gnu file names to aarch64-unknown-linux-gnu format... func_convert_file_noop
+checking how to convert aarch64-unknown-linux-gnu file names to toolchain format... func_convert_file_noop
+checking for /usr/bin/ld option to reload object files... -r
+checking for file... file
+checking for objdump... objdump
+checking how to recognize dependent libraries... pass_all
+checking for dlltool... no
+checking how to associate runtime and link libraries... printf %s\n
+checking for ar... ar
+checking for archiver @FILE support... @
+checking for strip... strip
+checking for ranlib... ranlib
+checking command to parse /usr/bin/nm -B output from gcc object... ok
+checking for sysroot... no
+checking for a working dd... /usr/bin/dd
+checking how to truncate binary pipes... /usr/bin/dd bs=4096 count=1
+checking for mt... no
+checking if : is a manifest tool... no
+checking for stdio.h... yes
+checking for stdlib.h... yes
+checking for string.h... yes
+checking for inttypes.h... yes
+checking for stdint.h... yes
+checking for strings.h... yes
+checking for sys/stat.h... yes
+checking for sys/types.h... yes
+checking for unistd.h... yes
+checking for dlfcn.h... yes
+checking for objdir... .libs
+checking if gcc supports -fno-rtti -fno-exceptions... no
+checking for gcc option to produce PIC... -fPIC -DPIC
+checking if gcc PIC flag -fPIC -DPIC works... yes
+checking if gcc static flag -static works... yes
+checking if gcc supports -c -o file.o... yes
+checking if gcc supports -c -o file.o... (cached) yes
+checking whether the gcc linker (/usr/bin/ld) supports shared libraries... yes
+checking dynamic linker characteristics... GNU/Linux ld.so
+checking how to hardcode library paths into programs... immediate
+checking whether stripping libraries is possible... yes
+checking if libtool supports shared libraries... yes
+checking whether to build shared libraries... no
+checking whether to build static libraries... yes
+checking for getopt_long... yes
+checking Checking for --enable-debug flag... no
+checking our pkgconfig libname... libh264bitstream
+checking our pkgconfig version... 0.1.9
+checking our pkgconfig_libdir... ${libdir}/pkgconfig
+expanded our pkgconfig_libdir... /home/sbrave/todo-upstreams/h264-library/lib/pkgconfig
+checking our pkgconfig_libfile... libh264bitstream.pc
+checking our package / suffix... h264bitstream / 
+checking our pkgconfig description... libh264bitstream Library
+checking our pkgconfig requires... 
+checking our pkgconfig ext libs... ${libdir}/libh264bitstream.la
+checking our pkgconfig cppflags... 
+checking our pkgconfig ldflags... 
+noninstalled pkgconfig -I /home/sbrave/todo-upstreams/H264Naked/h264bitstream-0.1.9/.
+checking that generated files are newer than configure... done
+configure: creating ./config.status
+config.status: creating Makefile
+config.status: executing depfiles commands
+config.status: executing libtool commands
+config.status: executing libh264bitstream.pc commands
+config.status: creating libh264bitstream.pc.in
+config.status: creating libh264bitstream.pc
+config.status: creating libh264bitstream-uninstalled.pc
+config.status: creating libh264bitstream-uninstalled.sh
+depbase=`echo h264_analyze.o | sed 's|[^/]*$|.deps/&|;s|\.o$||'`;\
+gcc -DPACKAGE_NAME=\"h264bitstream\" -DPACKAGE_TARNAME=\"h264bitstream\" -DPACKAGE_VERSION=\"0.1.9\" -DPACKAGE_STRING=\"h264bitstream\ 0.1.9\" -DPACKAGE_BUGREPORT=\"aizvorski@gmail.com\" -DPACKAGE_URL=\"\" -DPACKAGE=\"h264bitstream\" -DVERSION=\"0.1.9\" -DHAVE_STDIO_H=1 -DHAVE_STDLIB_H=1 -DHAVE_STRING_H=1 -DHAVE_INTTYPES_H=1 -DHAVE_STDINT_H=1 -DHAVE_STRINGS_H=1 -DHAVE_SYS_STAT_H=1 -DHAVE_SYS_TYPES_H=1 -DHAVE_UNISTD_H=1 -DSTDC_HEADERS=1 -DHAVE_DLFCN_H=1 -DLT_OBJDIR=\".libs/\" -DHAVE_GETOPT_LONG=1 -DNDEBUG=/\*\*/ -I.    -I. -Wall -std=c99 -std=c99 -Wno-error -g -O2 -MT h264_analyze.o -MD -MP -MF $depbase.Tpo -c -o h264_analyze.o h264_analyze.c &&\
+mv -f $depbase.Tpo $depbase.Po
+depbase=`echo h264_stream.lo | sed 's|[^/]*$|.deps/&|;s|\.lo$||'`;\
+/bin/bash ./libtool  --tag=CC   --mode=compile gcc -DPACKAGE_NAME=\"h264bitstream\" -DPACKAGE_TARNAME=\"h264bitstream\" -DPACKAGE_VERSION=\"0.1.9\" -DPACKAGE_STRING=\"h264bitstream\ 0.1.9\" -DPACKAGE_BUGREPORT=\"aizvorski@gmail.com\" -DPACKAGE_URL=\"\" -DPACKAGE=\"h264bitstream\" -DVERSION=\"0.1.9\" -DHAVE_STDIO_H=1 -DHAVE_STDLIB_H=1 -DHAVE_STRING_H=1 -DHAVE_INTTYPES_H=1 -DHAVE_STDINT_H=1 -DHAVE_STRINGS_H=1 -DHAVE_SYS_STAT_H=1 -DHAVE_SYS_TYPES_H=1 -DHAVE_UNISTD_H=1 -DSTDC_HEADERS=1 -DHAVE_DLFCN_H=1 -DLT_OBJDIR=\".libs/\" -DHAVE_GETOPT_LONG=1 -DNDEBUG=/\*\*/ -I.    -I. -Wall -std=c99 -std=c99 -Wno-error -g -O2 -MT h264_stream.lo -MD -MP -MF $depbase.Tpo -c -o h264_stream.lo h264_stream.c &&\
+mv -f $depbase.Tpo $depbase.Plo
+h264_analyze.c:33: warning: "HAVE_GETOPT_LONG" redefined
+   33 | #define HAVE_GETOPT_LONG
+      | 
+<command-line>: note: this is the location of the previous definition
+libtool: compile:  gcc -DPACKAGE_NAME=\"h264bitstream\" -DPACKAGE_TARNAME=\"h264bitstream\" -DPACKAGE_VERSION=\"0.1.9\" "-DPACKAGE_STRING=\"h264bitstream 0.1.9\"" -DPACKAGE_BUGREPORT=\"aizvorski@gmail.com\" -DPACKAGE_URL=\"\" -DPACKAGE=\"h264bitstream\" -DVERSION=\"0.1.9\" -DHAVE_STDIO_H=1 -DHAVE_STDLIB_H=1 -DHAVE_STRING_H=1 -DHAVE_INTTYPES_H=1 -DHAVE_STDINT_H=1 -DHAVE_STRINGS_H=1 -DHAVE_SYS_STAT_H=1 -DHAVE_SYS_TYPES_H=1 -DHAVE_UNISTD_H=1 -DSTDC_HEADERS=1 -DHAVE_DLFCN_H=1 -DLT_OBJDIR=\".libs/\" -DHAVE_GETOPT_LONG=1 "-DNDEBUG=/**/" -I. -I. -Wall -std=c99 -std=c99 -Wno-error -g -O2 -MT h264_stream.lo -MD -MP -MF .deps/h264_stream.Tpo -c h264_stream.c -o h264_stream.o
+h264_stream.c: In function ‘read_filler_data_rbsp’:
+h264_stream.c:832:13: warning: unused variable ‘ff_byte’ [-Wunused-variable]
+  832 |         int ff_byte = bs_read_f(b,8);  // equal to 0xFF
+      |             ^~~~~~~
+h264_stream.c: In function ‘read_rbsp_slice_trailing_bits’:
+h264_stream.c:896:9: warning: variable ‘cabac_zero_word’ set but not used [-Wunused-but-set-variable]
+  896 |     int cabac_zero_word;
+      |         ^~~~~~~~~~~~~~~
+h264_stream.c: In function ‘read_rbsp_trailing_bits’:
+h264_stream.c:913:13: warning: unused variable ‘rbsp_alignment_zero_bit’ [-Wunused-variable]
+  913 |         int rbsp_alignment_zero_bit = bs_read_u1( b ); // equal to 0
+      |             ^~~~~~~~~~~~~~~~~~~~~~~
+h264_stream.c:909:9: warning: unused variable ‘rbsp_stop_one_bit’ [-Wunused-variable]
+  909 |     int rbsp_stop_one_bit = bs_read_u1( b ); // equal to 1
+      |         ^~~~~~~~~~~~~~~~~
+depbase=`echo h264_sei.lo | sed 's|[^/]*$|.deps/&|;s|\.lo$||'`;\
+/bin/bash ./libtool  --tag=CC   --mode=compile gcc -DPACKAGE_NAME=\"h264bitstream\" -DPACKAGE_TARNAME=\"h264bitstream\" -DPACKAGE_VERSION=\"0.1.9\" -DPACKAGE_STRING=\"h264bitstream\ 0.1.9\" -DPACKAGE_BUGREPORT=\"aizvorski@gmail.com\" -DPACKAGE_URL=\"\" -DPACKAGE=\"h264bitstream\" -DVERSION=\"0.1.9\" -DHAVE_STDIO_H=1 -DHAVE_STDLIB_H=1 -DHAVE_STRING_H=1 -DHAVE_INTTYPES_H=1 -DHAVE_STDINT_H=1 -DHAVE_STRINGS_H=1 -DHAVE_SYS_STAT_H=1 -DHAVE_SYS_TYPES_H=1 -DHAVE_UNISTD_H=1 -DSTDC_HEADERS=1 -DHAVE_DLFCN_H=1 -DLT_OBJDIR=\".libs/\" -DHAVE_GETOPT_LONG=1 -DNDEBUG=/\*\*/ -I.    -I. -Wall -std=c99 -std=c99 -Wno-error -g -O2 -MT h264_sei.lo -MD -MP -MF $depbase.Tpo -c -o h264_sei.lo h264_sei.c &&\
+mv -f $depbase.Tpo $depbase.Plo
+libtool: compile:  gcc -DPACKAGE_NAME=\"h264bitstream\" -DPACKAGE_TARNAME=\"h264bitstream\" -DPACKAGE_VERSION=\"0.1.9\" "-DPACKAGE_STRING=\"h264bitstream 0.1.9\"" -DPACKAGE_BUGREPORT=\"aizvorski@gmail.com\" -DPACKAGE_URL=\"\" -DPACKAGE=\"h264bitstream\" -DVERSION=\"0.1.9\" -DHAVE_STDIO_H=1 -DHAVE_STDLIB_H=1 -DHAVE_STRING_H=1 -DHAVE_INTTYPES_H=1 -DHAVE_STDINT_H=1 -DHAVE_STRINGS_H=1 -DHAVE_SYS_STAT_H=1 -DHAVE_SYS_TYPES_H=1 -DHAVE_UNISTD_H=1 -DSTDC_HEADERS=1 -DHAVE_DLFCN_H=1 -DLT_OBJDIR=\".libs/\" -DHAVE_GETOPT_LONG=1 "-DNDEBUG=/**/" -I. -I. -Wall -std=c99 -std=c99 -Wno-error -g -O2 -MT h264_sei.lo -MD -MP -MF .deps/h264_sei.Tpo -c h264_sei.c -o h264_sei.o
+depbase=`echo h264_avcc.lo | sed 's|[^/]*$|.deps/&|;s|\.lo$||'`;\
+/bin/bash ./libtool  --tag=CC   --mode=compile gcc -DPACKAGE_NAME=\"h264bitstream\" -DPACKAGE_TARNAME=\"h264bitstream\" -DPACKAGE_VERSION=\"0.1.9\" -DPACKAGE_STRING=\"h264bitstream\ 0.1.9\" -DPACKAGE_BUGREPORT=\"aizvorski@gmail.com\" -DPACKAGE_URL=\"\" -DPACKAGE=\"h264bitstream\" -DVERSION=\"0.1.9\" -DHAVE_STDIO_H=1 -DHAVE_STDLIB_H=1 -DHAVE_STRING_H=1 -DHAVE_INTTYPES_H=1 -DHAVE_STDINT_H=1 -DHAVE_STRINGS_H=1 -DHAVE_SYS_STAT_H=1 -DHAVE_SYS_TYPES_H=1 -DHAVE_UNISTD_H=1 -DSTDC_HEADERS=1 -DHAVE_DLFCN_H=1 -DLT_OBJDIR=\".libs/\" -DHAVE_GETOPT_LONG=1 -DNDEBUG=/\*\*/ -I.    -I. -Wall -std=c99 -std=c99 -Wno-error -g -O2 -MT h264_avcc.lo -MD -MP -MF $depbase.Tpo -c -o h264_avcc.lo h264_avcc.c &&\
+mv -f $depbase.Tpo $depbase.Plo
+libtool: compile:  gcc -DPACKAGE_NAME=\"h264bitstream\" -DPACKAGE_TARNAME=\"h264bitstream\" -DPACKAGE_VERSION=\"0.1.9\" "-DPACKAGE_STRING=\"h264bitstream 0.1.9\"" -DPACKAGE_BUGREPORT=\"aizvorski@gmail.com\" -DPACKAGE_URL=\"\" -DPACKAGE=\"h264bitstream\" -DVERSION=\"0.1.9\" -DHAVE_STDIO_H=1 -DHAVE_STDLIB_H=1 -DHAVE_STRING_H=1 -DHAVE_INTTYPES_H=1 -DHAVE_STDINT_H=1 -DHAVE_STRINGS_H=1 -DHAVE_SYS_STAT_H=1 -DHAVE_SYS_TYPES_H=1 -DHAVE_UNISTD_H=1 -DSTDC_HEADERS=1 -DHAVE_DLFCN_H=1 -DLT_OBJDIR=\".libs/\" -DHAVE_GETOPT_LONG=1 "-DNDEBUG=/**/" -I. -I. -Wall -std=c99 -std=c99 -Wno-error -g -O2 -MT h264_avcc.lo -MD -MP -MF .deps/h264_avcc.Tpo -c h264_avcc.c -o h264_avcc.o
+/bin/bash ./libtool  --tag=CC   --mode=link gcc -I. -Wall -std=c99 -std=c99 -Wno-error -g -O2 -no-undefined  -o libh264bitstream.la -rpath /home/sbrave/todo-upstreams/h264-library/lib h264_stream.lo h264_sei.lo h264_avcc.lo  
+libtool: link: ar cr .libs/libh264bitstream.a  h264_stream.o h264_sei.o h264_avcc.o
+libtool: link: ranlib .libs/libh264bitstream.a
+libtool: link: ( cd ".libs" && rm -f "libh264bitstream.la" && ln -s "../libh264bitstream.la" "libh264bitstream.la" )
+/bin/bash ./libtool  --tag=CC   --mode=link gcc -I. -Wall -std=c99 -std=c99 -Wno-error -g -O2 -lm  -o h264_analyze h264_analyze.o libh264bitstream.la 
+libtool: link: gcc -I. -Wall -std=c99 -std=c99 -Wno-error -g -O2 -o h264_analyze h264_analyze.o  -lm ./.libs/libh264bitstream.a
+make[1]: Entering directory '/home/sbrave/todo-upstreams/H264Naked/h264bitstream-0.1.9'
+ /usr/bin/mkdir -p '/home/sbrave/todo-upstreams/h264-library/lib'
+ /bin/bash ./libtool   --mode=install /usr/bin/install -c   libh264bitstream.la '/home/sbrave/todo-upstreams/h264-library/lib'
+libtool: install: /usr/bin/install -c .libs/libh264bitstream.lai /home/sbrave/todo-upstreams/h264-library/lib/libh264bitstream.la
+libtool: install: /usr/bin/install -c .libs/libh264bitstream.a /home/sbrave/todo-upstreams/h264-library/lib/libh264bitstream.a
+libtool: install: chmod 644 /home/sbrave/todo-upstreams/h264-library/lib/libh264bitstream.a
+libtool: install: ranlib /home/sbrave/todo-upstreams/h264-library/lib/libh264bitstream.a
+libtool: finish: PATH="/home/sbrave/.local/bin:/opt/orbstack-guest/bin-hiprio:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:/opt/orbstack-guest/bin:/opt/orbstack-guest/data/bin/cmdlinks:/sbin" ldconfig -n /home/sbrave/todo-upstreams/h264-library/lib
+----------------------------------------------------------------------
+Libraries have been installed in:
+   /home/sbrave/todo-upstreams/h264-library/lib
+
+If you ever happen to want to link against installed libraries
+in a given directory, LIBDIR, you must either use libtool, and
+specify the full pathname of the library, or use the '-LLIBDIR'
+flag during linking and do at least one of the following:
+   - add LIBDIR to the 'LD_LIBRARY_PATH' environment variable
+     during execution
+   - add LIBDIR to the 'LD_RUN_PATH' environment variable
+     during linking
+   - use the '-Wl,-rpath -Wl,LIBDIR' linker flag
+   - have your system administrator add LIBDIR to '/etc/ld.so.conf'
+
+See any operating system documentation about shared libraries for
+more information, such as the ld(1) and ld.so(8) manual pages.
+----------------------------------------------------------------------
+ /usr/bin/mkdir -p '/home/sbrave/todo-upstreams/h264-library/bin'
+  /bin/bash ./libtool   --mode=install /usr/bin/install -c h264_analyze '/home/sbrave/todo-upstreams/h264-library/bin'
+libtool: install: /usr/bin/install -c h264_analyze /home/sbrave/todo-upstreams/h264-library/bin/h264_analyze
+ /usr/bin/mkdir -p '/home/sbrave/todo-upstreams/h264-library/include'
+ /usr/bin/install -c -m 644 h264_stream.h h264_sei.h h264_avcc.h bs.h '/home/sbrave/todo-upstreams/h264-library/include'
+ /usr/bin/mkdir -p '/home/sbrave/todo-upstreams/h264-library/lib/pkgconfig'
+ /usr/bin/install -c -m 644 libh264bitstream.pc '/home/sbrave/todo-upstreams/h264-library/lib/pkgconfig'
+make[1]: Leaving directory '/home/sbrave/todo-upstreams/H264Naked/h264bitstream-0.1.9'

@@ -1,0 +1,142 @@
+{
+  "schema": 1,
+  "backend": "apt",
+  "platform": {
+    "id": "ubuntu",
+    "version": "24.04",
+    "arch": "aarch64"
+  },
+  "roots": [
+    "jq=1.7.1-3ubuntu0.24.04.2",
+    "tree=2.1.1-2ubuntu3.24.04.2",
+    "tmux=3.4-1ubuntu0.1"
+  ],
+  "assets": [
+    {
+      "file": "archives/gcc-14-base_14.2.0-4ubuntu2~24.04.1_arm64.deb",
+      "sha256": "bddbe21061fdc73a23e7de79ece91693bf61aa22d634d1c69c5048385c114968",
+      "package": "gcc-14-base",
+      "version": "14.2.0-4ubuntu2~24.04.1",
+      "verification": "signed APT index SHA256"
+    },
+    {
+      "file": "archives/jq_1.7.1-3ubuntu0.24.04.2_arm64.deb",
+      "sha256": "d26709d728bf14016eac6ec5e56f88027b1751dffe1471e8cda3f6f8a0c8c1dc",
+      "package": "jq",
+      "version": "1.7.1-3ubuntu0.24.04.2",
+      "verification": "signed APT index SHA256"
+    },
+    {
+      "file": "archives/libc6_2.39-0ubuntu8.9_arm64.deb",
+      "sha256": "ad109797c5f78a5eeb6d4c296bfbaae68b239111a0c9ac0eb97b8d430284ac45",
+      "package": "libc6",
+      "version": "2.39-0ubuntu8.9",
+      "verification": "signed APT index SHA256"
+    },
+    {
+      "file": "archives/libcap2_1%3a2.66-5ubuntu2.4_arm64.deb",
+      "sha256": "3c4459762b9ee61c773209bc45db1ca7cf34e1254cc047260d309a8db11b3490",
+      "package": "libcap2",
+      "version": "1:2.66-5ubuntu2.4",
+      "verification": "signed APT index SHA256"
+    },
+    {
+      "file": "archives/libevent-core-2.1-7t64_2.1.12-stable-9ubuntu2.2_arm64.deb",
+      "sha256": "2fff3280ca73b151af50f29057b56b050465df23c255ece6f8cd83103c6fc711",
+      "package": "libevent-core-2.1-7t64",
+      "version": "2.1.12-stable-9ubuntu2.2",
+      "verification": "signed APT index SHA256"
+    },
+    {
+      "file": "archives/libgcc-s1_14.2.0-4ubuntu2~24.04.1_arm64.deb",
+      "sha256": "5b191f79ad985a9a653dbba45214619f729f9178a9bdf92f7c68db06c50d070b",
+      "package": "libgcc-s1",
+      "version": "14.2.0-4ubuntu2~24.04.1",
+      "verification": "signed APT index SHA256"
+    },
+    {
+      "file": "archives/libgcrypt20_1.10.3-2ubuntu0.2_arm64.deb",
+      "sha256": "ee18187ed456e97171adbbf116c9ddc303134e2dc4183d89dec44dcad75c80fe",
+      "package": "libgcrypt20",
+      "version": "1.10.3-2ubuntu0.2",
+      "verification": "signed APT index SHA256"
+    },
+    {
+      "file": "archives/libgpg-error0_1.47-3build2.1_arm64.deb",
+      "sha256": "cb14ae76d098421ee58c0b6796ce836a9fd386fa4824894a029089062b485b09",
+      "package": "libgpg-error0",
+      "version": "1.47-3build2.1",
+      "verification": "signed APT index SHA256"
+    },
+    {
+      "file": "archives/libjq1_1.7.1-3ubuntu0.24.04.2_arm64.deb",
+      "sha256": "0dbdaf70784536d6dd15f2521101399e89b3b697926862e171b2beaffc6ac22e",
+      "package": "libjq1",
+      "version": "1.7.1-3ubuntu0.24.04.2",
+      "verification": "signed APT index SHA256"
+    },
+    {
+      "file": "archives/liblz4-1_1.9.4-1build1.1_arm64.deb",
+      "sha256": "65ab8cfe4aeb8205ef4f980500d2c8cb397cb49901ef12efad59f4ed7685cbe0",
+      "package": "liblz4-1",
+      "version": "1.9.4-1build1.1",
+      "verification": "signed APT index SHA256"
+    },
+    {
+      "file": "archives/liblzma5_5.6.1+really5.4.5-1ubuntu0.3_arm64.deb",
+      "sha256": "2f58fd7de725efd0dbebe9d4442049fdacd7c2e8242f4288a13a688d50507245",
+      "package": "liblzma5",
+      "version": "5.6.1+really5.4.5-1ubuntu0.3",
+      "verification": "signed APT index SHA256"
+    },
+    {
+      "file": "archives/libonig5_6.9.9-1build1_arm64.deb",
+      "sha256": "12044a8919f3aae339652bfcd8b424245d6606a6124ae3ce08682485c12b124f",
+      "package": "libonig5",
+      "version": "6.9.9-1build1",
+      "verification": "signed APT index SHA256"
+    },
+    {
+      "file": "archives/libsystemd0_255.4-1ubuntu8.18_arm64.deb",
+      "sha256": "4f3b34215f5d76d69c12249b167fc416d9bc58d6669274f39cb30775c1c2f823",
+      "package": "libsystemd0",
+      "version": "255.4-1ubuntu8.18",
+      "verification": "signed APT index SHA256"
+    },
+    {
+      "file": "archives/libtinfo6_6.4+20240113-1ubuntu2.2_arm64.deb",
+      "sha256": "00570dce13bd89b31e4f433001fb0a55436e57a76370afbae6c5ac491b3dd3e9",
+      "package": "libtinfo6",
+      "version": "6.4+20240113-1ubuntu2.2",
+      "verification": "signed APT index SHA256"
+    },
+    {
+      "file": "archives/libutempter0_1.2.1-3build1_arm64.deb",
+      "sha256": "ba9c2f6b051d47fe3b34dbeac8fe34ac87853dd34eae1492aa034e56de511186",
+      "package": "libutempter0",
+      "version": "1.2.1-3build1",
+      "verification": "signed APT index SHA256"
+    },
+    {
+      "file": "archives/libzstd1_1.5.5+dfsg2-2build1.1_arm64.deb",
+      "sha256": "ea7d6e9fde577ea14dbf07fdfb74d6287eb09c6cba4a9d63abdcb87b0ec54bcc",
+      "package": "libzstd1",
+      "version": "1.5.5+dfsg2-2build1.1",
+      "verification": "signed APT index SHA256"
+    },
+    {
+      "file": "archives/tmux_3.4-1ubuntu0.1_arm64.deb",
+      "sha256": "8c44cae9ab4e220fa7a8951344af49a54e2e930d7418da1291d1eac027634335",
+      "package": "tmux",
+      "version": "3.4-1ubuntu0.1",
+      "verification": "signed APT index SHA256"
+    },
+    {
+      "file": "archives/tree_2.1.1-2ubuntu3.24.04.2_arm64.deb",
+      "sha256": "db73aefa02220d220343a66005f956cb7beec74d1b3f72bdcbe6e29ee0b90743",
+      "package": "tree",
+      "version": "2.1.1-2ubuntu3.24.04.2",
+      "verification": "signed APT index SHA256"
+    }
+  ]
+}

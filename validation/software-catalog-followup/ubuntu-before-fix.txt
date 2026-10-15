@@ -1,0 +1,321 @@
+test_changed_profile_is_read_without_editing_shell (test_catalog.CatalogTests.test_changed_profile_is_read_without_editing_shell) ... ok
+test_changed_source_cannot_silently_activate_an_old_receipt (test_catalog.CatalogTests.test_changed_source_cannot_silently_activate_an_old_receipt) ... ok
+test_darwin_listing_distinguishes_brew_and_unimplemented_hooks (test_catalog.CatalogTests.test_darwin_listing_distinguishes_brew_and_unimplemented_hooks) ... FAIL
+test_darwin_profile_requires_a_darwin_installation (test_catalog.CatalogTests.test_darwin_profile_requires_a_darwin_installation) ... FAIL
+test_direct_python_consumers_reject_duplicate_keys_before_side_effects (test_catalog.CatalogTests.test_direct_python_consumers_reject_duplicate_keys_before_side_effects) ... 
+  test_direct_python_consumers_reject_duplicate_keys_before_side_effects (test_catalog.CatalogTests.test_direct_python_consumers_reject_duplicate_keys_before_side_effects) (script='scripts/managed.py') ... FAIL
+  test_direct_python_consumers_reject_duplicate_keys_before_side_effects (test_catalog.CatalogTests.test_direct_python_consumers_reject_duplicate_keys_before_side_effects) (script='scripts/managed_gc.py') ... FAIL
+  test_direct_python_consumers_reject_duplicate_keys_before_side_effects (test_catalog.CatalogTests.test_direct_python_consumers_reject_duplicate_keys_before_side_effects) (script='scripts/export_lock.py') ... FAIL
+  test_direct_python_consumers_reject_duplicate_keys_before_side_effects (test_catalog.CatalogTests.test_direct_python_consumers_reject_duplicate_keys_before_side_effects) (script='tests/full_install.py') ... FAIL
+  test_direct_python_consumers_reject_duplicate_keys_before_side_effects (test_catalog.CatalogTests.test_direct_python_consumers_reject_duplicate_keys_before_side_effects) (script='scripts/verified_download.py') ... FAIL
+test_download_template_uses_declared_version_and_arch (test_catalog.CatalogTests.test_download_template_uses_declared_version_and_arch) ... ok
+test_duplicate_json_keys_are_rejected (test_catalog.CatalogTests.test_duplicate_json_keys_are_rejected) ... ok
+test_full_install_honors_alternate_profile_without_unselected_sdks (test_catalog.CatalogTests.test_full_install_honors_alternate_profile_without_unselected_sdks) ... FAIL
+test_invalid_backend_is_rejected (test_catalog.CatalogTests.test_invalid_backend_is_rejected) ... ok
+test_invalid_nested_values_report_the_field_without_traceback (test_catalog.CatalogTests.test_invalid_nested_values_report_the_field_without_traceback) ... 
+  test_invalid_nested_values_report_the_field_without_traceback (test_catalog.CatalogTests.test_invalid_nested_values_report_the_field_without_traceback) (path=['profiles'], value=[]) ... FAIL
+  test_invalid_nested_values_report_the_field_without_traceback (test_catalog.CatalogTests.test_invalid_nested_values_report_the_field_without_traceback) (path=['drivers', 'apt'], value=[]) ... FAIL
+  test_invalid_nested_values_report_the_field_without_traceback (test_catalog.CatalogTests.test_invalid_nested_values_report_the_field_without_traceback) (path=['backend_dependencies', 'source'], value=[]) ... FAIL
+  test_invalid_nested_values_report_the_field_without_traceback (test_catalog.CatalogTests.test_invalid_nested_values_report_the_field_without_traceback) (path=['apps', 'ccat', 'native'], value=[]) ... FAIL
+  test_invalid_nested_values_report_the_field_without_traceback (test_catalog.CatalogTests.test_invalid_nested_values_report_the_field_without_traceback) (path=['apps', 'wetype', 'darwin'], value=[]) ... FAIL
+  test_invalid_nested_values_report_the_field_without_traceback (test_catalog.CatalogTests.test_invalid_nested_values_report_the_field_without_traceback) (path=['apps', 'golang', 'version'], value=[]) ... FAIL
+  test_invalid_nested_values_report_the_field_without_traceback (test_catalog.CatalogTests.test_invalid_nested_values_report_the_field_without_traceback) (path=['apps', 'golang', 'version', 'latest'], value=[]) ... FAIL
+  test_invalid_nested_values_report_the_field_without_traceback (test_catalog.CatalogTests.test_invalid_nested_values_report_the_field_without_traceback) (path=['apps', 'golang', 'version', 'default'], value=123) ... FAIL
+  test_invalid_nested_values_report_the_field_without_traceback (test_catalog.CatalogTests.test_invalid_nested_values_report_the_field_without_traceback) (path=['apps', 'ccat', 'managed', 'commands'], value=[]) ... FAIL
+  test_invalid_nested_values_report_the_field_without_traceback (test_catalog.CatalogTests.test_invalid_nested_values_report_the_field_without_traceback) (path=['apps', 'ccat', 'managed', 'commands'], value={'ccat': '../../outside'}) ... FAIL
+  test_invalid_nested_values_report_the_field_without_traceback (test_catalog.CatalogTests.test_invalid_nested_values_report_the_field_without_traceback) (path=['apps', 'ccat', 'managed', 'commands'], value={'ccat': '/tmp/tool'}) ... FAIL
+  test_invalid_nested_values_report_the_field_without_traceback (test_catalog.CatalogTests.test_invalid_nested_values_report_the_field_without_traceback) (path=['apps', 'ccat', 'managed', 'aliases'], value={'../outside': 'ccat'}) ... FAIL
+  test_invalid_nested_values_report_the_field_without_traceback (test_catalog.CatalogTests.test_invalid_nested_values_report_the_field_without_traceback) (path=['apps', 'ccat', 'managed', 'bin_scripts'], value=['../outside']) ... FAIL
+  test_invalid_nested_values_report_the_field_without_traceback (test_catalog.CatalogTests.test_invalid_nested_values_report_the_field_without_traceback) (path=['apps', 'ccat', 'managed', 'verison'], value='v1.2.3') ... FAIL
+  test_invalid_nested_values_report_the_field_without_traceback (test_catalog.CatalogTests.test_invalid_nested_values_report_the_field_without_traceback) (path=['apps', 'wetype', 'darwin', 'implemented'], value='false') ... FAIL
+  test_invalid_nested_values_report_the_field_without_traceback (test_catalog.CatalogTests.test_invalid_nested_values_report_the_field_without_traceback) (path=['apps', 'golang', 'targets'], value=['arm64']) ... FAIL
+  test_invalid_nested_values_report_the_field_without_traceback (test_catalog.CatalogTests.test_invalid_nested_values_report_the_field_without_traceback) (path=['bootstrap', 'homebrew', 'install_url'], value='file:///tmp/install.sh') ... FAIL
+test_linux_installer_uses_changed_profile_and_native_package (test_catalog.CatalogTests.test_linux_installer_uses_changed_profile_and_native_package) ... ok
+test_mac_selection_respects_optional_and_linux_development_choice (test_catalog.CatalogTests.test_mac_selection_respects_optional_and_linux_development_choice) ... ok
+test_managed_install_uses_declared_source (test_catalog.CatalogTests.test_managed_install_uses_declared_source) ... ok
+test_missing_required_profile_is_rejected_before_rendering (test_catalog.CatalogTests.test_missing_required_profile_is_rejected_before_rendering) ... FAIL
+test_native_precedence_preserves_fedora_and_el_fallback (test_catalog.CatalogTests.test_native_precedence_preserves_fedora_and_el_fallback) ... ok
+test_optional_glob_package_is_kept_literal (test_catalog.CatalogTests.test_optional_glob_package_is_kept_literal) ... ok
+test_sdk_defaults_allow_existing_environment_override (test_catalog.CatalogTests.test_sdk_defaults_allow_existing_environment_override) ... ok
+test_unknown_profile_reference_and_unsafe_id_are_rejected_before_output (test_catalog.CatalogTests.test_unknown_profile_reference_and_unsafe_id_are_rejected_before_output) ... ok
+
+======================================================================
+FAIL: test_darwin_listing_distinguishes_brew_and_unimplemented_hooks (test_catalog.CatalogTests.test_darwin_listing_distinguishes_brew_and_unimplemented_hooks)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/sbrave/dev-env-linux/tests/test_catalog.py", line 162, in test_darwin_listing_distinguishes_brew_and_unimplemented_hooks
+    self.assertEqual(rows['He3']['version'],'not implemented')
+AssertionError: 'Homebrew managed' != 'not implemented'
+- Homebrew managed
++ not implemented
+
+
+======================================================================
+FAIL: test_darwin_profile_requires_a_darwin_installation (test_catalog.CatalogTests.test_darwin_profile_requires_a_darwin_installation)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/sbrave/dev-env-linux/tests/test_catalog.py", line 111, in test_darwin_profile_requires_a_darwin_installation
+    self.assertIn('darwin-base',result.stderr)
+AssertionError: 'darwin-base' not found in "catalog: 'darwin'\n"
+
+======================================================================
+FAIL: test_direct_python_consumers_reject_duplicate_keys_before_side_effects (test_catalog.CatalogTests.test_direct_python_consumers_reject_duplicate_keys_before_side_effects) (script='scripts/managed.py')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/sbrave/dev-env-linux/tests/test_catalog.py", line 137, in test_direct_python_consumers_reject_duplicate_keys_before_side_effects
+    self.assertIn('duplicate JSON key',result.stderr)
+AssertionError: 'duplicate JSON key' not found in "[Errno 2] No such file or directory: '/tmp/tmpg4adixo5/managed/apps/managed/ccat/previous.json'\n"
+
+======================================================================
+FAIL: test_direct_python_consumers_reject_duplicate_keys_before_side_effects (test_catalog.CatalogTests.test_direct_python_consumers_reject_duplicate_keys_before_side_effects) (script='scripts/managed_gc.py')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/sbrave/dev-env-linux/tests/test_catalog.py", line 136, in test_direct_python_consumers_reject_duplicate_keys_before_side_effects
+    self.assertNotEqual(result.returncode,0)
+AssertionError: 0 == 0
+
+======================================================================
+FAIL: test_direct_python_consumers_reject_duplicate_keys_before_side_effects (test_catalog.CatalogTests.test_direct_python_consumers_reject_duplicate_keys_before_side_effects) (script='scripts/export_lock.py')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/sbrave/dev-env-linux/tests/test_catalog.py", line 136, in test_direct_python_consumers_reject_duplicate_keys_before_side_effects
+    self.assertNotEqual(result.returncode,0)
+AssertionError: 0 == 0
+
+======================================================================
+FAIL: test_direct_python_consumers_reject_duplicate_keys_before_side_effects (test_catalog.CatalogTests.test_direct_python_consumers_reject_duplicate_keys_before_side_effects) (script='tests/full_install.py')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/sbrave/dev-env-linux/tests/test_catalog.py", line 136, in test_direct_python_consumers_reject_duplicate_keys_before_side_effects
+    self.assertNotEqual(result.returncode,0)
+AssertionError: 0 == 0
+
+======================================================================
+FAIL: test_direct_python_consumers_reject_duplicate_keys_before_side_effects (test_catalog.CatalogTests.test_direct_python_consumers_reject_duplicate_keys_before_side_effects) (script='scripts/verified_download.py')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/sbrave/dev-env-linux/tests/test_catalog.py", line 137, in test_direct_python_consumers_reject_duplicate_keys_before_side_effects
+    self.assertIn('duplicate JSON key',result.stderr)
+AssertionError: 'duplicate JSON key' not found in 'Traceback (most recent call last):\n  File "/usr/lib/python3.12/urllib/request.py", line 1506, in open_local_file\n    stats = os.stat(localfile)\n            ^^^^^^^^^^^^^^^^^^\nFileNotFoundError: [Errno 2] No such file or directory: \'/nonexistent/catalog-must-be-validated\'\n\nDuring handling of the above exception, another exception occurred:\n\nTraceback (most recent call last):\n  File "/home/sbrave/dev-env-linux/scripts/verified_download.py", line 27, in <module>\n    releases = json.loads(fetch(url))\n                          ^^^^^^^^^^\n  File "/home/sbrave/dev-env-linux/scripts/verified_download.py", line 12, in fetch\n    with urllib.request.urlopen(url, timeout=60) as response:\n         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File "/usr/lib/python3.12/urllib/request.py", line 215, in urlopen\n    return opener.open(url, data, timeout)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File "/usr/lib/python3.12/urllib/request.py", line 515, in open\n    response = self._open(req, data)\n               ^^^^^^^^^^^^^^^^^^^^^\n  File "/usr/lib/python3.12/urllib/request.py", line 532, in _open\n    result = self._call_chain(self.handle_open, protocol, protocol +\n             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File "/usr/lib/python3.12/urllib/request.py", line 492, in _call_chain\n    result = func(*args)\n             ^^^^^^^^^^^\n  File "/usr/lib/python3.12/urllib/request.py", line 1484, in file_open\n    return self.open_local_file(req)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^\n  File "/usr/lib/python3.12/urllib/request.py", line 1523, in open_local_file\n    raise URLError(exp)\nurllib.error.URLError: <urlopen error [Errno 2] No such file or directory: \'/nonexistent/catalog-must-be-validated\'>\n'
+
+======================================================================
+FAIL: test_full_install_honors_alternate_profile_without_unselected_sdks (test_catalog.CatalogTests.test_full_install_honors_alternate_profile_without_unselected_sdks)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/sbrave/dev-env-linux/tests/test_catalog.py", line 154, in test_full_install_honors_alternate_profile_without_unselected_sdks
+    self.assertEqual([row['app'] for row in report],['tmux'])
+AssertionError: Lists differ: ['golang', 'rust', 'axel', 'bcal', 'diff-so[725 chars]ect'] != ['tmux']
+
+First differing element 0:
+'golang'
+'tmux'
+
+First list contains 75 additional elements.
+First extra element 1:
+'rust'
+
+Diff is 1036 characters long. Set self.maxDiff to None to see it.
+
+======================================================================
+FAIL: test_invalid_nested_values_report_the_field_without_traceback (test_catalog.CatalogTests.test_invalid_nested_values_report_the_field_without_traceback) (path=['profiles'], value=[])
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/sbrave/dev-env-linux/tests/test_catalog.py", line 101, in test_invalid_nested_values_report_the_field_without_traceback
+    self.assertEqual(result.returncode,2,result.stderr)
+AssertionError: 1 != 2 : Traceback (most recent call last):
+  File "/home/sbrave/dev-env-linux/scripts/catalog.py", line 177, in <module>
+    if __name__=='__main__':main()
+                            ^^^^^^
+  File "/home/sbrave/dev-env-linux/scripts/catalog.py", line 118, in main
+    data=load(args.config);op=args.operation;apps=data['apps']
+         ^^^^^^^^^^^^^^^^^
+  File "/home/sbrave/dev-env-linux/scripts/catalog.py", line 66, in load
+    for profile,values in data['profiles'].items():
+                          ^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'list' object has no attribute 'items'
+
+
+======================================================================
+FAIL: test_invalid_nested_values_report_the_field_without_traceback (test_catalog.CatalogTests.test_invalid_nested_values_report_the_field_without_traceback) (path=['drivers', 'apt'], value=[])
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/sbrave/dev-env-linux/tests/test_catalog.py", line 104, in test_invalid_nested_values_report_the_field_without_traceback
+    self.assertIn(label,result.stderr)
+AssertionError: 'drivers.apt' not found in 'catalog: list indices must be integers or slices, not str\n'
+
+======================================================================
+FAIL: test_invalid_nested_values_report_the_field_without_traceback (test_catalog.CatalogTests.test_invalid_nested_values_report_the_field_without_traceback) (path=['backend_dependencies', 'source'], value=[])
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/sbrave/dev-env-linux/tests/test_catalog.py", line 101, in test_invalid_nested_values_report_the_field_without_traceback
+    self.assertEqual(result.returncode,2,result.stderr)
+AssertionError: 1 != 2 : Traceback (most recent call last):
+  File "/home/sbrave/dev-env-linux/scripts/catalog.py", line 177, in <module>
+    if __name__=='__main__':main()
+                            ^^^^^^
+  File "/home/sbrave/dev-env-linux/scripts/catalog.py", line 118, in main
+    data=load(args.config);op=args.operation;apps=data['apps']
+         ^^^^^^^^^^^^^^^^^
+  File "/home/sbrave/dev-env-linux/scripts/catalog.py", line 75, in load
+    for values in distros.values():names(values,'backend dependencies')
+                  ^^^^^^^^^^^^^^
+AttributeError: 'list' object has no attribute 'values'
+
+
+======================================================================
+FAIL: test_invalid_nested_values_report_the_field_without_traceback (test_catalog.CatalogTests.test_invalid_nested_values_report_the_field_without_traceback) (path=['apps', 'ccat', 'native'], value=[])
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/sbrave/dev-env-linux/tests/test_catalog.py", line 101, in test_invalid_nested_values_report_the_field_without_traceback
+    self.assertEqual(result.returncode,2,result.stderr)
+AssertionError: 1 != 2 : Traceback (most recent call last):
+  File "/home/sbrave/dev-env-linux/scripts/catalog.py", line 177, in <module>
+    if __name__=='__main__':main()
+                            ^^^^^^
+  File "/home/sbrave/dev-env-linux/scripts/catalog.py", line 118, in main
+    data=load(args.config);op=args.operation;apps=data['apps']
+         ^^^^^^^^^^^^^^^^^
+  File "/home/sbrave/dev-env-linux/scripts/catalog.py", line 45, in load
+    for platform,package in app.get('native',{}).items():
+                            ^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'list' object has no attribute 'items'
+
+
+======================================================================
+FAIL: test_invalid_nested_values_report_the_field_without_traceback (test_catalog.CatalogTests.test_invalid_nested_values_report_the_field_without_traceback) (path=['apps', 'wetype', 'darwin'], value=[])
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/sbrave/dev-env-linux/tests/test_catalog.py", line 101, in test_invalid_nested_values_report_the_field_without_traceback
+    self.assertEqual(result.returncode,2,result.stderr)
+AssertionError: 1 != 2 : Traceback (most recent call last):
+  File "/home/sbrave/dev-env-linux/scripts/catalog.py", line 177, in <module>
+    if __name__=='__main__':main()
+                            ^^^^^^
+  File "/home/sbrave/dev-env-linux/scripts/catalog.py", line 118, in main
+    data=load(args.config);op=args.operation;apps=data['apps']
+         ^^^^^^^^^^^^^^^^^
+  File "/home/sbrave/dev-env-linux/scripts/catalog.py", line 50, in load
+    if mac.get('backend') not in {'brew','hook'}:raise ValueError('invalid Darwin backend: '+name)
+       ^^^^^^^
+AttributeError: 'list' object has no attribute 'get'
+
+
+======================================================================
+FAIL: test_invalid_nested_values_report_the_field_without_traceback (test_catalog.CatalogTests.test_invalid_nested_values_report_the_field_without_traceback) (path=['apps', 'golang', 'version'], value=[])
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/sbrave/dev-env-linux/tests/test_catalog.py", line 101, in test_invalid_nested_values_report_the_field_without_traceback
+    self.assertEqual(result.returncode,2,result.stderr)
+AssertionError: 1 != 2 : Traceback (most recent call last):
+  File "/home/sbrave/dev-env-linux/scripts/catalog.py", line 177, in <module>
+    if __name__=='__main__':main()
+                            ^^^^^^
+  File "/home/sbrave/dev-env-linux/scripts/catalog.py", line 118, in main
+    data=load(args.config);op=args.operation;apps=data['apps']
+         ^^^^^^^^^^^^^^^^^
+  File "/home/sbrave/dev-env-linux/scripts/catalog.py", line 55, in load
+    if not re.fullmatch(r'[A-Z][A-Z0-9_]*_VERSION',version.get('variable','')):raise ValueError('invalid version variable: '+name)
+                                                   ^^^^^^^^^^^
+AttributeError: 'list' object has no attribute 'get'
+
+
+======================================================================
+FAIL: test_invalid_nested_values_report_the_field_without_traceback (test_catalog.CatalogTests.test_invalid_nested_values_report_the_field_without_traceback) (path=['apps', 'golang', 'version', 'latest'], value=[])
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/sbrave/dev-env-linux/tests/test_catalog.py", line 101, in test_invalid_nested_values_report_the_field_without_traceback
+    self.assertEqual(result.returncode,2,result.stderr)
+AssertionError: 0 != 2 : 
+
+======================================================================
+FAIL: test_invalid_nested_values_report_the_field_without_traceback (test_catalog.CatalogTests.test_invalid_nested_values_report_the_field_without_traceback) (path=['apps', 'golang', 'version', 'default'], value=123)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/sbrave/dev-env-linux/tests/test_catalog.py", line 104, in test_invalid_nested_values_report_the_field_without_traceback
+    self.assertIn(label,result.stderr)
+AssertionError: 'apps.golang.version.default' not found in "catalog: expected string or bytes-like object, got 'int'\n"
+
+======================================================================
+FAIL: test_invalid_nested_values_report_the_field_without_traceback (test_catalog.CatalogTests.test_invalid_nested_values_report_the_field_without_traceback) (path=['apps', 'ccat', 'managed', 'commands'], value=[])
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/sbrave/dev-env-linux/tests/test_catalog.py", line 101, in test_invalid_nested_values_report_the_field_without_traceback
+    self.assertEqual(result.returncode,2,result.stderr)
+AssertionError: 0 != 2 : 
+
+======================================================================
+FAIL: test_invalid_nested_values_report_the_field_without_traceback (test_catalog.CatalogTests.test_invalid_nested_values_report_the_field_without_traceback) (path=['apps', 'ccat', 'managed', 'commands'], value={'ccat': '../../outside'})
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/sbrave/dev-env-linux/tests/test_catalog.py", line 101, in test_invalid_nested_values_report_the_field_without_traceback
+    self.assertEqual(result.returncode,2,result.stderr)
+AssertionError: 0 != 2 : 
+
+======================================================================
+FAIL: test_invalid_nested_values_report_the_field_without_traceback (test_catalog.CatalogTests.test_invalid_nested_values_report_the_field_without_traceback) (path=['apps', 'ccat', 'managed', 'commands'], value={'ccat': '/tmp/tool'})
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/sbrave/dev-env-linux/tests/test_catalog.py", line 101, in test_invalid_nested_values_report_the_field_without_traceback
+    self.assertEqual(result.returncode,2,result.stderr)
+AssertionError: 0 != 2 : 
+
+======================================================================
+FAIL: test_invalid_nested_values_report_the_field_without_traceback (test_catalog.CatalogTests.test_invalid_nested_values_report_the_field_without_traceback) (path=['apps', 'ccat', 'managed', 'aliases'], value={'../outside': 'ccat'})
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/sbrave/dev-env-linux/tests/test_catalog.py", line 101, in test_invalid_nested_values_report_the_field_without_traceback
+    self.assertEqual(result.returncode,2,result.stderr)
+AssertionError: 0 != 2 : 
+
+======================================================================
+FAIL: test_invalid_nested_values_report_the_field_without_traceback (test_catalog.CatalogTests.test_invalid_nested_values_report_the_field_without_traceback) (path=['apps', 'ccat', 'managed', 'bin_scripts'], value=['../outside'])
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/sbrave/dev-env-linux/tests/test_catalog.py", line 101, in test_invalid_nested_values_report_the_field_without_traceback
+    self.assertEqual(result.returncode,2,result.stderr)
+AssertionError: 0 != 2 : 
+
+======================================================================
+FAIL: test_invalid_nested_values_report_the_field_without_traceback (test_catalog.CatalogTests.test_invalid_nested_values_report_the_field_without_traceback) (path=['apps', 'ccat', 'managed', 'verison'], value='v1.2.3')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/sbrave/dev-env-linux/tests/test_catalog.py", line 101, in test_invalid_nested_values_report_the_field_without_traceback
+    self.assertEqual(result.returncode,2,result.stderr)
+AssertionError: 0 != 2 : 
+
+======================================================================
+FAIL: test_invalid_nested_values_report_the_field_without_traceback (test_catalog.CatalogTests.test_invalid_nested_values_report_the_field_without_traceback) (path=['apps', 'wetype', 'darwin', 'implemented'], value='false')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/sbrave/dev-env-linux/tests/test_catalog.py", line 101, in test_invalid_nested_values_report_the_field_without_traceback
+    self.assertEqual(result.returncode,2,result.stderr)
+AssertionError: 0 != 2 : 
+
+======================================================================
+FAIL: test_invalid_nested_values_report_the_field_without_traceback (test_catalog.CatalogTests.test_invalid_nested_values_report_the_field_without_traceback) (path=['apps', 'golang', 'targets'], value=['arm64'])
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/sbrave/dev-env-linux/tests/test_catalog.py", line 101, in test_invalid_nested_values_report_the_field_without_traceback
+    self.assertEqual(result.returncode,2,result.stderr)
+AssertionError: 0 != 2 : 
+
+======================================================================
+FAIL: test_invalid_nested_values_report_the_field_without_traceback (test_catalog.CatalogTests.test_invalid_nested_values_report_the_field_without_traceback) (path=['bootstrap', 'homebrew', 'install_url'], value='file:///tmp/install.sh')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/sbrave/dev-env-linux/tests/test_catalog.py", line 101, in test_invalid_nested_values_report_the_field_without_traceback
+    self.assertEqual(result.returncode,2,result.stderr)
+AssertionError: 0 != 2 : 
+
+======================================================================
+FAIL: test_missing_required_profile_is_rejected_before_rendering (test_catalog.CatalogTests.test_missing_required_profile_is_rejected_before_rendering)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/sbrave/dev-env-linux/tests/test_catalog.py", line 117, in test_missing_required_profile_is_rejected_before_rendering
+    self.assertEqual(result.returncode,2,result.stderr)
+AssertionError: 0 != 2 : 
+
+----------------------------------------------------------------------
+Ran 18 tests in 0.876s
+
+FAILED (failures=26)

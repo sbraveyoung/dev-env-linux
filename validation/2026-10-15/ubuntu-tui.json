@@ -1,0 +1,130 @@
+[
+  {
+    "exit": 0,
+    "timeout": false,
+    "bytes": 698,
+    "app": "nvim",
+    "rendered": true,
+    "passed": true
+  },
+  {
+    "exit": 0,
+    "timeout": false,
+    "bytes": 383,
+    "app": "tig",
+    "rendered": true,
+    "passed": true
+  },
+  {
+    "exit": 0,
+    "timeout": false,
+    "bytes": 7854,
+    "app": "vifm",
+    "rendered": true,
+    "passed": true
+  },
+  {
+    "exit": 0,
+    "timeout": false,
+    "bytes": 825,
+    "app": "ranger",
+    "rendered": true,
+    "passed": true
+  },
+  {
+    "exit": 0,
+    "timeout": false,
+    "bytes": 428,
+    "app": "fff",
+    "rendered": true,
+    "passed": true
+  },
+  {
+    "exit": 0,
+    "timeout": false,
+    "bytes": 21060,
+    "app": "fzf",
+    "rendered": true,
+    "passed": true
+  },
+  {
+    "exit": 1,
+    "timeout": false,
+    "bytes": 574,
+    "app": "fpp",
+    "rendered": true,
+    "passed": true
+  },
+  {
+    "exit": 0,
+    "timeout": false,
+    "bytes": 13363,
+    "app": "broot",
+    "rendered": true,
+    "passed": true
+  },
+  {
+    "exit": 0,
+    "timeout": false,
+    "bytes": 8415,
+    "app": "bottom",
+    "rendered": true,
+    "passed": true
+  },
+  {
+    "exit": 0,
+    "timeout": false,
+    "bytes": 1905,
+    "app": "git-commander",
+    "rendered": true,
+    "passed": true
+  },
+  {
+    "exit": 0,
+    "timeout": false,
+    "bytes": 8263,
+    "app": "lazygit",
+    "rendered": true,
+    "passed": true
+  },
+  {
+    "exit": 0,
+    "timeout": false,
+    "bytes": 377,
+    "app": "http-prompt",
+    "rendered": true,
+    "passed": true
+  },
+  {
+    "exit": 0,
+    "timeout": false,
+    "bytes": 115,
+    "app": "insect",
+    "rendered": true,
+    "passed": true
+  },
+  {
+    "exit": 0,
+    "timeout": false,
+    "bytes": 703,
+    "app": "mcfly",
+    "rendered": true,
+    "passed": true
+  },
+  {
+    "exit": 0,
+    "timeout": false,
+    "bytes": 10248,
+    "app": "glances",
+    "rendered": true,
+    "passed": true
+  },
+  {
+    "exit": 0,
+    "timeout": false,
+    "bytes": 1973,
+    "app": "tmux",
+    "rendered": true,
+    "passed": true
+  }
+]

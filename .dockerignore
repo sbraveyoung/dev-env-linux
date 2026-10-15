@@ -1,0 +1,12 @@
+.git
+.planning
+*.bak
+.dev-env-linux
+output
+test.sh
+todo
+**/*.log
+**/__pycache__
+linux
+archive
+.local

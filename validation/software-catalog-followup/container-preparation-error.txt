@@ -1,0 +1,159 @@
+tar: dev-env-linux/build.sh: Cannot open: Permission denied
+tar: dev-env-linux/software.lock.json: Cannot open: Permission denied
+tar: dev-env-linux/scripts: Cannot mkdir: Permission denied
+tar: dev-env-linux/scripts/catalog.py: Cannot open: No such file or directory
+tar: dev-env-linux/scripts: Cannot mkdir: Permission denied
+tar: dev-env-linux/scripts/catalog.sh: Cannot open: No such file or directory
+tar: dev-env-linux/scripts: Cannot mkdir: Permission denied
+tar: dev-env-linux/scripts/check.sh: Cannot open: No such file or directory
+tar: dev-env-linux/scripts: Cannot mkdir: Permission denied
+tar: dev-env-linux/scripts/cli.sh: Cannot open: No such file or directory
+tar: dev-env-linux/scripts: Cannot mkdir: Permission denied
+tar: dev-env-linux/scripts/common_defines.sh: Cannot open: No such file or directory
+tar: dev-env-linux/scripts/distro: Cannot mkdir: No such file or directory
+tar: dev-env-linux/scripts/distro/apt.sh: Cannot open: No such file or directory
+tar: dev-env-linux/scripts/distro: Cannot mkdir: No such file or directory
+tar: dev-env-linux/scripts/distro/dnf.sh: Cannot open: No such file or directory
+tar: dev-env-linux/scripts: Cannot mkdir: Permission denied
+tar: dev-env-linux/scripts/dockerfile_centos: Cannot open: No such file or directory
+tar: dev-env-linux/scripts: Cannot mkdir: Permission denied
+tar: dev-env-linux/scripts/dockerfile_ubuntu: Cannot open: No such file or directory
+tar: dev-env-linux/scripts: Cannot mkdir: Permission denied
+tar: dev-env-linux/scripts/dotfiles.py: Cannot open: No such file or directory
+tar: dev-env-linux/scripts: Cannot mkdir: Permission denied
+tar: dev-env-linux/scripts/export_lock.py: Cannot open: No such file or directory
+tar: dev-env-linux/scripts: Cannot mkdir: Permission denied
+tar: dev-env-linux/scripts/export_native.py: Cannot open: No such file or directory
+tar: dev-env-linux/scripts: Cannot mkdir: Permission denied
+tar: dev-env-linux/scripts/forward_cli.sh: Cannot open: No such file or directory
+tar: dev-env-linux/scripts: Cannot mkdir: Permission denied
+tar: dev-env-linux/scripts/managed.py: Cannot open: No such file or directory
+tar: dev-env-linux/scripts: Cannot mkdir: Permission denied
+tar: dev-env-linux/scripts/managed.sh: Cannot open: No such file or directory
+tar: dev-env-linux/scripts: Cannot mkdir: Permission denied
+tar: dev-env-linux/scripts/managed_gc.py: Cannot open: No such file or directory
+tar: dev-env-linux/scripts: Cannot mkdir: Permission denied
+tar: dev-env-linux/scripts/native_bundle.py: Cannot open: No such file or directory
+tar: dev-env-linux/scripts: Cannot mkdir: Permission denied
+tar: dev-env-linux/scripts/rust_sdk.sh: Cannot open: No such file or directory
+tar: dev-env-linux/scripts: Cannot mkdir: Permission denied
+tar: dev-env-linux/scripts/setup_linux.sh: Cannot open: No such file or directory
+tar: dev-env-linux/scripts: Cannot mkdir: Permission denied
+tar: dev-env-linux/scripts/setup_linux_apps.sh: Cannot open: No such file or directory
+tar: dev-env-linux/scripts: Cannot mkdir: Permission denied
+tar: dev-env-linux/scripts/setup_linux_docker.sh: Cannot open: No such file or directory
+tar: dev-env-linux/scripts: Cannot mkdir: Permission denied
+tar: dev-env-linux/scripts/setup_linux_system.sh: Cannot open: No such file or directory
+tar: dev-env-linux/scripts: Cannot mkdir: Permission denied
+tar: dev-env-linux/scripts/setup_linux_vm.sh: Cannot open: No such file or directory
+tar: dev-env-linux/scripts: Cannot mkdir: Permission denied
+tar: dev-env-linux/scripts/setup_macos.sh: Cannot open: No such file or directory
+tar: dev-env-linux/scripts: Cannot mkdir: Permission denied
+tar: dev-env-linux/scripts/setup_macos_apps.sh: Cannot open: No such file or directory
+tar: dev-env-linux/scripts: Cannot mkdir: Permission denied
+tar: dev-env-linux/scripts/setup_macos_system.sh: Cannot open: No such file or directory
+tar: dev-env-linux/scripts/true_color_detect: Cannot mkdir: No such file or directory
+tar: dev-env-linux/scripts/true_color_detect/24-bit-color-1.sh: Cannot open: No such file or directory
+tar: dev-env-linux/scripts/true_color_detect: Cannot mkdir: No such file or directory
+tar: dev-env-linux/scripts/true_color_detect/24-bit-color.sh: Cannot open: No such file or directory
+tar: dev-env-linux/scripts/true_color_detect: Cannot mkdir: No such file or directory
+tar: dev-env-linux/scripts/true_color_detect/256colors.pl: Cannot open: No such file or directory
+tar: dev-env-linux/scripts/true_color_detect: Cannot mkdir: No such file or directory
+tar: dev-env-linux/scripts/true_color_detect/truecolor.sh: Cannot open: No such file or directory
+tar: dev-env-linux/scripts: Cannot mkdir: Permission denied
+tar: dev-env-linux/scripts/verified_download.py: Cannot open: No such file or directory
+tar: dev-env-linux/sheath: Cannot mkdir: Permission denied
+tar: dev-env-linux/sheath/README.md: Cannot open: No such file or directory
+tar: dev-env-linux/sheath: Cannot mkdir: Permission denied
+tar: dev-env-linux/sheath/README_EN.md: Cannot open: No such file or directory
+tar: dev-env-linux/sheath: Cannot mkdir: Permission denied
+tar: dev-env-linux/sheath/alias.sh: Cannot open: No such file or directory
+tar: dev-env-linux/sheath: Cannot mkdir: Permission denied
+tar: dev-env-linux/sheath/configuration.sh: Cannot open: No such file or directory
+tar: dev-env-linux/sheath: Cannot mkdir: Permission denied
+tar: dev-env-linux/sheath/constant.sh: Cannot open: No such file or directory
+tar: dev-env-linux/sheath: Cannot mkdir: Permission denied
+tar: dev-env-linux/sheath/environments.sh: Cannot open: No such file or directory
+tar: dev-env-linux/sheath: Cannot mkdir: Permission denied
+tar: dev-env-linux/sheath/functions.sh: Cannot open: No such file or directory
+tar: dev-env-linux/sheath: Cannot mkdir: Permission denied
+tar: dev-env-linux/sheath/functions_test.sh: Cannot open: No such file or directory
+tar: dev-env-linux/sheath: Cannot mkdir: Permission denied
+tar: dev-env-linux/sheath/init.sh: Cannot open: No such file or directory
+tar: dev-env-linux/config: Cannot mkdir: Permission denied
+tar: dev-env-linux/config/.gitconfig: Cannot open: No such file or directory
+tar: dev-env-linux/config: Cannot mkdir: Permission denied
+tar: dev-env-linux/config/.ssh_config: Cannot open: No such file or directory
+tar: dev-env-linux/config: Cannot mkdir: Permission denied
+tar: dev-env-linux/config/.tigrc: Cannot open: No such file or directory
+tar: dev-env-linux/config: Cannot mkdir: Permission denied
+tar: dev-env-linux/config/.tmux.conf: Cannot open: No such file or directory
+tar: dev-env-linux/config: Cannot mkdir: Permission denied
+tar: dev-env-linux/config/.vimrc: Cannot open: No such file or directory
+tar: dev-env-linux/config: Cannot mkdir: Permission denied
+tar: dev-env-linux/config/login: Cannot open: No such file or directory
+tar: dev-env-linux/config/nvim: Cannot mkdir: No such file or directory
+tar: dev-env-linux/config/nvim/.gitignore: Cannot open: No such file or directory
+tar: dev-env-linux/config/nvim: Cannot mkdir: No such file or directory
+tar: dev-env-linux/config/nvim/.neoconf.json: Cannot open: No such file or directory
+tar: dev-env-linux/config/nvim: Cannot mkdir: No such file or directory
+tar: dev-env-linux/config/nvim/LICENSE: Cannot open: No such file or directory
+tar: dev-env-linux/config/nvim: Cannot mkdir: No such file or directory
+tar: dev-env-linux/config/nvim/README.md: Cannot open: No such file or directory
+tar: dev-env-linux/config/nvim: Cannot mkdir: No such file or directory
+tar: dev-env-linux/config/nvim/init.lua: Cannot open: No such file or directory
+tar: dev-env-linux/config/nvim: Cannot mkdir: No such file or directory
+tar: dev-env-linux/config/nvim/lazy-lock.json: Cannot open: No such file or directory
+tar: dev-env-linux/config/nvim: Cannot mkdir: No such file or directory
+tar: dev-env-linux/config/nvim/lazyvim.json: Cannot open: No such file or directory
+tar: dev-env-linux/config/nvim: Cannot mkdir: No such file or directory
+tar: dev-env-linux/config/nvim/lua/config/autocmds.lua: Cannot open: No such file or directory
+tar: dev-env-linux/config/nvim: Cannot mkdir: No such file or directory
+tar: dev-env-linux/config/nvim/lua/config/keymaps.lua: Cannot open: No such file or directory
+tar: dev-env-linux/config/nvim: Cannot mkdir: No such file or directory
+tar: dev-env-linux/config/nvim/lua/config/lazy.lua: Cannot open: No such file or directory
+tar: dev-env-linux/config/nvim: Cannot mkdir: No such file or directory
+tar: dev-env-linux/config/nvim/lua/config/options.lua: Cannot open: No such file or directory
+tar: dev-env-linux/config/nvim: Cannot mkdir: No such file or directory
+tar: dev-env-linux/config/nvim/lua/plugins/example.lua: Cannot open: No such file or directory
+tar: dev-env-linux/config/nvim: Cannot mkdir: No such file or directory
+tar: dev-env-linux/config/nvim/stylua.toml: Cannot open: No such file or directory
+tar: dev-env-linux/config: Cannot mkdir: Permission denied
+tar: dev-env-linux/config/relay.sh: Cannot open: No such file or directory
+tar: dev-env-linux/config: Cannot mkdir: Permission denied
+tar: dev-env-linux/config/setup_centos.sh: Cannot open: No such file or directory
+tar: dev-env-linux/config: Cannot mkdir: Permission denied
+tar: dev-env-linux/config/software.json: Cannot open: No such file or directory
+tar: dev-env-linux/config: Cannot mkdir: Permission denied
+tar: dev-env-linux/config/squoosh-compat.cjs: Cannot open: No such file or directory
+tar: dev-env-linux/tests: Cannot mkdir: Permission denied
+tar: dev-env-linux/tests/.gitignore: Cannot open: No such file or directory
+tar: dev-env-linux/tests: Cannot mkdir: Permission denied
+tar: dev-env-linux/tests/full_install.py: Cannot open: No such file or directory
+tar: dev-env-linux/tests: Cannot mkdir: Permission denied
+tar: dev-env-linux/tests/orb_smoke.sh: Cannot open: No such file or directory
+tar: dev-env-linux/tests: Cannot mkdir: Permission denied
+tar: dev-env-linux/tests/test_catalog.py: Cannot open: No such file or directory
+tar: dev-env-linux/tests: Cannot mkdir: Permission denied
+tar: dev-env-linux/tests/test_execution.py: Cannot open: No such file or directory
+tar: dev-env-linux/tests: Cannot mkdir: Permission denied
+tar: dev-env-linux/tests/test_gc.py: Cannot open: No such file or directory
+tar: dev-env-linux/tests: Cannot mkdir: Permission denied
+tar: dev-env-linux/tests/test_macos_mock.py: Cannot open: No such file or directory
+tar: dev-env-linux/tests: Cannot mkdir: Permission denied
+tar: dev-env-linux/tests/test_managed.py: Cannot open: No such file or directory
+tar: dev-env-linux/tests: Cannot mkdir: Permission denied
+tar: dev-env-linux/tests/test_native_bundle.py: Cannot open: No such file or directory
+tar: dev-env-linux/tests: Cannot mkdir: Permission denied
+tar: dev-env-linux/tests/test_shell_fixes.py: Cannot open: No such file or directory
+tar: dev-env-linux/tests: Cannot mkdir: Permission denied
+tar: dev-env-linux/tests/test_tui_runner.py: Cannot open: No such file or directory
+tar: dev-env-linux/tests: Cannot mkdir: Permission denied
+tar: dev-env-linux/tests/tui_smoke.py: Cannot open: No such file or directory
+tar: dev-env-linux/.github/workflows: Cannot mkdir: No such file or directory
+tar: dev-env-linux/.github/workflows/check.yml: Cannot open: No such file or directory
+tar: dev-env-linux/.github/workflows: Cannot mkdir: No such file or directory
+tar: dev-env-linux/.github/workflows/full-install.yml: Cannot open: No such file or directory
+tar: dev-env-linux/.github/workflows: Cannot mkdir: No such file or directory
+tar: dev-env-linux/.github/workflows/macos-cli.yml: Cannot open: No such file or directory
+tar: Exiting with failure status due to previous errors

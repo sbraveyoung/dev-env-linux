@@ -1,0 +1,122 @@
+[
+  {
+    "exit": 0,
+    "timeout": false,
+    "bytes": 1314,
+    "app": "nvim",
+    "rendered": true,
+    "passed": true
+  },
+  {
+    "exit": 0,
+    "timeout": false,
+    "bytes": 364,
+    "app": "tig",
+    "rendered": true,
+    "passed": true
+  },
+  {
+    "exit": 0,
+    "timeout": false,
+    "bytes": 6222,
+    "app": "vifm",
+    "rendered": true,
+    "passed": true
+  },
+  {
+    "exit": 0,
+    "timeout": false,
+    "bytes": 813,
+    "app": "ranger",
+    "rendered": true,
+    "passed": true
+  },
+  {
+    "exit": 0,
+    "timeout": false,
+    "bytes": 428,
+    "app": "fff",
+    "rendered": true,
+    "passed": true
+  },
+  {
+    "exit": 0,
+    "timeout": false,
+    "bytes": 11165,
+    "app": "fzf",
+    "rendered": true,
+    "passed": true
+  },
+  {
+    "exit": 1,
+    "timeout": false,
+    "bytes": 466,
+    "app": "fpp",
+    "rendered": true,
+    "passed": true
+  },
+  {
+    "exit": 0,
+    "timeout": false,
+    "bytes": 13363,
+    "app": "broot",
+    "rendered": true,
+    "passed": true
+  },
+  {
+    "exit": 0,
+    "timeout": false,
+    "bytes": 8201,
+    "app": "bottom",
+    "rendered": true,
+    "passed": true
+  },
+  {
+    "exit": 0,
+    "timeout": false,
+    "bytes": 1905,
+    "app": "git-commander",
+    "rendered": true,
+    "passed": true
+  },
+  {
+    "exit": 0,
+    "timeout": false,
+    "bytes": 377,
+    "app": "http-prompt",
+    "rendered": true,
+    "passed": true
+  },
+  {
+    "exit": 0,
+    "timeout": false,
+    "bytes": 115,
+    "app": "insect",
+    "rendered": true,
+    "passed": true
+  },
+  {
+    "exit": 0,
+    "timeout": false,
+    "bytes": 703,
+    "app": "mcfly",
+    "rendered": true,
+    "passed": true
+  },
+  {
+    "exit": 0,
+    "timeout": false,
+    "bytes": 5762,
+    "app": "glances",
+    "rendered": true,
+    "passed": true
+  },
+  {
+    "exit": 0,
+    "timeout": false,
+    "bytes": 1172,
+    "app": "tmux",
+    "rendered": true,
+    "passed": true
+  }
+]

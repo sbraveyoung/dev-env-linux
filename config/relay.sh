@@ -1,6 +1,15 @@
 #!/usr/bin/env bash
 
-#XXX: use ssh config file
+set -euo pipefail
+[[ $# -gt 0 ]] || { printf 'usage: relay HOST [COMMAND ...]\n' >&2; exit 2; }
+# OpenSSH owns Host aliases, User, IdentityFile and ProxyJump. No password is
+# placed on a command line. Legacy expect login requires explicit opt-in.
+if [[ ${DEV_ENV_LEGACY_LOGIN:-false} != true ]]; then
+    host=$1
+    shift
+    if [[ ${1:-} == status ]]; then shift; set -- '/usr/local/bin/mutagen sync list' "$@"; fi
+    exec ssh "$host" "$@"
+fi
 
 case $1 in
     mac)
@@ -19,7 +28,7 @@ esac
 
 shift
 
-case $1 in
+case ${1:-} in
     status)
         set -- "/usr/local/bin/mutagen sync list"
         ;;
@@ -27,4 +36,4 @@ case $1 in
         ;;
 esac
 
-${HOME}/.ssh/login ${mechine} ${user} ${passwd} ${relay} $@
+"${HOME}"/.ssh/login "${mechine}" "${user}" "${passwd}" "${relay}" "$@"

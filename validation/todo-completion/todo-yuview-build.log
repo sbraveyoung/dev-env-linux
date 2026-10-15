@@ -1,0 +1,4 @@
+Info: creating stash file /home/sbrave/todo-upstreams/YUView/.qmake.stash
+cd YUViewLib/ && ( test -e Makefile || /usr/lib/qt5/bin/qmake -o Makefile /home/sbrave/todo-upstreams/YUView/YUViewLib/YUViewLib.pro ) && make -f Makefile 
+Project ERROR: Unknown module(s) in QT: opengl
+make: *** [Makefile:48: sub-YUViewLib-make_first] Error 3

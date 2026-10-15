@@ -1,0 +1,12 @@
+.dev-env-linux
+output
+test.sh
+todo
+*.log
+!validation/todo-completion/todo-*.log
+__pycache__/
+*.pyc
+.local/
+archive/legacy/
+.planning/
+.brooks-lint-history.json

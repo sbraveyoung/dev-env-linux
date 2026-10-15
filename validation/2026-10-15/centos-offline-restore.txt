@@ -1,0 +1,17 @@
+Added offline repo from file:///home/developer/native-bundle-catalog-20261015/archives
+Last metadata expiration check: 0:57:29 ago on Wed Oct 14 19:43:22 2026.
+Package jq-1.7.1-13.el10.aarch64 is already installed.
+Package tree-2.1.0-8.el10.aarch64 is already installed.
+Package tmux-3.3a-14.20230918gitb202a2f.el10.aarch64 is already installed.
+Dependencies resolved.
+Nothing to do.
+Complete!
+{
+  "apply": true,
+  "roots": [
+    "jq-1.7.1-13.el10.aarch64",
+    "tree-2.1.0-8.el10.aarch64",
+    "tmux-3.3a-14.20230918gitb202a2f.el10.aarch64"
+  ],
+  "packages": 48
+}

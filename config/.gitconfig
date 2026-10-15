@@ -33,9 +33,3 @@
 	default = matching
 [pull]
     rebase = true
-
-# bytedance config
-[url "git@code.byted.org:"]
-    insteadOf = https://code.byted.org/
-[url "git@git.byted.org:"]
-    insteadOf = https://git.byted.org/

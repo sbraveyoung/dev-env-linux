@@ -1,0 +1,48 @@
+[
+  {
+    "app": "ImageMagick",
+    "apply": true,
+    "protected": {
+      "892090606554b532a99535a8d88e0148f5dbf20b": [
+        "current",
+        "lock",
+        "repository lock",
+        "binary link magick",
+        "binary link MagickCore-config",
+        "binary link MagickWand-config",
+        "binary link Magick++-config",
+        "binary link animate",
+        "binary link compare",
+        "binary link composite",
+        "binary link conjure",
+        "binary link convert",
+        "binary link display",
+        "binary link identify",
+        "binary link import",
+        "binary link magick-script",
+        "binary link mogrify",
+        "binary link montage",
+        "binary link stream"
+      ],
+      "43154d48ccf7f0bf0d9d98ee32927d86e4109dd9": [
+        "previous"
+      ]
+    },
+    "candidates": [],
+    "removed": []
+  },
+  {
+    "app": "ccat",
+    "apply": true,
+    "protected": {
+      "v1.1.0": [
+        "current",
+        "lock",
+        "repository lock",
+        "binary link ccat"
+      ]
+    },
+    "candidates": [],
+    "removed": []
+  }
+]

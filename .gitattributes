@@ -1,0 +1,3 @@
+# Preserve raw validation output; compiler/test logs contain intentional whitespace.
+validation/**/*.log -text -whitespace
+validation/**/*.txt -text -whitespace

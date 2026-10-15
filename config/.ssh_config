@@ -1,3 +1,6 @@
+Host mac
+    HostName host.docker.internal
+
 Host *
     GSSAPIAuthentication yes
     GSSAPIDelegateCredentials no

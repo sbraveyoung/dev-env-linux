@@ -1,0 +1,24 @@
+#0 building with "orbstack" instance using docker driver
+
+#1 [internal] load build definition from dockerfile_ubuntu
+#1 transferring dockerfile: 901B done
+#1 DONE 0.0s
+
+#2 [internal] load metadata for docker.io/library/ubuntu:24.04
+#2 ...
+
+#3 [auth] library/ubuntu:pull token for registry-1.docker.io
+#3 DONE 0.0s
+
+#2 [internal] load metadata for docker.io/library/ubuntu:24.04
+#2 ERROR: docker.io/library/ubuntu:24.04: not found
+------
+ > [internal] load metadata for docker.io/library/ubuntu:24.04:
+------
+dockerfile_ubuntu:1
+--------------------
+   1 | >>> FROM ubuntu:24.04
+   2 |     ARG NORMAL_USER=developer
+   3 |     ENV DEBIAN_FRONTEND=noninteractive
+--------------------
+ERROR: failed to build: failed to solve: ubuntu:24.04: failed to resolve source metadata for docker.io/library/ubuntu:24.04: docker.io/library/ubuntu:24.04: not found

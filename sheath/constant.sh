@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 CONTROL_CODE_PREFIX='\033['
 CONTROL_CODE_SPERATOR=';'
 CONTROL_CODE_SUFFIX='m'
@@ -27,8 +28,8 @@ BACKGROUND_COLOR_PINK='45'
 BACKGROUND_COLOR_DEEP_BLUE='46'
 BACKGROUND_COLOR_WHITE='47'
 
-CODE_PATH=${HOME}/code
-GOPATH=${CODE_PATH}
-CLONE_PATH=/usr/local/src
-APP_PATH=/usr/local/app
-BIN_PATH=/usr/local/bin
+CODE_PATH=${CODE_PATH:-${HOME}/code}
+GOPATH=${GOPATH:-${CODE_PATH}}
+CLONE_PATH=${CLONE_PATH:-${HOME}/.local/share/dev-env-linux/src}
+APP_PATH=${APP_PATH:-${HOME}/.local/share/dev-env-linux/app}
+BIN_PATH=${BIN_PATH:-${HOME}/.local/bin}

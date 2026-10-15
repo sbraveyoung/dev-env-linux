@@ -1,0 +1,54 @@
+{
+  "preview": {
+    "app": "ccat",
+    "apply": false,
+    "protected": {
+      "v3": [
+        "current",
+        "lock"
+      ],
+      "v2": [
+        "previous"
+      ]
+    },
+    "candidates": [
+      {
+        "version": "v1",
+        "path": "/tmp/dev-env-gc-real-dusge32o/managed/ccat/v1",
+        "bytes": 52
+      }
+    ],
+    "removed": []
+  },
+  "apply": {
+    "app": "ccat",
+    "apply": true,
+    "protected": {
+      "v3": [
+        "current",
+        "lock"
+      ],
+      "v2": [
+        "previous"
+      ]
+    },
+    "candidates": [
+      {
+        "version": "v1",
+        "path": "/tmp/dev-env-gc-real-dusge32o/managed/ccat/v1",
+        "bytes": 52
+      }
+    ],
+    "removed": [
+      {
+        "version": "v1",
+        "path": "/tmp/dev-env-gc-real-dusge32o/managed/ccat/v1",
+        "bytes": 52
+      }
+    ]
+  },
+  "preserved": [
+    "v2",
+    "v3"
+  ]
+}

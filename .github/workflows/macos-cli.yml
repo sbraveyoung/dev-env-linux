@@ -1,0 +1,43 @@
+name: Isolated macOS CLI smoke
+on:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  macos:
+    # GitHub-hosted disposable VM only; never use the user's Mac as a runner.
+    runs-on: macos-15
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+        with:
+          persist-credentials: false
+      - name: Check tmux lifecycle in the disposable guest
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p macos-results
+          exec > >(tee macos-results/tmux.log) 2>&1
+          brew install bash
+          task_bash="$(brew --prefix bash)/bin/bash"
+          for script in build.sh scripts/setup_macos.sh scripts/setup_macos_apps.sh; do
+            "$task_bash" -n "$script"
+          done
+          "$task_bash" build.sh --skip-system --only=tmux --concurrent=1
+          tmux -V
+          "$task_bash" build.sh --skip-system --only=tmux --concurrent=1
+          "$task_bash" build.sh --skip-system --only=tmux --operator=upgrade --concurrent=1
+          "$task_bash" build.sh --skip-system --only=tmux --operator=uninstall --concurrent=1
+          if brew list tmux >/dev/null 2>&1; then
+            echo 'tmux was not uninstalled' >&2
+            exit 1
+          fi
+          "$task_bash" build.sh --skip-system --only=tmux --concurrent=1
+          tmux -V
+          brew list --versions tmux > macos-results/versions.txt
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7
+        if: always()
+        with:
+          name: macos-cli-results
+          path: macos-results
+          retention-days: 14

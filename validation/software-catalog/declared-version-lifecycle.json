@@ -1,0 +1,17 @@
+[
+  {
+    "operation": "install",
+    "version": "v1.0.0",
+    "command": "/home/sbrave/catalog-version-proof/app/managed/ccat/v1.0.0/bin/ccat"
+  },
+  {
+    "operation": "upgrade",
+    "version": "v1.1.0",
+    "command": "/home/sbrave/catalog-version-proof/app/managed/ccat/v1.1.0/bin/ccat"
+  },
+  {
+    "operation": "rollback",
+    "version": "v1.0.0",
+    "command_runs": true
+  }
+]

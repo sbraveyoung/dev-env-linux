@@ -3,31 +3,28 @@
 #set -euo pipefail
 set -uo pipefail
 
-#smart cd: can import environment variable you need automatically
-#maybe https://github.com/hyperupcall/autoenv or https://direnv.net/ is better
-#scd() {
-#	#TODO: take effect in current dir and sub dir.
-#	[ -f .unenv ] && . .unenv
-#	cd $1
-#	[ -f .env ] && . .env
-#}
-#
-#
-#cdls() {
-#	scd $1
-#	exa --all
-#}
+# direnv controls explicit authorization, parent-directory inheritance and unloading.
+# A plain .env is never sourced by these navigation helpers.
+scd() {
+  [[ $# -le 1 ]] || return 2
+  cd -- "${1:-$HOME}" || return
+  if command -v direnv >/dev/null 2>&1; then
+    local changes status=0
+    changes=$(direnv export bash) || status=$?
+    # A blocked .envrc can still emit the exports that unload the previous dir.
+    eval "$changes" || return
+    return "$status"
+  fi
+}
 
-# get the path of current script, instead of shell path
-#get_self_dir() {
-#	echo $(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)
-#	# XXX: have bug when this script file was imported by `source`
-#	# echo $(dirname $(readlink -f "$0"))
-#	# echo $(cd "$(dirname "$0")" && pwd)
-#}
-#source $(get_self_dir $0)/constant.sh
-#source $(dirname $(readlink -f "$1"))/constant.sh
-source $(dirname ${BASH_SOURCE[0]})/constant.sh
+cdls() {
+  scd "$@" || return
+  if command -v eza >/dev/null 2>&1; then command eza --all
+  elif command -v exa >/dev/null 2>&1; then command exa --all
+  else command ls -a; fi
+}
+
+source "$(dirname "${BASH_SOURCE[0]}")/constant.sh"
 
 parse_git_branch() {
 	git branch 2>/dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/ [\1]/'
@@ -38,134 +35,184 @@ echo_date() {
 }
 
 echo_sentence() {
-	quo=$(fortune -s)
-	echo $quo
+	local quo
+	quo=$(fortune -s) || return
+	printf '%s\n' "$quo"
 	#echo `trans $quo` # toooooo slow!
 }
 
 save_origin_env() {
-	eval ORIGIN_$1=\${$1}
+	[[ $# -eq 1 && $1 =~ ^[a-zA-Z_][a-zA-Z0-9_]*$ ]] || return 2
+	printf -v "ORIGIN_$1" '%s' "${!1}"
 }
 
 restore_origin_env() {
-	ORIGIN_KEY=$(echo ORIGIN_$1)
-	eval $(echo $1)=${!ORIGIN_KEY}
-	unset ORIGIN_$1
+	[[ $# -eq 1 && $1 =~ ^[a-zA-Z_][a-zA-Z0-9_]*$ ]] || return 2
+	local origin_key="ORIGIN_$1"
+	printf -v "$1" '%s' "${!origin_key}"
+	unset "$origin_key"
 }
 
 smart_cp() {
-	local args=$#
-	if [[ ${args} -lt 2 ]]; then
-		return 1
-	fi
-
-	local dst_dir=$(dirname ${!args})
-	if [[ ! -d ${dst_dir} ]]; then
-		mkdir ${dst_dir}
-	fi
-	cp $@
+	[[ $# -ge 2 ]] || return 2
+	local destination=${!#} parent
+	parent=$(dirname "$destination") || return
+	command mkdir -p -- "$parent" || return
+	command cp "$@"
 }
 
-# usage: save_env "please input value:" test_var
-function save_env() {
-	read -p "$1" -r $2
-	eval line="$2=\${$2}"
-	[[ -f .env ]] || {
-		echo "${line}" >>.env
-		return 0
-	}
-	exist=$(grep ${line} .env | wc -l)
-	[ ${exist} -ne 0 ] && {
-		echo "${line}" >>.env
-	}
-
-  # TODO: write to .unenv also?
+# Append exact assignments once, without evaluating input as shell code.
+save_env() {
+	[[ $# -eq 2 && $2 =~ ^[a-zA-Z_][a-zA-Z0-9_]*$ ]] || return 2
+	local value line
+	IFS= read -r -p "$1" value || return
+	printf -v "$2" '%s' "$value"
+	line="$2=$value"
+	if [[ ! -f .env ]] || ! grep -Fqx -- "$line" .env; then
+		printf '%s\n' "$line" >>.env
+	fi
+	return 0
 }
 
 # deprecated, for autojump
 jls() {
-	j $1
+	j "$1"
 	exa --all
 }
 
 jcurl() {
-	curl $1 | jq
+	curl "$1" | jq
 }
 
 mkdir_and_cd() {
-	dir_count=$#
-
-	# use command to avoid infinite recursion
-	command mkdir $@
-	[ $? -eq 0 ] && cd ${!dir_count} #cd the last dir
+	[[ $# -gt 0 ]] || return 2
+	command mkdir "$@" || return
+	cd -- "${!#}" || return
 }
 
-#maybe watch command is better!
 every() {
-	t=$1
+	[[ $# -ge 2 && $1 =~ ^[0-9]+([.][0-9]+)?$ ]] || return 2
+	local interval=$1
 	shift
-
 	while true; do
-		$@
-		sleep $t
+		"$@" || return
+		sleep "$interval" || return
 	done
 }
 
 echo_last_status() {
-	[ $1 -ne 0 ] && echo x || echo y
+	[ "$1" -ne 0 ] && echo x || echo y
 }
 
 timestamp() {
-	date --rfc-3339=s -d @$1
-}
-
-bak() {
-	#TODO: support multifile
-	#TODO: backup with timestamp suffix
-	local origin=$1
-	local new=$1.bak
-	if [[ -e ${origin} ]]; then
-		if [[ -d ${origin} ]]; then
-			smart_cp -r ${origin} ${new}
-		else
-			smart_cp ${origin} ${new}
-		fi
+	# GNU date（Linux）与 BSD date（macOS）语法不同，需做兼容处理：
+	#   Linux: date --rfc-3339=s -d @<epoch>
+	#   macOS: date -r <epoch> '+格式'
+	if is_mac; then
+		date -r "$1" '+%Y-%m-%d %H:%M:%S %z'
+	else
+		date --rfc-3339=s -d "@$1"
 	fi
 }
 
-mbak() {
-	if [[ -e $1 ]]; then
-		mv $1 $1.bak
-	fi
+# A unique sibling directory reserves each version atomically; payload preserves
+# the source name/type independently of timestamp parsing and symlink targets.
+_backup_paths() {
+  [[ $# -ge 2 ]] || return 2
+  local operation=$1 origin parent backup
+  shift
+  for origin in "$@"; do
+    [[ -e "$origin" || -L "$origin" ]] || { printf 'backup: missing path: %s\n' "$origin" >&2; return 1; }
+  done
+  for origin in "$@"; do
+    origin=${origin%/}
+    [[ -n "$origin" && ${origin##*/} != . && ${origin##*/} != .. ]] || return 2
+    parent=$(cd -- "$(dirname -- "$origin")" && pwd -P) || return
+    origin="$parent/$(basename -- "$origin")"
+    backup=$(mktemp -d "$origin.bak.$(date -u +%Y%m%dT%H%M%S).XXXXXX") || return
+    if [[ $operation == cp ]]; then command cp -a -- "$origin" "$backup/payload" || return
+    else command mv -- "$origin" "$backup/payload" || return; fi
+    printf '%s\n' "$backup"
+  done
 }
 
-unbak() {
-	#TODO: compare and replace origin file or not?
-	cp $1 ${1%.bak}
+bak() { _backup_paths cp "$@"; }
+mbak() { _backup_paths mv "$@"; }
+
+_backup_same() {
+  if [[ -L $1 || -L $2 ]]; then
+    [[ -L $1 && -L $2 && $(readlink "$1") == "$(readlink "$2")" ]]
+  elif [[ -d $1 && -d $2 ]]; then
+    command diff -qr -- "$1" "$2" >/dev/null 2>&1
+  elif [[ -f $1 && -f $2 ]]; then
+    command cmp -s -- "$1" "$2"
+  else return 1; fi
 }
 
-umbak() {
-	#TODO: compare and replace origin file or not?
-	mv $1 ${1%.bak}
+_restore_backups() {
+  [[ $# -ge 2 ]] || return 2
+  local operation=$1 backup origin payload container
+  shift
+  for backup in "$@"; do
+    backup=${backup%/};container=false
+    if [[ $backup =~ ^(.+)\.bak\.[0-9]{8}T[0-9]{6}\.[A-Za-z0-9]{6}$ && -d $backup && ! -L $backup ]]; then
+      origin=${BASH_REMATCH[1]};payload="$backup/payload";container=true
+    elif [[ $backup == *.bak ]]; then
+      origin=${backup%.bak};payload=$backup
+    else printf 'restore: invalid backup path: %s\n' "$backup" >&2; return 2; fi
+    [[ -n $origin && ( -e $payload || -L $payload ) ]] || return 1
+    if [[ -e $origin || -L $origin ]]; then
+      if _backup_same "$payload" "$origin"; then
+        if [[ $operation == mv ]]; then
+          command rm -rf -- "$payload" || return
+          [[ $container != true ]] || command rmdir -- "$backup" || return
+        fi
+        continue
+      fi
+      mbak "$origin" || return
+    fi
+    if [[ $operation == cp ]]; then command cp -a -- "$payload" "$origin" || return
+    else command mv -- "$payload" "$origin" || return; fi
+    if [[ $operation == mv && $container == true ]]; then command rmdir -- "$backup" || return; fi
+  done
 }
+
+unbak() { _restore_backups cp "$@"; }
+umbak() { _restore_backups mv "$@"; }
 
 touchx() {
-	touch $1
-	chmod +x $1
+	touch -- "$1" && chmod +x -- "$1"
 }
 
-# TODO: set current log level
+# LOG_LEVEL defaults to trace for compatibility; quiet suppresses ordinary output.
+_log_rank() {
+  case "$1" in
+    quiet) printf 0 ;; panic) printf 1 ;; fatal) printf 2 ;; error) printf 3 ;;
+    warning) printf 4 ;; info) printf 5 ;; verbose) printf 6 ;; debug) printf 7 ;; trace) printf 8 ;;
+    *) printf 'invalid log level: %s\n' "$1" >&2; return 2 ;;
+  esac
+}
 # $1: file description
 # $2: loglevel
 # $3: format string
 # $4-: args
 # level: quiet/panic/fatal/error/warning/info/verbose/debug/trace
 printf_with_level() {
-	fd="$1"
-	loglevel="$2"
-	format_str="$3"
+  [[ $# -ge 3 ]] || return 2
+	local fd="$1"
+	local loglevel="$2"
+	local format_str="$3"
 	shift 3
 
+  local rank threshold
+  rank=$(_log_rank "$loglevel") || return
+  threshold=$(_log_rank "${LOG_LEVEL:-trace}") || return
+  [[ $loglevel != quiet ]] || return 0
+  # Fatal events retain their exit semantics even when output is suppressed.
+  if [[ $rank -gt $threshold ]]; then
+    if [[ $loglevel == fatal || $loglevel == panic ]]; then exit 1; fi
+    return 0
+  fi
 	local control_code=''
 
 	# pays tribute to FFmpeg's loglevel
@@ -246,35 +293,46 @@ command_exist() {
 # $1: concurrent
 # $2: command
 # $3-: data array
-batch() {
-	[ -e /tmp/fd1 ] || mkfifo /tmp/fd1
-	exec 3<>/tmp/fd1
-	rm -rf /tmp/fd1
-	for ((i = 0; i < $1; i++)); do
-		echo >&3
-	done
-
-	cmd=$2
+batch() (
+	# A subshell keeps jobs, variables and file descriptors out of the caller.
+	if [[ $# -lt 2 || ! $1 =~ ^[1-9][0-9]*$ || -z $2 ]]; then
+		printf 'batch: invalid concurrency or command\n' >&2
+		return 2
+	fi
+	local limit=$1 result=0 status pid arg
+	local pids=() command=()
+	# Retain the legacy "command args" API without evaluating shell code.
+	read -r -a command <<<"$2"
+	[[ ${#command[@]} -gt 0 ]] || return 2
 	shift 2
 	for arg in "$@"; do
-		read -u3
-		{
-			# TODO: timeout
-			${cmd} "${arg}"
-			echo >&3
-		} &
+		"${command[@]}" "${arg}" &
+		pids+=("$!")
+		if [[ ${#pids[@]} -ge ${limit} ]]; then
+			if wait "${pids[0]}"; then :; else
+				status=$?
+				[[ ${result} -ne 0 ]] || result=${status}
+			fi
+			pids=("${pids[@]:1}")
+		fi
 	done
-	wait
-
-	exec 3<&-
-	exec 3>&-
-}
+	# Bash 3.2 treats an empty array expansion as unset under nounset.
+	if [[ ${#pids[@]} -gt 0 ]]; then
+		for pid in "${pids[@]}"; do
+			if wait "${pid}"; then :; else
+				status=$?
+				[[ ${result} -ne 0 ]] || result=${status}
+			fi
+		done
+	fi
+	return "${result}"
+)
 
 # $1: if condition
 # $2-: command if condition is true
 do_if() {
-	if $(eval test "$1"); then
+	if eval "test $1"; then
 		shift
-		$@
+		"$@"
 	fi
 }

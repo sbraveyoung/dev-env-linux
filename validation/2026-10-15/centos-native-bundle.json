@@ -1,0 +1,377 @@
+{
+  "schema": 1,
+  "backend": "dnf",
+  "platform": {
+    "id": "centos",
+    "version": "10",
+    "arch": "aarch64"
+  },
+  "roots": [
+    "jq-1.7.1-13.el10.aarch64",
+    "tree-2.1.0-8.el10.aarch64",
+    "tmux-3.3a-14.20230918gitb202a2f.el10.aarch64"
+  ],
+  "assets": [
+    {
+      "file": "archives/alternatives-1.30-2.el10.aarch64.rpm",
+      "sha256": "13d1cae28aecbc13bee2cf23391ec2ee41d39c51c9bb47f466fbad133d38f5c9",
+      "package": "alternatives",
+      "version": "1.30-2.el10.aarch64",
+      "verification": "RPM vendor signature"
+    },
+    {
+      "file": "archives/audit-libs-4.2.1-3.el10.aarch64.rpm",
+      "sha256": "6d5f5785f453a38fb9533ae970bf1ca2726febadaff57dc75487fcbee5e212d9",
+      "package": "audit-libs",
+      "version": "4.2.1-3.el10.aarch64",
+      "verification": "RPM vendor signature"
+    },
+    {
+      "file": "archives/basesystem-11-22.el10.noarch.rpm",
+      "sha256": "76ff57f4d7565cd0e49f5e6dc38f3707dfe6a6b61317d883c2701be4277f2abf",
+      "package": "basesystem",
+      "version": "11-22.el10.noarch",
+      "verification": "RPM vendor signature"
+    },
+    {
+      "file": "archives/bash-5.2.26-6.el10.aarch64.rpm",
+      "sha256": "3f42c3de9fddc6e6c08f7c603ce29ed96d8d66f4425ce1c27bcb0d7d0e0490b5",
+      "package": "bash",
+      "version": "5.2.26-6.el10.aarch64",
+      "verification": "RPM vendor signature"
+    },
+    {
+      "file": "archives/ca-certificates-2026.2.90_v9.0.316-100.0.el10.noarch.rpm",
+      "sha256": "4eec39702f3f494f1d22a062fd23ccefaafc704bdc44ee666031f1aa3f759244",
+      "package": "ca-certificates",
+      "version": "2026.2.90_v9.0.316-100.0.el10.noarch",
+      "verification": "RPM vendor signature"
+    },
+    {
+      "file": "archives/centos-gpg-keys-10.0-23.el10.noarch.rpm",
+      "sha256": "f223143fc00d956376d9f6361a538037e738a469ad79d4d82555e99a307c510f",
+      "package": "centos-gpg-keys",
+      "version": "10.0-23.el10.noarch",
+      "verification": "RPM vendor signature"
+    },
+    {
+      "file": "archives/centos-stream-release-10.0-23.el10.noarch.rpm",
+      "sha256": "3c0ca8ad94e7b4dfdbe3a0c6ed088c560c57815779cdee33b00b8980894d760f",
+      "package": "centos-stream-release",
+      "version": "10.0-23.el10.noarch",
+      "verification": "RPM vendor signature"
+    },
+    {
+      "file": "archives/centos-stream-repos-10.0-23.el10.noarch.rpm",
+      "sha256": "f08be10e29ff190f941fad1335dd0528f264ee1afaf1836758609a554c028d00",
+      "package": "centos-stream-repos",
+      "version": "10.0-23.el10.noarch",
+      "verification": "RPM vendor signature"
+    },
+    {
+      "file": "archives/coreutils-9.5-14.el10.aarch64.rpm",
+      "sha256": "cbef68b5b777e6441bfff955dfea11fd227457651f58d650058b711df156d101",
+      "package": "coreutils",
+      "version": "9.5-14.el10.aarch64",
+      "verification": "RPM vendor signature"
+    },
+    {
+      "file": "archives/coreutils-common-9.5-14.el10.aarch64.rpm",
+      "sha256": "59fec70b5c064b2454f0d643ae73a8d3f9f93ca6dc19ed94c304ab108c93ecac",
+      "package": "coreutils-common",
+      "version": "9.5-14.el10.aarch64",
+      "verification": "RPM vendor signature"
+    },
+    {
+      "file": "archives/crypto-policies-20260811-1.git4dcd294.el10.noarch.rpm",
+      "sha256": "6935c44a0cce68eddfe12c7e84f09263ae0a270f9834d9bf2b3d9c538af79007",
+      "package": "crypto-policies",
+      "version": "20260811-1.git4dcd294.el10.noarch",
+      "verification": "RPM vendor signature"
+    },
+    {
+      "file": "archives/filesystem-3.18-17.el10.aarch64.rpm",
+      "sha256": "6c4d8ecaf8b45c8d7d588c6ebe368a77805ed84830d0bc3b38e4c8e499514aba",
+      "package": "filesystem",
+      "version": "3.18-17.el10.aarch64",
+      "verification": "RPM vendor signature"
+    },
+    {
+      "file": "archives/findutils-4.10.0-5.el10.aarch64.rpm",
+      "sha256": "f0e4db5b6e713c75e097e80218c592de4e6cb85d353f0933f64714df11b178b2",
+      "package": "findutils",
+      "version": "4.10.0-5.el10.aarch64",
+      "verification": "RPM vendor signature"
+    },
+    {
+      "file": "archives/glibc-2.39-141.el10.aarch64.rpm",
+      "sha256": "91b560a474cdf53e5f75c506c1e19e8e9fbc2204fe82252ca6054cc317232826",
+      "package": "glibc",
+      "version": "2.39-141.el10.aarch64",
+      "verification": "RPM vendor signature"
+    },
+    {
+      "file": "archives/glibc-common-2.39-141.el10.aarch64.rpm",
+      "sha256": "fe1047ba8ff855909ca3a179c49a3be5d7cf89a723c3a293002810e4dcaa1419",
+      "package": "glibc-common",
+      "version": "2.39-141.el10.aarch64",
+      "verification": "RPM vendor signature"
+    },
+    {
+      "file": "archives/glibc-gconv-extra-2.39-141.el10.aarch64.rpm",
+      "sha256": "aae6bebbf782f91cbd395683db512a1a94ec4ee8888abfdbd751953283f9525f",
+      "package": "glibc-gconv-extra",
+      "version": "2.39-141.el10.aarch64",
+      "verification": "RPM vendor signature"
+    },
+    {
+      "file": "archives/glibc-minimal-langpack-2.39-141.el10.aarch64.rpm",
+      "sha256": "482142911f484db2aa86cb4d4992395dda51af000abcec47a95806902bd68415",
+      "package": "glibc-minimal-langpack",
+      "version": "2.39-141.el10.aarch64",
+      "verification": "RPM vendor signature"
+    },
+    {
+      "file": "archives/gmp-6.2.1-12.el10.aarch64.rpm",
+      "sha256": "9bbe58df2a29320daf9b4c36305fcc7f781ab0bdd486736c6d8c685838141a41",
+      "package": "gmp",
+      "version": "6.2.1-12.el10.aarch64",
+      "verification": "RPM vendor signature"
+    },
+    {
+      "file": "archives/grep-3.11-10.el10.aarch64.rpm",
+      "sha256": "d797740f7c738e5e7729949bde3d82274c5c6422242a82c1058fbe71ea0c37e9",
+      "package": "grep",
+      "version": "3.11-10.el10.aarch64",
+      "verification": "RPM vendor signature"
+    },
+    {
+      "file": "archives/jq-1.7.1-13.el10.aarch64.rpm",
+      "sha256": "8b53180d4269660c3cbf114295e996492b3a5c8b4a07e772aec20c17c44da409",
+      "package": "jq",
+      "version": "1.7.1-13.el10.aarch64",
+      "verification": "RPM vendor signature"
+    },
+    {
+      "file": "archives/libacl-2.4.0-2.el10.aarch64.rpm",
+      "sha256": "3a666e5a2151fbf10257ffc23939308e1c5fc3e9837fd8716c702c2a5b725a4b",
+      "package": "libacl",
+      "version": "2.4.0-2.el10.aarch64",
+      "verification": "RPM vendor signature"
+    },
+    {
+      "file": "archives/libattr-2.6.0-2.el10.aarch64.rpm",
+      "sha256": "e0884432ed6ac6f470ccec6a9b5df8fd7d68d6500d405dd5b18554591c3f1658",
+      "package": "libattr",
+      "version": "2.6.0-2.el10.aarch64",
+      "verification": "RPM vendor signature"
+    },
+    {
+      "file": "archives/libcap-2.69-7.el10.aarch64.rpm",
+      "sha256": "38c8ab1a8883b39bf46006ed39b7834cfa0df2ca0a4825908f7da4ed631c8fc6",
+      "package": "libcap",
+      "version": "2.69-7.el10.aarch64",
+      "verification": "RPM vendor signature"
+    },
+    {
+      "file": "archives/libcap-ng-0.9.3-2.el10.aarch64.rpm",
+      "sha256": "c2233c781e7cfc9173f4a94f97c152ffdabf8e47e4fe188619abb04ffe9e9f7c",
+      "package": "libcap-ng",
+      "version": "0.9.3-2.el10.aarch64",
+      "verification": "RPM vendor signature"
+    },
+    {
+      "file": "archives/libeconf-0.6.2-4.el10.aarch64.rpm",
+      "sha256": "1bb73420b4f72fb200ccc560224107e1ae62b8a7156051a88c9239c9def47983",
+      "package": "libeconf",
+      "version": "0.6.2-4.el10.aarch64",
+      "verification": "RPM vendor signature"
+    },
+    {
+      "file": "archives/libevent-2.1.13-1.el10.aarch64.rpm",
+      "sha256": "3c51c7b188142238d173cd34535a1f3966d9b2b38c1839606e03566d43a3e249",
+      "package": "libevent",
+      "version": "2.1.13-1.el10.aarch64",
+      "verification": "RPM vendor signature"
+    },
+    {
+      "file": "archives/libffi-3.4.4-10.el10.aarch64.rpm",
+      "sha256": "87b620ad4069f0a9623913acc568a2659bcee3695293b275a9f09b809437bf6e",
+      "package": "libffi",
+      "version": "3.4.4-10.el10.aarch64",
+      "verification": "RPM vendor signature"
+    },
+    {
+      "file": "archives/libgcc-14.4.1-3.el10.aarch64.rpm",
+      "sha256": "99719c9f6e92237dc2f7a3adb1806c1d74e7ed70127ee2b28b5ce1db81271308",
+      "package": "libgcc",
+      "version": "14.4.1-3.el10.aarch64",
+      "verification": "RPM vendor signature"
+    },
+    {
+      "file": "archives/libselinux-3.11-3.el10.aarch64.rpm",
+      "sha256": "6b94481d8001e5b1cc198e830456e1616c46da2b1205086e30ae9f0a126ba1b7",
+      "package": "libselinux",
+      "version": "3.11-3.el10.aarch64",
+      "verification": "RPM vendor signature"
+    },
+    {
+      "file": "archives/libsepol-3.11-2.el10.aarch64.rpm",
+      "sha256": "c58953aef27e129bd40fe0cef848511322c16f4ada0be524e434a123cef05ca7",
+      "package": "libsepol",
+      "version": "3.11-2.el10.aarch64",
+      "verification": "RPM vendor signature"
+    },
+    {
+      "file": "archives/libtasn1-4.20.0-5.el10.aarch64.rpm",
+      "sha256": "7620003f6a891292015f8db155c6d9c0717deb2f5ebfc30821da519637825ecc",
+      "package": "libtasn1",
+      "version": "4.20.0-5.el10.aarch64",
+      "verification": "RPM vendor signature"
+    },
+    {
+      "file": "archives/ncurses-base-6.4-15.20240127.el10.noarch.rpm",
+      "sha256": "9feb09b8a1f86ca76ed7dd6f66476b05fde5084757501cf24be4b8e836a99693",
+      "package": "ncurses-base",
+      "version": "6.4-15.20240127.el10.noarch",
+      "verification": "RPM vendor signature"
+    },
+    {
+      "file": "archives/ncurses-libs-6.4-15.20240127.el10.aarch64.rpm",
+      "sha256": "3436974a653ed58ff9bb3fe4cab25f3b2b81e672b5e034cc8c951ccd947f3257",
+      "package": "ncurses-libs",
+      "version": "6.4-15.20240127.el10.aarch64",
+      "verification": "RPM vendor signature"
+    },
+    {
+      "file": "archives/oniguruma-6.9.9-7.el10.aarch64.rpm",
+      "sha256": "a46b3f205885d5eb4d1111e1cb93ff828c364ffefc3e519e4af639dd96456fba",
+      "package": "oniguruma",
+      "version": "6.9.9-7.el10.aarch64",
+      "verification": "RPM vendor signature"
+    },
+    {
+      "file": "archives/openssl-fips-provider-3.5.8-1.el10.aarch64.rpm",
+      "sha256": "0d64525926c911708063e395d34b67523c2e92e385de40e30eea7a3d7b5c4e7f",
+      "package": "openssl-fips-provider",
+      "version": "3.5.8-1.el10.aarch64",
+      "verification": "RPM vendor signature"
+    },
+    {
+      "file": "archives/openssl-libs-3.5.8-1.el10.aarch64.rpm",
+      "sha256": "d98d2bc20fc4996cd7c026c48c7d18322fd6cf9799aadf4194107155e6b32fe1",
+      "package": "openssl-libs",
+      "version": "3.5.8-1.el10.aarch64",
+      "verification": "RPM vendor signature"
+    },
+    {
+      "file": "archives/p11-kit-0.26.4-1.el10.aarch64.rpm",
+      "sha256": "a3cfdc5bde366b5f88222ad2154f578de277bfe0a35e5631c8fe1503d39ad810",
+      "package": "p11-kit",
+      "version": "0.26.4-1.el10.aarch64",
+      "verification": "RPM vendor signature"
+    },
+    {
+      "file": "archives/p11-kit-trust-0.26.4-1.el10.aarch64.rpm",
+      "sha256": "465c251c3f8b10ae8afa72da7a4d99f615048eb96b7602954f05fc1bf86e14fb",
+      "package": "p11-kit-trust",
+      "version": "0.26.4-1.el10.aarch64",
+      "verification": "RPM vendor signature"
+    },
+    {
+      "file": "archives/pam-libs-1.6.1-11.el10.aarch64.rpm",
+      "sha256": "9b730de5039b508cea3b478b58f529d138694dbf89dc260ee61a8cc605a5902f",
+      "package": "pam-libs",
+      "version": "1.6.1-11.el10.aarch64",
+      "verification": "RPM vendor signature"
+    },
+    {
+      "file": "archives/pcre2-10.44-1.4.el10.aarch64.rpm",
+      "sha256": "0c6c8922af73980644044772ea5c70b276066282138eba1c6e3a128cfae071d2",
+      "package": "pcre2",
+      "version": "10.44-1.4.el10.aarch64",
+      "verification": "RPM vendor signature"
+    },
+    {
+      "file": "archives/pcre2-syntax-10.44-1.4.el10.noarch.rpm",
+      "sha256": "ea0b3e9690d614d677a310647126277c0aa190bae8af1e0058ca6086f49e60c0",
+      "package": "pcre2-syntax",
+      "version": "10.44-1.4.el10.noarch",
+      "verification": "RPM vendor signature"
+    },
+    {
+      "file": "archives/sed-4.9-5.el10.aarch64.rpm",
+      "sha256": "9c03d6148a319111bce62ba46e859c17c6615f51648788b499e28cbb429d1390",
+      "package": "sed",
+      "version": "4.9-5.el10.aarch64",
+      "verification": "RPM vendor signature"
+    },
+    {
+      "file": "archives/setup-2.14.5-7.el10.noarch.rpm",
+      "sha256": "bd7fb604e635ec8e49abc330cb15e9f30dcc1c6f248495308acd83e41896b29e",
+      "package": "setup",
+      "version": "2.14.5-7.el10.noarch",
+      "verification": "RPM vendor signature"
+    },
+    {
+      "file": "archives/systemd-libs-257-34.el10.aarch64.rpm",
+      "sha256": "9e03d41948be68c3884fc4831e89613b7d6fd224706ad888901e224cd234fa10",
+      "package": "systemd-libs",
+      "version": "257-34.el10.aarch64",
+      "verification": "RPM vendor signature"
+    },
+    {
+      "file": "archives/tmux-3.3a-14.20230918gitb202a2f.el10.aarch64.rpm",
+      "sha256": "7f2f499219ac015e7eb33b50c3ac34864305aa2362c90540a03dbbca2552bcec",
+      "package": "tmux",
+      "version": "3.3a-14.20230918gitb202a2f.el10.aarch64",
+      "verification": "RPM vendor signature"
+    },
+    {
+      "file": "archives/tree-2.1.0-8.el10.aarch64.rpm",
+      "sha256": "b6a448accedd1287320facbcfc71b012cb05d7201c0fb1a76f187e5335fe81d8",
+      "package": "tree",
+      "version": "2.1.0-8.el10.aarch64",
+      "verification": "RPM vendor signature"
+    },
+    {
+      "file": "archives/tzdata-2026e-1.el10.noarch.rpm",
+      "sha256": "0c225efbd95d3dc1948f2b0251e51dd3ab72da3f29c62e742ed66f0cd3653aa1",
+      "package": "tzdata",
+      "version": "2026e-1.el10.noarch",
+      "verification": "RPM vendor signature"
+    },
+    {
+      "file": "archives/zlib-ng-compat-2.2.3-3.el10.aarch64.rpm",
+      "sha256": "a7870bf73b68086ae1fdd3e2fb6191bf79dff1ab5ae16b907efbb0befe590dca",
+      "package": "zlib-ng-compat",
+      "version": "2.2.3-3.el10.aarch64",
+      "verification": "RPM vendor signature"
+    },
+    {
+      "file": "archives/repodata/588316f3ade9107d302c4364cc4cce1ebde1d82fb0bc1cf4182bf94760bf7533-other.xml.zst",
+      "sha256": "588316f3ade9107d302c4364cc4cce1ebde1d82fb0bc1cf4182bf94760bf7533",
+      "verification": "local dependency catalog; RPM assets vendor-signed"
+    },
+    {
+      "file": "archives/repodata/63b424e11f119244f57663d9c822e4b283ff164bccf100e53f825557c1daa5e5-primary.xml.zst",
+      "sha256": "63b424e11f119244f57663d9c822e4b283ff164bccf100e53f825557c1daa5e5",
+      "verification": "local dependency catalog; RPM assets vendor-signed"
+    },
+    {
+      "file": "archives/repodata/7400d18c78641982ba870a59efbef6f295ffec2a7daa1c04803a96940d843b5c-filelists.xml.zst",
+      "sha256": "7400d18c78641982ba870a59efbef6f295ffec2a7daa1c04803a96940d843b5c",
+      "verification": "local dependency catalog; RPM assets vendor-signed"
+    },
+    {
+      "file": "archives/repodata/repomd.xml",
+      "sha256": "22ace296c128ffd144134601da99b46e35dcbba5faf1fb6030d3e0ff89ea0398",
+      "verification": "local dependency catalog; RPM assets vendor-signed"
+    },
+    {
+      "file": "RPM-GPG-KEYS",
+      "sha256": "2bd78fc5c3deb9b1e88ee84dc8fc1bb823c2acd31318d8b084fa91abb7a36998",
+      "verification": "public keys from donor RPM database"
+    }
+  ]
+}

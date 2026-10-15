@@ -1,12 +1,15 @@
+#!/usr/bin/env bash
 set -uo pipefail
 
-source $(dirname ${BASH_SOURCE[0]})/constant.sh
+source "$(dirname "${BASH_SOURCE[0]}")/constant.sh"
 
-export GOPATH=${CODE_PATH}
-export GOROOT=${APP_PATH}/go
+export GOPATH=${GOPATH:-${CODE_PATH}}
+if [[ -d "${APP_PATH}/go" ]]; then
+  export GOROOT="${APP_PATH}/go"
+fi
 export GOBIN=$BIN_PATH
 #export GOMODCACHE=${GOPATH}/gomod
-export PATH=$HOME/.cargo/bin:$HOME/.autojump/bin:$HOME/.fzf/bin:$HOME/.local/bin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin:$GOBIN
+export PATH="$HOME/.cargo/bin:$HOME/.autojump/bin:$HOME/.fzf/bin:$HOME/.local/bin:$GOBIN:$PATH"
 export LD_LIBRARY_PATH=${APP_PATH}/ImageMagick/lib:/usr/local/lib:${APP_PATH}/ffmpeg/lib
 #export C_INCLUDE_PATH=
 export CPLUS_INCLUDE_PATH=${APP_PATH}/ImageMagick/include/ImageMagick-7:${APP_PATH}/ffmpeg/include

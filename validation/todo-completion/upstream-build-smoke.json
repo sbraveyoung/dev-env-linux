@@ -1,0 +1,23 @@
+[
+  {
+    "app": "H264Naked",
+    "revision": "d13aa44b4f1e332a849687565623ddf4f4479125",
+    "executable": "/home/sbrave/todo-upstreams/H264Naked/H264Naked",
+    "running_until_timeout": true,
+    "stderr": "This plugin does not support propagateSizeHints()\n"
+  },
+  {
+    "app": "FlvParser",
+    "revision": "8ad677c9f3ba951e8aede3210413f87436f21696",
+    "executable": "/home/sbrave/todo-upstreams/FlvParser/bin/FlvParser",
+    "running_until_timeout": true,
+    "stderr": "This plugin does not support propagateSizeHints()\n"
+  },
+  {
+    "app": "YUView",
+    "revision": "22c1e305bef25b23850a2068dcef3fb165c3fd60",
+    "executable": "/home/sbrave/todo-upstreams/YUView/YUViewApp/YUView",
+    "running_until_timeout": true,
+    "stderr": "This plugin does not support propagateSizeHints()\nThis plugin does not support propagateSizeHints()\nThis plugin does not support propagateSizeHints()\nThis plugin does not support propagateSizeHints()\nThis plugin does not support propagateSizeHints()\nThis plugin does not support propagateSizeHints()\n"
+  }
+]

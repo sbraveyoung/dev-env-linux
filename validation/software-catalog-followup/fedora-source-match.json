@@ -1,0 +1,6 @@
+{
+  "checked": 80,
+  "mismatches": [],
+  "python": "3.14.8",
+  "shellcheck": "/usr/sbin/shellcheck"
+}

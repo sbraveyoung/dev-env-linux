@@ -1,16 +1,15 @@
-FROM centos:8
-MAINTAINER sbrave <sbraveyoung@gmail.com>
-
-ARG NORMAL_USER=default
-ARG NORMAL_PASSWD=default
-ARG ROOT_PASSWD=default
-
-RUN    sed -i 's/mirrorlist/#mirrorlist/g' /etc/yum.repos.d/CentOS-* \
-    && sed -i 's|#baseurl=http://mirror.centos.org|baseurl=http://vault.centos.org|g' /etc/yum.repos.d/CentOS-*
-
-RUN    sed -i '/Defaults/s/env_reset/\!env_reset/g' /etc/sudoers \
-    && useradd --create-home $NORMAL_USER --password $NORMAL_PASSWD && echo "$NORMAL_USER ALL=(ALL) NOPASSWD:ALL" >>/etc/sudoers \
-    && echo "root:$ROOT_PASSWD" | chpasswd
-
-# TODO
-RUN ./build.sh
+FROM quay.io/centos/centos:stream10
+ARG NORMAL_USER=developer
+RUN dnf install -y bash ca-certificates curl git sudo wget python3 \
+    && dnf clean all \
+    && (id "$NORMAL_USER" >/dev/null 2>&1 || useradd --create-home --shell /bin/bash "$NORMAL_USER") \
+    && printf '%s ALL=(ALL) NOPASSWD:ALL\n' "$NORMAL_USER" > /etc/sudoers.d/dev-env
+WORKDIR /opt/dev-env-linux
+RUN chown "${NORMAL_USER}:${NORMAL_USER}" /opt/dev-env-linux
+COPY --chown=${NORMAL_USER}:${NORMAL_USER} build.sh software.lock.json ./
+COPY --chown=${NORMAL_USER}:${NORMAL_USER} scripts ./scripts
+COPY --chown=${NORMAL_USER}:${NORMAL_USER} sheath ./sheath
+COPY --chown=${NORMAL_USER}:${NORMAL_USER} config ./config
+COPY --chown=${NORMAL_USER}:${NORMAL_USER} tests ./tests
+USER ${NORMAL_USER}
+CMD ["bash"]

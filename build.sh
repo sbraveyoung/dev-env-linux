@@ -1,117 +1,52 @@
 #!/usr/bin/env bash
 
-set -exuo pipefail
+set -euo pipefail
 
-export OPTIONAL=false
-export WITH_LINUX=false             # docker or vm
-export LINUX_ENV_NAME=linux-dev-env # linux_dev_env is invalid
-export LINUX_USER=$(whoami)
-export LINUX_NORMAL_PASSWD=""
-export LINUX_ROOT_PASSWD=""
-export OPERATOR=install # or upgrade/uninstall
-export ENABLE_APPS=()
-export DISABLE_APPS=()
-export CONCURRENT=5
-export TIMEOUT=7200 # 2hours
+REPO_ROOT=$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)
+export REPO_ROOT
+CACHE_FILE="${REPO_ROOT}/.$(basename "${REPO_ROOT}")"
+export CACHE_FILE
+source "${REPO_ROOT}/scripts/cli.sh"
+parse_cli "$@"
+
+if [[ "$SHOW_HELP" == true ]]; then
+  print_usage
+  exit 0
+fi
+if [[ "$CLEAN_CACHE" == true ]]; then
+  rm -f -- "$CACHE_FILE"
+  exit 0
+fi
+SYSTEM=$(uname -s | tr 'A-Z' 'a-z')
+export SYSTEM
+if [[ $SYSTEM == darwin && $WITH_LINUX != false ]]; then
+  source "${REPO_ROOT}/scripts/setup_linux_${WITH_LINUX}.sh"
+  exit $?
+fi
+
+if [[ ${BASH_VERSINFO[0]} -lt 4 ]]; then
+  printf 'Installation requires Bash 4+; current Bash is %s.\n' "$BASH_VERSION" >&2
+  exit 2
+fi
+
 declare -A APP_FLAGS
-export APP_FLAGS
-export SYSTEM=$(uname -s | tr 'A-Z' 'a-z')
-export REPO_ROOT=$(pwd)
-export CACHE_FILE=${REPO_ROOT}/.$(basename ${REPO_ROOT})
-
-[ $# -gt 0 ] && {
-	for arg in "$@"; do
-		case ${arg} in
-		--help*)
-			#TODO:
-			;;
-		--only=)
-			#TODO: install/upgrade/uninstall something only
-			;;
-		--optional=*)
-			case ${arg#--optional=} in
-			true | True | t | T | 1)
-				OPTIONAL=true
-				;;
-			false | False | f | F | 0)
-				OPTIONAL=false
-				;;
-			*) ;;
-			esac
-			;;
-		--with-linux=*)
-			# vm or docker
-      case ${arg#--with-linux=} in
-        vm | docker)
-          WITH_LINUX=${arg#--with-linux=}
-          ;;
-        *)
-          printf2stderr "error" "invalid valud of argument --with-linux: %s\n" "${arg$--with-linux=}"
-          exit 1
-          ;;
-      esac
-			;;
-		--linux_env_name=*)
-			LINUX_ENV_NAME=${arg#--linux_env_name=}
-			;;
-		--linux_user=*)
-			LINUX_USER=${arg#--linux_user=}
-			;;
-		--linux_normal_passwd=*)
-			LINUX_NORMAL_PASSWD=${arg#--linux_normal_passwd=}
-			;;
-		--linux_root_passwd=*)
-			LINUX_ROOT_PASSWD=${arg#--linux_root_passwd=}
-			;;
-		--operator=*)
-			OPERATOR=${arg#--operator=}
-			;;
-		--enable-*)
-			ENABLE_APPS=("${ENABLE_APPS[@]}" "${arg#--enable-}")
-			;;
-		--disable-*)
-			DISABLE_APPS=("${DISABLE_APPS[@]}" "${arg#--disable-}")
-			;;
-		--concurrent=*)
-			CONCURRENT=${arg#--concurrent=}
-			;;
-		--timeout=*)
-			TIMEOUT=${arg#--timeout=}
-			;;
-		--app_flag=*)
-			# eg: --app_flag=wetype=xxx
-			app_flag=${arg#--app_flag=}
-			if [[ ${app_flag} == "" ]] || [[ ! ${app_flag} =~ "=" ]]; then
-				printf2stderr "error" "invalid argument: %s\n" "${arg}"
-				exit 1
-			fi
-
-			items=${app_flag//=/ }
-			app="${items[0]}"
-			unset "items[0]"
-			APP_FLAGS[${app}]=${APP_FLAGS[${app}]}"/"${items}
-			;;
-		--clean_cache)
-			rm -rf ${CACHE_FILE}
-			exit 0
-			;;
-		*)
-			printf2stderr "error" "arg:%s is not supported.\n" "${arg}"
-			exit 1
-			;;
-		esac
-		shift
-	done
-}
-
-cd scripts
-source common_defines.sh
-
+if [[ ${#APP_FLAG_ARGS[@]} -gt 0 ]]; then
+  for app_flag in "${APP_FLAG_ARGS[@]}"; do
+    app=${app_flag%%=*}
+    value=${app_flag#*=}
+    APP_FLAGS[$app]="${APP_FLAGS[$app]:-}/${value}"
+  done
+fi
+export APP_FLAGS OPTIONAL WITH_LINUX LINUX_ENV_NAME LINUX_USER
+export LINUX_NORMAL_PASSWD LINUX_ROOT_PASSWD OPERATOR CONCURRENT TIMEOUT
+export ENABLE_APPS DISABLE_APPS ONLY_APPS SKIP_SYSTEM
+cd "${REPO_ROOT}/scripts"
+source ./common_defines.sh
 if is_mac; then
-	source setup_macos.sh # exec setup_macos.sh in current process in order to use array variables which have be defined.
+  source ./setup_macos.sh
 elif is_linux; then
-	source setup_linux.sh
+  source ./setup_linux.sh
 else
-	printf2stderr "error" "unsupported system:%s.\n" "$(uname -s)"
-	exit 1
+  printf2stderr "error" "unsupported system:%s.\n" "$(uname -s)"
+  exit 1
 fi

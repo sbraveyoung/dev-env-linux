@@ -1,0 +1,1443 @@
+{
+  "schema": 1,
+  "profiles": {
+    "linux-default": [
+      "axel",
+      "bcal",
+      "diff-so-fancy",
+      "fff",
+      "git-commander",
+      "jq",
+      "lsix",
+      "PathPicker",
+      "tig",
+      "tmux",
+      "neovim",
+      "vifm",
+      "yank",
+      "insect",
+      "shellcheck",
+      "git-flow-completion",
+      "git-quick-stats",
+      "ffmpeg",
+      "mcfly",
+      "mosh",
+      "cloc",
+      "svg-term-cli",
+      "zx",
+      "squoosh_cli",
+      "bash-language-server",
+      "setuptools",
+      "httpie",
+      "pybind11",
+      "iredis",
+      "ranger-fm",
+      "mdv",
+      "thefuck",
+      "mycli",
+      "asciinema",
+      "http-prompt",
+      "yapf",
+      "icdiff",
+      "golang",
+      "gron",
+      "ccat",
+      "dlv",
+      "cheat",
+      "fx",
+      "fq",
+      "yq",
+      "lazydocker",
+      "this-repo",
+      "glances",
+      "glow",
+      "curlie",
+      "duf",
+      "dsq",
+      "z",
+      "rust",
+      "fzf",
+      "lsd",
+      "broot",
+      "exa",
+      "fd-find",
+      "hexyl",
+      "ripgrep",
+      "sd",
+      "bat",
+      "procs",
+      "gping",
+      "bottom",
+      "choose",
+      "du-dust",
+      "onefetch",
+      "tealdeer",
+      "pastel",
+      "hyperfine",
+      "git-delta",
+      "xh",
+      "zoxide",
+      "fselect"
+    ],
+    "linux-manual": [
+      "ImageMagick",
+      "dive",
+      "grv",
+      "trash-cli",
+      "FlameGraph",
+      "lazygit",
+      "forgit",
+      "htop",
+      "sdl",
+      "vim",
+      "aminal",
+      "pomo",
+      "percol",
+      "flvlib",
+      "direnv"
+    ],
+    "darwin-base": [
+      "wechat",
+      "raycast",
+      "google-chrome",
+      "obsidian",
+      "dash",
+      "alacritty",
+      "ffmpeg@6",
+      "wetype"
+    ],
+    "darwin-optional": [
+      "orbstack",
+      "alfred",
+      "utools",
+      "typora",
+      "qqmusic",
+      "arc",
+      "snipaste",
+      "telegram",
+      "tencent-lemon",
+      "tencent-meeting",
+      "trojanx",
+      "handbrake",
+      "avidemux",
+      "vlc",
+      "audacity",
+      "mediainfo",
+      "obs",
+      "zenmap",
+      "xquartz",
+      "figma",
+      "He3",
+      "YuvEye",
+      "YUView",
+      "StreamEye",
+      "FlvParser",
+      "H264Naked"
+    ],
+    "darwin-development": [
+      "visual-studio-code",
+      "gnu-sed",
+      "gawk",
+      "lrzsz",
+      "coreutils",
+      "jetbrains-toolbox",
+      "ctags",
+      "python3",
+      "cmake",
+      "fzf",
+      "wget",
+      "nvm",
+      "icdiff",
+      "fd",
+      "the_silver_searcher",
+      "nvim",
+      "tmux",
+      "git",
+      "ssh-copy-id",
+      "ranger",
+      "cloc"
+    ]
+  },
+  "drivers": {
+    "apt": {
+      "base_packages": [
+        "build-essential",
+        "libc6-dev",
+        "bison",
+        "flex",
+        "texinfo",
+        "libtool",
+        "zlib1g-dev",
+        "libbz2-dev",
+        "libssl-dev",
+        "libsqlite3-dev",
+        "libreadline-dev",
+        "tk-dev",
+        "liblzma-dev",
+        "gettext",
+        "pkg-config",
+        "autoconf",
+        "automake",
+        "txt2man",
+        "libncurses-dev",
+        "tcl-dev",
+        "net-tools",
+        "asciidoc",
+        "libpcre2-dev",
+        "llvm",
+        "clang",
+        "libclang-dev",
+        "libx11-dev",
+        "libxcursor-dev",
+        "libxrandr-dev",
+        "libxinerama-dev",
+        "libgl1-mesa-dev",
+        "libglu1-mesa-dev",
+        "freeglut3-dev",
+        "libxi-dev",
+        "libsdl2-dev",
+        "mesa-utils",
+        "libevent-dev",
+        "dnsutils",
+        "libfreetype-dev",
+        "libglib2.0-dev",
+        "libfontconfig1-dev",
+        "libpango1.0-dev",
+        "privoxy",
+        "cscope",
+        "coreutils",
+        "ninja-build",
+        "libprotobuf-dev",
+        "libwmf-dev",
+        "libgs-dev",
+        "libgdbm-dev",
+        "gdb",
+        "git",
+        "unzip",
+        "universal-ctags",
+        "expect",
+        "passwd",
+        "wget",
+        "cmake",
+        "figlet",
+        "curl",
+        "zsh",
+        "perl",
+        "nodejs",
+        "npm",
+        "python3",
+        "python3-pip",
+        "python3-venv",
+        "python3-dev",
+        "ruby",
+        "lua5.4",
+        "luajit",
+        "pipx"
+      ],
+      "optional_packages": [
+        "libpng-dev",
+        "libjpeg-dev",
+        "libx264-dev",
+        "libwebp-dev",
+        "libde265-dev",
+        "libheif-dev",
+        "libtiff-dev",
+        "ncdu",
+        "gh",
+        "colordiff",
+        "git-lfs",
+        "ack",
+        "tree"
+      ],
+      "package_ext": "deb",
+      "ssh_client": "openssh-client"
+    },
+    "dnf": {
+      "base_packages": [
+        "libgcc",
+        "glibc-devel",
+        "bison",
+        "flex",
+        "texinfo",
+        "libtool",
+        "zlib-devel",
+        "bzip2-devel",
+        "openssl-devel",
+        "sqlite-devel",
+        "readline-devel",
+        "tk-devel",
+        "xz-devel",
+        "gettext",
+        "pkg-config",
+        "autoconf",
+        "automake",
+        "txt2man",
+        "ncurses",
+        "ncurses-devel",
+        "tcl-devel",
+        "net-tools",
+        "asciidoc",
+        "pcre2-devel",
+        "llvm",
+        "clang-libs",
+        "clang-devel",
+        "libX11-devel",
+        "libXcursor-devel",
+        "libXrandr-devel",
+        "libXinerama-devel",
+        "mesa-libGL-devel",
+        "mesa-libGLU-devel",
+        "freeglut-devel",
+        "libXi-devel",
+        "SDL2-devel",
+        "mesa-dri-drivers",
+        "libevent",
+        "libevent-devel",
+        "bind-utils",
+        "freetype-devel",
+        "glib2-devel",
+        "fontconfig-devel",
+        "pango-devel",
+        "privoxy",
+        "initscripts",
+        "cscope",
+        "coreutils",
+        "ninja-build",
+        "protobuf-devel",
+        "libwmf-devel",
+        "ghostscript-devel",
+        "gdbm-devel",
+        "createrepo_c",
+        "which",
+        "sudo",
+        "gcc",
+        "gcc-c++",
+        "gdb",
+        "git",
+        "make",
+        "unzip",
+        "ctags",
+        "expect",
+        "passwd",
+        "wget",
+        "cmake",
+        "figlet",
+        "pkgconfig",
+        "curl",
+        "zsh",
+        "perl",
+        "nodejs",
+        "python3",
+        "python3-pip",
+        "python3-devel",
+        "ruby",
+        "lua",
+        "luajit",
+        "pipx"
+      ],
+      "optional_packages": [
+        "libpng",
+        "libpng-devel",
+        "libjpeg-devel",
+        "x264-devel",
+        "x264-libs",
+        "libwebp-devel",
+        "libde265",
+        "libheif*",
+        "libtiff-devel",
+        "ncdu",
+        "gh",
+        "colordiff",
+        "git-lfs",
+        "ack",
+        "tree"
+      ],
+      "package_ext": "rpm",
+      "ssh_client": "openssh-clients"
+    }
+  },
+  "backend_dependencies": {
+    "source": {
+      "apt": [
+        "build-essential",
+        "autoconf",
+        "autoconf-archive",
+        "automake",
+        "libtool",
+        "pkg-config",
+        "gettext"
+      ],
+      "dnf": [
+        "gcc",
+        "gcc-c++",
+        "make",
+        "autoconf",
+        "autoconf-archive",
+        "automake",
+        "libtool",
+        "pkgconf-pkg-config",
+        "gettext-devel"
+      ]
+    },
+    "npm": {
+      "apt": [
+        "nodejs",
+        "npm"
+      ],
+      "dnf": [
+        "nodejs",
+        "npm"
+      ]
+    },
+    "pip": {
+      "apt": [
+        "python3-venv"
+      ],
+      "dnf": [
+        "python3-venv"
+      ]
+    },
+    "git": {
+      "apt": [
+        "git"
+      ],
+      "dnf": [
+        "git"
+      ]
+    }
+  },
+  "apps": {
+    "gron": {
+      "managed": {
+        "backend": "go",
+        "package": "github.com/tomnomnom/gron"
+      },
+      "native": {
+        "apt": "gron"
+      }
+    },
+    "ccat": {
+      "managed": {
+        "backend": "go",
+        "package": "github.com/jingweno/ccat"
+      }
+    },
+    "dlv": {
+      "managed": {
+        "backend": "go",
+        "package": "github.com/go-delve/delve/cmd/dlv"
+      }
+    },
+    "cheat": {
+      "managed": {
+        "backend": "go",
+        "package": "github.com/cheat/cheat/cmd/cheat"
+      }
+    },
+    "fx": {
+      "managed": {
+        "backend": "go",
+        "package": "github.com/antonmedv/fx"
+      }
+    },
+    "fq": {
+      "managed": {
+        "backend": "go",
+        "package": "github.com/wader/fq"
+      },
+      "native": {
+        "apt": "fq"
+      }
+    },
+    "yq": {
+      "managed": {
+        "backend": "go",
+        "package": "github.com/mikefarah/yq/v4"
+      }
+    },
+    "lazydocker": {
+      "managed": {
+        "backend": "go",
+        "package": "github.com/jesseduffield/lazydocker"
+      }
+    },
+    "glow": {
+      "managed": {
+        "backend": "go",
+        "package": "github.com/charmbracelet/glow"
+      }
+    },
+    "curlie": {
+      "managed": {
+        "backend": "go",
+        "package": "github.com/rs/curlie"
+      }
+    },
+    "duf": {
+      "managed": {
+        "backend": "go",
+        "package": "github.com/muesli/duf"
+      },
+      "native": {
+        "apt": "duf"
+      }
+    },
+    "dsq": {
+      "managed": {
+        "backend": "go",
+        "package": "github.com/multiprocessio/dsq"
+      }
+    },
+    "mcfly": {
+      "managed": {
+        "backend": "cargo",
+        "package": "mcfly"
+      }
+    },
+    "lsd": {
+      "managed": {
+        "backend": "cargo",
+        "package": "lsd"
+      },
+      "native": {
+        "apt": "lsd"
+      }
+    },
+    "broot": {
+      "managed": {
+        "backend": "cargo",
+        "package": "broot",
+        "cargo_profile": {
+          "lto": "false",
+          "codegen_units": "16"
+        }
+      }
+    },
+    "fd-find": {
+      "managed": {
+        "backend": "cargo",
+        "package": "fd-find"
+      },
+      "native": {
+        "apt": "fd-find"
+      }
+    },
+    "hexyl": {
+      "managed": {
+        "backend": "cargo",
+        "package": "hexyl"
+      },
+      "native": {
+        "apt": "hexyl"
+      }
+    },
+    "ripgrep": {
+      "managed": {
+        "backend": "cargo",
+        "package": "ripgrep"
+      },
+      "native": {
+        "apt": "ripgrep",
+        "dnf": "ripgrep"
+      }
+    },
+    "sd": {
+      "managed": {
+        "backend": "cargo",
+        "package": "sd"
+      },
+      "native": {
+        "apt": "sd"
+      }
+    },
+    "bat": {
+      "managed": {
+        "backend": "cargo",
+        "package": "bat"
+      },
+      "native": {
+        "apt": "bat"
+      }
+    },
+    "procs": {
+      "managed": {
+        "backend": "cargo",
+        "package": "procs"
+      }
+    },
+    "gping": {
+      "managed": {
+        "backend": "cargo",
+        "package": "gping"
+      },
+      "native": {
+        "apt": "gping"
+      }
+    },
+    "bottom": {
+      "managed": {
+        "backend": "cargo",
+        "package": "bottom"
+      }
+    },
+    "choose": {
+      "managed": {
+        "backend": "cargo",
+        "package": "choose"
+      }
+    },
+    "du-dust": {
+      "managed": {
+        "backend": "cargo",
+        "package": "du-dust"
+      }
+    },
+    "onefetch": {
+      "managed": {
+        "backend": "cargo",
+        "package": "onefetch"
+      }
+    },
+    "tealdeer": {
+      "managed": {
+        "backend": "cargo",
+        "package": "tealdeer"
+      },
+      "native": {
+        "apt": "tealdeer"
+      }
+    },
+    "pastel": {
+      "managed": {
+        "backend": "cargo",
+        "package": "pastel"
+      }
+    },
+    "hyperfine": {
+      "managed": {
+        "backend": "cargo",
+        "package": "hyperfine"
+      },
+      "native": {
+        "apt": "hyperfine"
+      }
+    },
+    "git-delta": {
+      "managed": {
+        "backend": "cargo",
+        "package": "git-delta"
+      },
+      "native": {
+        "apt": "git-delta"
+      }
+    },
+    "xh": {
+      "managed": {
+        "backend": "cargo",
+        "package": "xh"
+      }
+    },
+    "zoxide": {
+      "managed": {
+        "backend": "cargo",
+        "package": "zoxide"
+      },
+      "native": {
+        "apt": "zoxide"
+      }
+    },
+    "fselect": {
+      "managed": {
+        "backend": "cargo",
+        "package": "fselect"
+      }
+    },
+    "exa": {
+      "managed": {
+        "backend": "cargo",
+        "package": "eza",
+        "migration": "exa is replaced by eza",
+        "aliases": {
+          "exa": "eza"
+        }
+      },
+      "native": {
+        "apt": "eza"
+      }
+    },
+    "httpie": {
+      "managed": {
+        "backend": "pip",
+        "package": "httpie"
+      },
+      "native": {
+        "apt": "httpie"
+      }
+    },
+    "iredis": {
+      "managed": {
+        "backend": "pip",
+        "package": "iredis"
+      },
+      "native": {
+        "apt": "iredis"
+      }
+    },
+    "ranger-fm": {
+      "managed": {
+        "backend": "pip",
+        "package": "ranger-fm",
+        "bin_scripts": [
+          "ranger"
+        ]
+      },
+      "native": {
+        "apt": "ranger"
+      }
+    },
+    "mdv": {
+      "managed": {
+        "backend": "pip",
+        "package": "mdv"
+      }
+    },
+    "thefuck": {
+      "managed": {
+        "backend": "pip",
+        "package": "thefuck"
+      },
+      "native": {
+        "apt": "thefuck"
+      }
+    },
+    "mycli": {
+      "managed": {
+        "backend": "pip",
+        "package": "mycli"
+      },
+      "native": {
+        "apt": "mycli"
+      }
+    },
+    "asciinema": {
+      "managed": {
+        "backend": "pip",
+        "package": "asciinema"
+      },
+      "native": {
+        "apt": "asciinema"
+      }
+    },
+    "http-prompt": {
+      "managed": {
+        "backend": "pip",
+        "package": "http-prompt"
+      }
+    },
+    "yapf": {
+      "managed": {
+        "backend": "pip",
+        "package": "yapf"
+      }
+    },
+    "icdiff": {
+      "managed": {
+        "backend": "pip",
+        "package": "icdiff"
+      },
+      "native": {
+        "apt": "icdiff"
+      },
+      "darwin": {
+        "backend": "brew",
+        "package": "icdiff"
+      }
+    },
+    "glances": {
+      "managed": {
+        "backend": "pip",
+        "package": "glances"
+      },
+      "native": {
+        "apt": "glances"
+      }
+    },
+    "trash-cli": {
+      "managed": {
+        "backend": "pip",
+        "package": "trash-cli"
+      }
+    },
+    "setuptools": {
+      "managed": {
+        "backend": "pip",
+        "package": "setuptools"
+      }
+    },
+    "pybind11": {
+      "managed": {
+        "backend": "pip",
+        "package": "pybind11"
+      }
+    },
+    "git-commander": {
+      "managed": {
+        "backend": "npm",
+        "package": "git-commander"
+      }
+    },
+    "svg-term-cli": {
+      "managed": {
+        "backend": "npm",
+        "package": "svg-term-cli"
+      }
+    },
+    "zx": {
+      "managed": {
+        "backend": "npm",
+        "package": "zx"
+      }
+    },
+    "squoosh_cli": {
+      "managed": {
+        "backend": "npm",
+        "package": "@squoosh/cli"
+      }
+    },
+    "bash-language-server": {
+      "managed": {
+        "backend": "npm",
+        "package": "bash-language-server"
+      }
+    },
+    "diff-so-fancy": {
+      "managed": {
+        "backend": "git",
+        "package": "https://github.com/so-fancy/diff-so-fancy.git",
+        "commands": {
+          "diff-so-fancy": "diff-so-fancy"
+        }
+      }
+    },
+    "fff": {
+      "managed": {
+        "backend": "git",
+        "package": "https://github.com/dylanaraps/fff.git",
+        "commands": {
+          "fff": "fff"
+        }
+      }
+    },
+    "lsix": {
+      "managed": {
+        "backend": "git",
+        "package": "https://github.com/hackerb9/lsix.git",
+        "commands": {
+          "lsix": "lsix"
+        }
+      }
+    },
+    "PathPicker": {
+      "managed": {
+        "backend": "git",
+        "package": "https://github.com/facebook/PathPicker.git",
+        "commands": {
+          "fpp": "fpp"
+        }
+      }
+    },
+    "git-flow-completion": {
+      "managed": {
+        "backend": "git",
+        "package": "https://github.com/bobthecow/git-flow-completion.git",
+        "commands": {}
+      }
+    },
+    "git-quick-stats": {
+      "managed": {
+        "backend": "git",
+        "package": "https://github.com/arzzen/git-quick-stats.git",
+        "commands": {
+          "git-quick-stats": "git-quick-stats"
+        }
+      }
+    },
+    "z": {
+      "managed": {
+        "backend": "git",
+        "package": "https://github.com/rupa/z.git",
+        "commands": {}
+      }
+    },
+    "FlameGraph": {
+      "managed": {
+        "backend": "git",
+        "package": "https://github.com/brendangregg/FlameGraph.git",
+        "commands": {}
+      }
+    },
+    "insect": {
+      "managed": {
+        "backend": "npm",
+        "package": "insect",
+        "note": "Archived upstream; official npm CLI supports ARM without x64 binaries"
+      }
+    },
+    "dive": {
+      "managed": {
+        "backend": "go",
+        "package": "github.com/wagoodman/dive"
+      }
+    },
+    "ImageMagick": {
+      "managed": {
+        "backend": "source",
+        "package": "https://github.com/ImageMagick/ImageMagick.git"
+      }
+    },
+    "lazygit": {
+      "managed": {
+        "backend": "go",
+        "package": "github.com/jesseduffield/lazygit",
+        "note": "Optional ARM-capable Git TUI alternative; does not alias grv"
+      }
+    },
+    "axel": {
+      "managed": {
+        "backend": "source",
+        "package": "https://github.com/axel-download-accelerator/axel.git",
+        "ref": "v2.17.13",
+        "note": "EL fallback: stable release compatible with Autoconf 2.71"
+      },
+      "native": {
+        "apt": "axel",
+        "fedora": "axel"
+      }
+    },
+    "bcal": {
+      "native": {
+        "apt": "bcal",
+        "dnf": "bcal"
+      }
+    },
+    "jq": {
+      "native": {
+        "apt": "jq",
+        "dnf": "jq"
+      }
+    },
+    "tig": {
+      "native": {
+        "apt": "tig",
+        "dnf": "tig"
+      }
+    },
+    "tmux": {
+      "native": {
+        "apt": "tmux",
+        "dnf": "tmux"
+      },
+      "darwin": {
+        "backend": "brew",
+        "package": "tmux"
+      },
+      "plugin_url": "https://github.com/tmux-plugins/tpm"
+    },
+    "neovim": {
+      "native": {
+        "apt": "neovim",
+        "dnf": "neovim"
+      }
+    },
+    "vifm": {
+      "native": {
+        "apt": "vifm",
+        "dnf": "vifm"
+      }
+    },
+    "yank": {
+      "native": {
+        "apt": "yank",
+        "dnf": "yank"
+      }
+    },
+    "shellcheck": {
+      "native": {
+        "apt": "shellcheck",
+        "dnf": "shellcheck"
+      }
+    },
+    "ffmpeg": {
+      "native": {
+        "apt": "ffmpeg",
+        "dnf": "ffmpeg",
+        "fedora": "ffmpeg-free"
+      }
+    },
+    "mosh": {
+      "native": {
+        "apt": "mosh",
+        "dnf": "mosh"
+      }
+    },
+    "cloc": {
+      "native": {
+        "apt": "cloc",
+        "dnf": "cloc"
+      },
+      "darwin": {
+        "backend": "brew",
+        "package": "cloc"
+      }
+    },
+    "golang": {
+      "version": {
+        "variable": "GOLANG_VERSION",
+        "default": "1.27.2",
+        "latest": {
+          "provider": "go",
+          "url": "https://go.dev/dl/?mode=json"
+        }
+      },
+      "download_url": "https://go.dev/dl/go{version}.linux-{arch}.tar.gz",
+      "checksum_url": "https://go.dev/dl/?mode=json&include=all"
+    },
+    "this-repo": {},
+    "rust": {
+      "version": {
+        "variable": "RUST_VERSION",
+        "default": "1.99.0"
+      },
+      "download_url": "https://static.rust-lang.org/rustup/dist/{target}/rustup-init",
+      "targets": {
+        "arm64": "aarch64-unknown-linux-gnu",
+        "amd64": "x86_64-unknown-linux-gnu"
+      }
+    },
+    "fzf": {
+      "native": {
+        "apt": "fzf",
+        "dnf": "fzf"
+      },
+      "darwin": {
+        "backend": "brew",
+        "package": "fzf"
+      }
+    },
+    "grv": {
+      "version": {
+        "variable": "GRV_VERSION",
+        "default": "0.3.2",
+        "latest": {
+          "provider": "github",
+          "url": "https://api.github.com/repos/rgburke/grv/releases/latest"
+        }
+      },
+      "download_url": "https://github.com/rgburke/grv/releases/download/v{version}/grv_v{version}_linux64",
+      "architectures": [
+        "amd64"
+      ]
+    },
+    "forgit": {
+      "note": "Downloads intentionally disabled; explicit selection reports unsupported",
+      "status": "disabled"
+    },
+    "htop": {
+      "source_url": "https://github.com/hishamhm/htop"
+    },
+    "sdl": {
+      "source_url": "https://github.com/libsdl-org/SDL.git"
+    },
+    "vim": {
+      "native": {
+        "apt": "vim",
+        "dnf": "vim"
+      }
+    },
+    "aminal": {
+      "module": "github.com/liamg/aminal@latest"
+    },
+    "pomo": {
+      "source_url": "https://github.com/kevinschoon/pomo.git"
+    },
+    "percol": {
+      "legacy_python_package": "percol"
+    },
+    "flvlib": {
+      "legacy_python_package": "flvlib"
+    },
+    "wechat": {
+      "darwin": {
+        "backend": "brew",
+        "package": "wechat"
+      }
+    },
+    "raycast": {
+      "darwin": {
+        "backend": "brew",
+        "package": "raycast"
+      }
+    },
+    "google-chrome": {
+      "darwin": {
+        "backend": "brew",
+        "package": "google-chrome"
+      }
+    },
+    "obsidian": {
+      "darwin": {
+        "backend": "brew",
+        "package": "obsidian"
+      }
+    },
+    "dash": {
+      "darwin": {
+        "backend": "brew",
+        "package": "dash"
+      }
+    },
+    "alacritty": {
+      "darwin": {
+        "backend": "brew",
+        "package": "alacritty",
+        "font_tap": "homebrew/cask-fonts",
+        "font_package": "font-jetbrains-mono-nerd-font",
+        "font_family": "JetBrainsMono Nerd"
+      }
+    },
+    "ffmpeg@6": {
+      "darwin": {
+        "backend": "brew",
+        "package": "ffmpeg@6"
+      }
+    },
+    "wetype": {
+      "darwin": {
+        "backend": "hook",
+        "implemented": true,
+        "version": {
+          "variable": "WETYPE_VERSION",
+          "default": "0.9.8_201"
+        },
+        "download_url": "https://wetype.wxqcloud.qq.com/app/mac/{release}/WeTypeInstaller_{version}.zip",
+        "archive": "WeTypeInstaller_{version}.zip",
+        "bundle": "WeTypeInstaller_{version}.app"
+      }
+    },
+    "orbstack": {
+      "darwin": {
+        "backend": "brew",
+        "package": "orbstack"
+      }
+    },
+    "alfred": {
+      "darwin": {
+        "backend": "brew",
+        "package": "alfred"
+      }
+    },
+    "utools": {
+      "darwin": {
+        "backend": "brew",
+        "package": "utools"
+      }
+    },
+    "typora": {
+      "darwin": {
+        "backend": "brew",
+        "package": "typora"
+      }
+    },
+    "qqmusic": {
+      "darwin": {
+        "backend": "brew",
+        "package": "qqmusic"
+      }
+    },
+    "arc": {
+      "darwin": {
+        "backend": "brew",
+        "package": "arc"
+      }
+    },
+    "snipaste": {
+      "darwin": {
+        "backend": "brew",
+        "package": "snipaste"
+      }
+    },
+    "telegram": {
+      "darwin": {
+        "backend": "brew",
+        "package": "telegram"
+      }
+    },
+    "tencent-lemon": {
+      "darwin": {
+        "backend": "brew",
+        "package": "tencent-lemon"
+      }
+    },
+    "tencent-meeting": {
+      "darwin": {
+        "backend": "brew",
+        "package": "tencent-meeting"
+      }
+    },
+    "trojanx": {
+      "darwin": {
+        "backend": "brew",
+        "package": "trojanx"
+      }
+    },
+    "handbrake": {
+      "darwin": {
+        "backend": "brew",
+        "package": "handbrake"
+      }
+    },
+    "avidemux": {
+      "darwin": {
+        "backend": "brew",
+        "package": "avidemux"
+      }
+    },
+    "vlc": {
+      "darwin": {
+        "backend": "brew",
+        "package": "vlc"
+      }
+    },
+    "audacity": {
+      "darwin": {
+        "backend": "brew",
+        "package": "audacity"
+      }
+    },
+    "mediainfo": {
+      "darwin": {
+        "backend": "brew",
+        "package": "mediainfo"
+      }
+    },
+    "obs": {
+      "darwin": {
+        "backend": "brew",
+        "package": "obs"
+      }
+    },
+    "zenmap": {
+      "darwin": {
+        "backend": "brew",
+        "package": "zenmap"
+      }
+    },
+    "xquartz": {
+      "darwin": {
+        "backend": "brew",
+        "package": "xquartz"
+      }
+    },
+    "figma": {
+      "darwin": {
+        "backend": "brew",
+        "package": "figma"
+      }
+    },
+    "He3": {
+      "darwin": {
+        "backend": "brew",
+        "package": "he3",
+        "tap": "he3-app/he3"
+      }
+    },
+    "YuvEye": {
+      "darwin": {
+        "backend": "hook",
+        "implemented": false
+      }
+    },
+    "YUView": {
+      "darwin": {
+        "backend": "hook",
+        "installer": "qt",
+        "source_url": "https://github.com/IENT/YUView.git",
+        "revision": "22c1e305bef25b23850a2068dcef3fb165c3fd60",
+        "project": "YUView.pro",
+        "bundle": "YUViewApp/YUView.app",
+        "qt_package": "qt@5",
+        "brew_dependencies": [
+          "qt@5"
+        ]
+      }
+    },
+    "StreamEye": {
+      "darwin": {
+        "backend": "hook",
+        "implemented": false
+      }
+    },
+    "FlvParser": {
+      "darwin": {
+        "backend": "hook",
+        "installer": "qt",
+        "source_url": "https://github.com/imagora/FlvParser.git",
+        "revision": "8ad677c9f3ba951e8aede3210413f87436f21696",
+        "project": "FlvParser.pro",
+        "bundle": "bin/FlvParser.app",
+        "qt_package": "qt@5",
+        "brew_dependencies": [
+          "qt@5",
+          "yaml-cpp"
+        ],
+        "link_packages": [
+          "yaml-cpp"
+        ],
+        "patches": [
+          "flvparser-resource-case.patch"
+        ]
+      }
+    },
+    "H264Naked": {
+      "darwin": {
+        "backend": "hook",
+        "installer": "qt",
+        "source_url": "https://github.com/shi-yan/H264Naked.git",
+        "revision": "d13aa44b4f1e332a849687565623ddf4f4479125",
+        "project": "H264Naked.pro",
+        "bundle": "H264Naked.app",
+        "qt_package": "qt@5",
+        "brew_dependencies": [
+          "qt@5",
+          "autoconf",
+          "automake",
+          "libtool"
+        ],
+        "library_subdir": "h264bitstream-0.1.9"
+      }
+    },
+    "visual-studio-code": {
+      "darwin": {
+        "backend": "brew",
+        "package": "visual-studio-code"
+      }
+    },
+    "gnu-sed": {
+      "darwin": {
+        "backend": "brew",
+        "package": "gnu-sed"
+      }
+    },
+    "gawk": {
+      "darwin": {
+        "backend": "brew",
+        "package": "gawk"
+      }
+    },
+    "lrzsz": {
+      "darwin": {
+        "backend": "brew",
+        "package": "lrzsz"
+      }
+    },
+    "coreutils": {
+      "darwin": {
+        "backend": "brew",
+        "package": "coreutils"
+      }
+    },
+    "jetbrains-toolbox": {
+      "darwin": {
+        "backend": "brew",
+        "package": "jetbrains-toolbox"
+      }
+    },
+    "ctags": {
+      "darwin": {
+        "backend": "brew",
+        "package": "ctags"
+      }
+    },
+    "python3": {
+      "darwin": {
+        "backend": "brew",
+        "package": "python3"
+      }
+    },
+    "cmake": {
+      "darwin": {
+        "backend": "brew",
+        "package": "cmake"
+      }
+    },
+    "wget": {
+      "darwin": {
+        "backend": "brew",
+        "package": "wget"
+      }
+    },
+    "nvm": {
+      "darwin": {
+        "backend": "brew",
+        "package": "nvm"
+      }
+    },
+    "fd": {
+      "darwin": {
+        "backend": "brew",
+        "package": "fd"
+      }
+    },
+    "the_silver_searcher": {
+      "darwin": {
+        "backend": "brew",
+        "package": "the_silver_searcher"
+      }
+    },
+    "nvim": {
+      "darwin": {
+        "backend": "brew",
+        "package": "nvim"
+      }
+    },
+    "git": {
+      "darwin": {
+        "backend": "brew",
+        "package": "git"
+      }
+    },
+    "ssh-copy-id": {
+      "darwin": {
+        "backend": "brew",
+        "package": "ssh-copy-id"
+      }
+    },
+    "ranger": {
+      "darwin": {
+        "backend": "brew",
+        "package": "ranger"
+      }
+    },
+    "kitty": {
+      "darwin": {
+        "backend": "brew",
+        "package": "kitty"
+      }
+    },
+    "direnv": {
+      "native": {
+        "apt": "direnv",
+        "dnf": "direnv"
+      },
+      "darwin": {
+        "backend": "brew",
+        "package": "direnv"
+      }
+    }
+  },
+  "bootstrap": {
+    "homebrew": {
+      "install_url": "https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh"
+    }
+  }
+}

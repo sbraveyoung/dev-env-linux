@@ -1,0 +1,19 @@
+libtoolize: putting auxiliary files in AC_CONFIG_AUX_DIR, 'build-aux'.
+libtoolize: copying file 'build-aux/ltmain.sh'
+libtoolize: putting macros in AC_CONFIG_MACRO_DIRS, 'm4'.
+libtoolize: copying file 'm4/libtool.m4'
+libtoolize: copying file 'm4/ltoptions.m4'
+libtoolize: copying file 'm4/ltsugar.m4'
+libtoolize: copying file 'm4/ltversion.m4'
+libtoolize: copying file 'm4/lt~obsolete.m4'
+configure.ac:26: warning: The macro `AC_PROG_LD' is obsolete.
+configure.ac:26: You should run autoupdate.
+m4/libtool.m4:3361: AC_PROG_LD is expanded from...
+configure.ac:26: the top level
+configure.ac:28: warning: The macro `AC_PROG_LIBTOOL' is obsolete.
+configure.ac:28: You should run autoupdate.
+m4/libtool.m4:100: AC_PROG_LIBTOOL is expanded from...
+configure.ac:28: the top level
+configure.ac:24: installing 'build-aux/compile'
+configure.ac:22: installing 'build-aux/missing'
+Makefile.am: installing 'build-aux/depcomp'

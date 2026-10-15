@@ -1,0 +1,7 @@
+{
+  "checked": 84,
+  "mismatches": [],
+  "python": "3.12.3",
+  "shellcheck": "/usr/bin/shellcheck",
+  "removed_misplaced_test": true
+}

@@ -1,0 +1,458 @@
+[
+  {
+    "app": "golang",
+    "exit": 0,
+    "seconds": 0.0,
+    "log": "golang.log"
+  },
+  {
+    "app": "rust",
+    "exit": 0,
+    "seconds": 0.1,
+    "log": "rust.log"
+  },
+  {
+    "app": "axel",
+    "exit": 0,
+    "seconds": 0.1,
+    "log": "axel.log"
+  },
+  {
+    "app": "bcal",
+    "exit": 0,
+    "seconds": 0.0,
+    "log": "bcal.log"
+  },
+  {
+    "app": "diff-so-fancy",
+    "exit": 0,
+    "seconds": 0.1,
+    "log": "diff-so-fancy.log"
+  },
+  {
+    "app": "fff",
+    "exit": 0,
+    "seconds": 0.1,
+    "log": "fff.log"
+  },
+  {
+    "app": "git-commander",
+    "exit": 0,
+    "seconds": 0.1,
+    "log": "git-commander.log"
+  },
+  {
+    "app": "jq",
+    "exit": 0,
+    "seconds": 0.0,
+    "log": "jq.log"
+  },
+  {
+    "app": "lsix",
+    "exit": 0,
+    "seconds": 0.1,
+    "log": "lsix.log"
+  },
+  {
+    "app": "PathPicker",
+    "exit": 0,
+    "seconds": 0.1,
+    "log": "PathPicker.log"
+  },
+  {
+    "app": "tig",
+    "exit": 0,
+    "seconds": 0.0,
+    "log": "tig.log"
+  },
+  {
+    "app": "tmux",
+    "exit": 0,
+    "seconds": 0.0,
+    "log": "tmux.log"
+  },
+  {
+    "app": "neovim",
+    "exit": 0,
+    "seconds": 0.0,
+    "log": "neovim.log"
+  },
+  {
+    "app": "vifm",
+    "exit": 0,
+    "seconds": 0.0,
+    "log": "vifm.log"
+  },
+  {
+    "app": "yank",
+    "exit": 0,
+    "seconds": 0.0,
+    "log": "yank.log"
+  },
+  {
+    "app": "insect",
+    "exit": 0,
+    "seconds": 0.1,
+    "log": "insect.log"
+  },
+  {
+    "app": "shellcheck",
+    "exit": 0,
+    "seconds": 0.0,
+    "log": "shellcheck.log"
+  },
+  {
+    "app": "git-flow-completion",
+    "exit": 0,
+    "seconds": 0.1,
+    "log": "git-flow-completion.log"
+  },
+  {
+    "app": "git-quick-stats",
+    "exit": 0,
+    "seconds": 0.1,
+    "log": "git-quick-stats.log"
+  },
+  {
+    "app": "ffmpeg",
+    "exit": 0,
+    "seconds": 0.0,
+    "log": "ffmpeg.log"
+  },
+  {
+    "app": "mcfly",
+    "exit": 0,
+    "seconds": 0.1,
+    "log": "mcfly.log"
+  },
+  {
+    "app": "mosh",
+    "exit": 0,
+    "seconds": 0.0,
+    "log": "mosh.log"
+  },
+  {
+    "app": "cloc",
+    "exit": 0,
+    "seconds": 0.0,
+    "log": "cloc.log"
+  },
+  {
+    "app": "svg-term-cli",
+    "exit": 0,
+    "seconds": 0.1,
+    "log": "svg-term-cli.log"
+  },
+  {
+    "app": "zx",
+    "exit": 0,
+    "seconds": 0.1,
+    "log": "zx.log"
+  },
+  {
+    "app": "squoosh_cli",
+    "exit": 0,
+    "seconds": 0.1,
+    "log": "squoosh_cli.log"
+  },
+  {
+    "app": "bash-language-server",
+    "exit": 0,
+    "seconds": 0.1,
+    "log": "bash-language-server.log"
+  },
+  {
+    "app": "setuptools",
+    "exit": 0,
+    "seconds": 0.1,
+    "log": "setuptools.log"
+  },
+  {
+    "app": "httpie",
+    "exit": 0,
+    "seconds": 0.1,
+    "log": "httpie.log"
+  },
+  {
+    "app": "pybind11",
+    "exit": 0,
+    "seconds": 0.1,
+    "log": "pybind11.log"
+  },
+  {
+    "app": "iredis",
+    "exit": 0,
+    "seconds": 0.1,
+    "log": "iredis.log"
+  },
+  {
+    "app": "ranger-fm",
+    "exit": 0,
+    "seconds": 0.1,
+    "log": "ranger-fm.log"
+  },
+  {
+    "app": "mdv",
+    "exit": 0,
+    "seconds": 0.1,
+    "log": "mdv.log"
+  },
+  {
+    "app": "thefuck",
+    "exit": 0,
+    "seconds": 0.1,
+    "log": "thefuck.log"
+  },
+  {
+    "app": "mycli",
+    "exit": 0,
+    "seconds": 0.1,
+    "log": "mycli.log"
+  },
+  {
+    "app": "asciinema",
+    "exit": 0,
+    "seconds": 0.1,
+    "log": "asciinema.log"
+  },
+  {
+    "app": "http-prompt",
+    "exit": 0,
+    "seconds": 0.1,
+    "log": "http-prompt.log"
+  },
+  {
+    "app": "yapf",
+    "exit": 0,
+    "seconds": 0.1,
+    "log": "yapf.log"
+  },
+  {
+    "app": "icdiff",
+    "exit": 0,
+    "seconds": 0.1,
+    "log": "icdiff.log"
+  },
+  {
+    "app": "gron",
+    "exit": 0,
+    "seconds": 0.1,
+    "log": "gron.log"
+  },
+  {
+    "app": "ccat",
+    "exit": 0,
+    "seconds": 0.1,
+    "log": "ccat.log"
+  },
+  {
+    "app": "dlv",
+    "exit": 0,
+    "seconds": 0.1,
+    "log": "dlv.log"
+  },
+  {
+    "app": "cheat",
+    "exit": 0,
+    "seconds": 0.1,
+    "log": "cheat.log"
+  },
+  {
+    "app": "fx",
+    "exit": 0,
+    "seconds": 0.1,
+    "log": "fx.log"
+  },
+  {
+    "app": "fq",
+    "exit": 0,
+    "seconds": 0.1,
+    "log": "fq.log"
+  },
+  {
+    "app": "yq",
+    "exit": 0,
+    "seconds": 0.1,
+    "log": "yq.log"
+  },
+  {
+    "app": "lazydocker",
+    "exit": 0,
+    "seconds": 0.1,
+    "log": "lazydocker.log"
+  },
+  {
+    "app": "this-repo",
+    "exit": 0,
+    "seconds": 0.0,
+    "log": "this-repo.log"
+  },
+  {
+    "app": "glances",
+    "exit": 0,
+    "seconds": 0.1,
+    "log": "glances.log"
+  },
+  {
+    "app": "glow",
+    "exit": 0,
+    "seconds": 0.1,
+    "log": "glow.log"
+  },
+  {
+    "app": "curlie",
+    "exit": 0,
+    "seconds": 0.1,
+    "log": "curlie.log"
+  },
+  {
+    "app": "duf",
+    "exit": 0,
+    "seconds": 0.1,
+    "log": "duf.log"
+  },
+  {
+    "app": "dsq",
+    "exit": 0,
+    "seconds": 0.1,
+    "log": "dsq.log"
+  },
+  {
+    "app": "z",
+    "exit": 0,
+    "seconds": 0.1,
+    "log": "z.log"
+  },
+  {
+    "app": "fzf",
+    "exit": 0,
+    "seconds": 0.0,
+    "log": "fzf.log"
+  },
+  {
+    "app": "lsd",
+    "exit": 0,
+    "seconds": 0.1,
+    "log": "lsd.log"
+  },
+  {
+    "app": "broot",
+    "exit": 0,
+    "seconds": 0.1,
+    "log": "broot.log"
+  },
+  {
+    "app": "exa",
+    "exit": 0,
+    "seconds": 0.1,
+    "log": "exa.log"
+  },
+  {
+    "app": "fd-find",
+    "exit": 0,
+    "seconds": 0.1,
+    "log": "fd-find.log"
+  },
+  {
+    "app": "hexyl",
+    "exit": 0,
+    "seconds": 0.1,
+    "log": "hexyl.log"
+  },
+  {
+    "app": "ripgrep",
+    "exit": 0,
+    "seconds": 0.4,
+    "log": "ripgrep.log"
+  },
+  {
+    "app": "sd",
+    "exit": 0,
+    "seconds": 0.1,
+    "log": "sd.log"
+  },
+  {
+    "app": "bat",
+    "exit": 0,
+    "seconds": 0.1,
+    "log": "bat.log"
+  },
+  {
+    "app": "procs",
+    "exit": 0,
+    "seconds": 0.1,
+    "log": "procs.log"
+  },
+  {
+    "app": "gping",
+    "exit": 0,
+    "seconds": 0.1,
+    "log": "gping.log"
+  },
+  {
+    "app": "bottom",
+    "exit": 0,
+    "seconds": 0.1,
+    "log": "bottom.log"
+  },
+  {
+    "app": "choose",
+    "exit": 0,
+    "seconds": 0.1,
+    "log": "choose.log"
+  },
+  {
+    "app": "du-dust",
+    "exit": 0,
+    "seconds": 0.1,
+    "log": "du-dust.log"
+  },
+  {
+    "app": "onefetch",
+    "exit": 0,
+    "seconds": 0.1,
+    "log": "onefetch.log"
+  },
+  {
+    "app": "tealdeer",
+    "exit": 0,
+    "seconds": 0.1,
+    "log": "tealdeer.log"
+  },
+  {
+    "app": "pastel",
+    "exit": 0,
+    "seconds": 0.1,
+    "log": "pastel.log"
+  },
+  {
+    "app": "hyperfine",
+    "exit": 0,
+    "seconds": 0.1,
+    "log": "hyperfine.log"
+  },
+  {
+    "app": "git-delta",
+    "exit": 0,
+    "seconds": 0.1,
+    "log": "git-delta.log"
+  },
+  {
+    "app": "xh",
+    "exit": 0,
+    "seconds": 0.1,
+    "log": "xh.log"
+  },
+  {
+    "app": "zoxide",
+    "exit": 0,
+    "seconds": 0.1,
+    "log": "zoxide.log"
+  },
+  {
+    "app": "fselect",
+    "exit": 0,
+    "seconds": 0.1,
+    "log": "fselect.log"
+  }
+]

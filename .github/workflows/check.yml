@@ -1,0 +1,30 @@
+name: Linux checks
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  ubuntu:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+        with:
+          persist-credentials: false
+      - run: sudo apt-get update && sudo apt-get install -y shellcheck
+      - run: bash scripts/check.sh
+  fedora:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+        with:
+          persist-credentials: false
+      - name: Test with Fedora in a disposable container
+        run: |
+          docker run --rm -v "$PWD:/repo:ro" fedora:44 bash -c '
+            dnf install -y python3 ShellCheck git sudo &&
+            cp -a /repo /tmp/dev-env-linux &&
+            cd /tmp/dev-env-linux && bash scripts/check.sh'
