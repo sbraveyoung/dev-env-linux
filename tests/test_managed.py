@@ -84,7 +84,7 @@ class DotfileTests(unittest.TestCase):
             module.apply('uninstall')
             self.assertEqual(original.read_text(),'my original config')
             self.assertEqual(edited.read_text(),'user modified')
-            self.assertNotIn('sheath/init.sh',(module.HOME/'.bashrc').read_text())
+            self.assertFalse((module.HOME/'.bashrc').exists())
 
 class VersionTests(unittest.TestCase):
     def test_source_release_uses_peeled_commit_of_selected_tag(self):

@@ -41,7 +41,7 @@ VM 本身仍会占用宿主磁盘、CPU 和内存，因此它不符合“宿主�
 ## 系统配置需要单独测试
 
 [setup_macos_system.sh](scripts/setup_macos_system.sh) 当前会修改触摸板/Dock，
-关闭 LSQuarantine 和 DMG 验证，并把安装目录改为所有用户可写。
+并准备安装目录；已移除关闭 LSQuarantine、跳过 DMG 验证和目录全员可写的旧行为。
 Mac app hooks 还可能写 /Applications、修改默认浏览器与 shell 配置。
 更换 HOME 或创建一个本机测试账号无法隔离全部系统级改动。
 这部分只在可销毁 macOS guest 中测试，不能以容器或 Linux mock 替代。

@@ -10,13 +10,13 @@
 | macOS Homebrew | 安装前先查已有 App，再查 brew list；命中则跳过整个安装和配置流程；安装 hook 不依赖旧成功缓存 | 尚未安装时才按需引导 Homebrew、tap、安装软件；依赖由 Homebrew 处理 |
 | macOS Qt 源码 App | 已有外部 App 时跳过 install；所属 App 使用私有版本与收据，复用构建并修复链接 | 所属 App 链接和收据可重写；缺失版本需构建，依赖由 Homebrew 安装 |
 | macOS WeType | 检测到 Input Methods 中已有完整 WeType.app 时跳过下载与配置 | 尚未安装时只准备版本化的 WeTypeInstaller；输入法启用、系统授权不等于已自动完成 |
-| 仓库 dotfiles / this-repo | 首次安装保存备份；已有收据时 install 不重写文件、启动配置或创建新快照 | 显式 upgrade 应用仓库内容并保存备份；uninstall 只恢复未被用户再修改的文件 |
+| 仓库 dotfiles / this-repo | 独占锁下先处理未完成事务；已有收据时 install 保留修改 | 显式 upgrade 应用仓库内容；正常错误尝试回滚，进程中断由下次 dotfiles 调用恢复；冲突保留文件并停止 |
 | Go SDK | 复用请求版本的私有 SDK；拒绝覆盖用户命令和非所属 SDK 链接；没有所属 SDK 链接时卸载保留用户入口 | 修复所属链接；旧的私有未版本化目录可能迁移为保留备份；安装新版本仍需下载 |
 | Rust SDK | 使用私有 RUSTUP_HOME/CARGO_HOME，保留用户 ~/.rustup 与 ~/.cargo；拒绝覆盖非所属命令 | 失去全局缓存或直接调用可重新运行 rustup、重写私有 wrapper；upgrade 会更新私有工具链 |
 | 旧的可手动选择 hook，如 htop、SDL、pomo | 主要依赖成功缓存，不保证直接调用或清缓存后的严格幂等 | 可重新构建、重建链接；部分历史 hook 向系统前缀安装。应只在一次性环境选择 |
 | 系统初始化 | 一些步骤有成功缓存；设置为同一值并不代表保留用户后来改过的偏好 | Linux 源、全系统包升级、时区、SSH 权限；macOS defaults（触控板/Dock 等）仍可能写入 |
 | Docker 包装入口 | 会构建镜像；同名容器存在时返回错误，不自动删除容器 | 镜像可更新，不是重复执行成功的幂等入口 |
-| Orb VM 包装入口 | 复用同名 VM，重新传输源码并执行安装 | guest 仓库文件会被上传覆盖；显式密码参数可重设 guest 密码。不要用来保留 guest 中未同步的源码编辑 |
+| Orb VM 包装入口 | 复用同名 VM，传输完整源码与版本锁；仅更新所属且未改过的文件 | guest 编辑或未知同名文件不同于投递内容时整批源码同步拒绝；缺 Python 时先在 Ubuntu guest 引导；显式密码参数可重设 guest 密码 |
 
 ## macOS 手动 App 的处理
 
@@ -52,3 +52,17 @@ Linux 内的 App 包、Homebrew 和 Qt 外部工具替身用于验证控制流�
 真实 macOS 隔离方案见 [MACOS_TESTING.md](MACOS_TESTING.md)。
 
 本轮检查证据见 [validation/install-idempotency](validation/install-idempotency)。
+
+## 2026-10-27：事务恢复与 guest 源码保护
+
+VM receiver 的清单 `.dev-env-source-manifest.json` 记录源码内容及权限；更新与删除先整批检查。
+额外笔记保留，冲突阻止构建。相同源码可以在中断后重试，但源码同步不是整批原子发布。
+不应在同步期间同时编辑 guest 中同一批文件；安装器的锁只协调安装器进程。
+
+Dotfiles 使用事务锁、原子 JSON 收据、`pending.json` 与同目录临时旁路文件。
+支持独立的 `python3 scripts/dotfiles.py recover`，仅在 guest 中执行；通常下次 dotfiles 生命周期自动处理。
+它区分“收据已提交，只需清理”和“未提交，恢复原状”；用户中断后新增编辑则停止，保留恢复依据。
+新收据记录权限与目录结构状态，目录 symlink 不跟随其目标；原本不存在且未被再修改的 `.bashrc` 在卸载时移除。
+旧收据仍兼容内容比较，但无法追溯以前没有记录的权限变化。
+这些保证针对进程中断，不声称整机断电或磁盘损坏下的完整持久事务。
+证据见 [validation/safe-workflows](validation/safe-workflows)，新手解释见 [BEGINNER_GUIDE.md](BEGINNER_GUIDE.md)。

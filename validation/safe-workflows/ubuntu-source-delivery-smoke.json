@@ -1,0 +1,9 @@
+{
+  "fresh_delivery": "passed",
+  "repeat_delivery": "passed",
+  "repository_lock_records": 65,
+  "guest_notes_preserved": true,
+  "edited_source_refused_before_changes": true,
+  "delivered_build_help": "passed",
+  "temporary_prefix_removed_on_exit": true
+}

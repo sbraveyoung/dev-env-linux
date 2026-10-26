@@ -235,6 +235,9 @@ uninstall_linux_golang() {
 
 source "$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)/rust_sdk.sh"
 source "$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)/managed.sh"
+# Always inspect the dotfile journal; a historical success must not skip recovery.
+declare -A MANAGED_INSTALL_APPS
+MANAGED_INSTALL_APPS[this-repo]=true
 
 
 if [[ ${#ONLY_APPS[@]} -gt 0 ]]; then

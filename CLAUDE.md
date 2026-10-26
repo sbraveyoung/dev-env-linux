@@ -15,6 +15,8 @@ Their useful changes were consolidated here; see
 
 ## Running the Setup
 
+All project installation/test commands below run inside isolated guests or containers. The Mac host is only used for source editing, Git, and Orb/Docker management. Do not run the installers or test suite natively on the user's Mac.
+
 ```bash
 # Basic setup (detects platform automatically)
 ./build.sh
@@ -91,11 +93,11 @@ A standalone shell utility library sourced into the user's shell environment:
 - `scripts/dockerfile_centos` — CentOS Stream 10 bootstrap image; reuses build.sh for installation
 
 ### Configuration Templates (`config/`)
-Dotfiles deployed during setup: `.gitconfig`, `.tmux.conf`, `.vimrc`, `.ssh_config`, `nvim/` (LazyVim-based). These use `${VARIABLE}` placeholders substituted at install time.
+Dotfiles are deployed by scripts/dotfiles.py with backups, a lifecycle lock and recovery journal. Active mappings include `.gitconfig`, `.tmux.conf`, `.ssh/config`, `.tigrc` and `nvim/` (LazyVim-based). Templates are copied; do not assume `${VARIABLE}` placeholders are expanded. See BEGINNER_GUIDE.md.
 
 ## Key Conventions
 
-- **Idempotency**: Always use `execute_if_not_success` for steps that should not re-run. The cache file `.dev-env-linux` records successful commands with exact matching. Simple legacy hook entries are retained; general commands encode argument boundaries. Failed commands are not cached.
+- **Idempotency**: Use `execute_if_not_success` for legacy cached steps; installers with their own receipts/state checks bypass historical success records, including dotfiles journal recovery. The cache file `.dev-env-linux` records successful commands with exact matching. Simple legacy hook entries are retained; general commands encode argument boundaries. Failed commands are not cached.
 - **Adding a new app**: Declare sources/versions/platform mappings in `config/software.json`; shared backends generate hooks automatically. Add its ID to a profile only if it should be selected there. Special installation behavior still needs a hook. See `SOFTWARE_CATALOG.md`.
 - **Source retention**: App scripts retain `CLONE_PATH`; installed symlinks may reference its contents.
 - **Concurrent installs**: batch limits and collects child statuses; Linux package transactions are serialized to avoid APT/DNF lock races. Each application has a timeout.

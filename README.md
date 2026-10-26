@@ -3,6 +3,8 @@
 Linux 开发环境安装器，支持 Ubuntu/Debian 的 APT 和 Fedora/CentOS 的 DNF。
 当前目录是唯一开发目录；合并历史见 [MERGE_NOTES.md](MERGE_NOTES.md)。
 
+第一次接触项目可先读 [从零认识这个项目](BEGINNER_GUIDE.md)，包含目录地图、安装流程、版本与恢复机制。
+
 ## 使用
 
 安装需 Bash 4+、普通用户和 sudo；JSON 声明由 Python 3 读取，Linux 入口会在缺失时引导安装。
@@ -34,7 +36,8 @@ macOS 安装前只读识别已有 App；匹配后跳过安装和配置，保留�
 ## 版本、校验与兼容
 
 - [software.lock.json](software.lock.json) 由 `python3 scripts/export_lock.py` 从成功安装记录生成，
-  不手改。首次安装读取该锁；之后读取本机锁；`upgrade` 查询新的版本并保留旧版本。
+  不手改。共享后端 install 依次采用显式期望版本、本机锁、仓库锁、上游查询；
+  `upgrade` 遵守显式固定版本，否则查询更新，并保留旧版本。
 - npm 保存完整依赖锁和 registry integrity；Python 保存依赖约束；Cargo 使用 `--locked`
   与 registry 校验；Go 使用官方模块校验数据库。Git/源码锁定确切提交。
 - Go 下载按官方 API 的 SHA256 校验；rustup 按官方 `.sha256` 校验后才执行。
