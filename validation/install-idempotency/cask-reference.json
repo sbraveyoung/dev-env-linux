@@ -1,0 +1,215 @@
+{
+  "observed": "2026-10-23",
+  "note": "Read-only upstream reference, not runtime configuration. quit entries can refer to helpers; do not blindly import IDs. config/software.json is authoritative.",
+  "apps": {
+    "wechat": {
+      "app_bundles": [
+        "WeChat.app"
+      ],
+      "quit": [
+        "com.tencent.xinWeChat"
+      ],
+      "source": "https://formulae.brew.sh/api/cask/wechat.json"
+    },
+    "raycast": {
+      "app_bundles": [
+        "Raycast.app"
+      ],
+      "quit": [
+        "com.raycast.macos"
+      ],
+      "source": "https://formulae.brew.sh/api/cask/raycast.json"
+    },
+    "google-chrome": {
+      "app_bundles": [
+        "Google Chrome.app"
+      ],
+      "quit": [],
+      "source": "https://formulae.brew.sh/api/cask/google-chrome.json"
+    },
+    "obsidian": {
+      "app_bundles": [
+        "Obsidian.app"
+      ],
+      "quit": [],
+      "source": "https://formulae.brew.sh/api/cask/obsidian.json"
+    },
+    "dash": {
+      "app_bundles": [
+        "Dash.app"
+      ],
+      "quit": [],
+      "source": "https://formulae.brew.sh/api/cask/dash.json"
+    },
+    "alacritty": {
+      "app_bundles": [
+        "Alacritty.app"
+      ],
+      "quit": [],
+      "source": "https://formulae.brew.sh/api/cask/alacritty.json"
+    },
+    "orbstack": {
+      "app_bundles": [
+        "OrbStack.app"
+      ],
+      "quit": [
+        "dev.kdrag0n.MacVirt"
+      ],
+      "source": "https://formulae.brew.sh/api/cask/orbstack.json"
+    },
+    "alfred": {
+      "app_bundles": [
+        "Alfred 5.app"
+      ],
+      "quit": [
+        "com.runningwithcrayons.Alfred"
+      ],
+      "source": "https://formulae.brew.sh/api/cask/alfred.json"
+    },
+    "utools": {
+      "app_bundles": [
+        "uTools.app"
+      ],
+      "quit": [
+        "org.yuanli.utools"
+      ],
+      "source": "https://formulae.brew.sh/api/cask/utools.json"
+    },
+    "typora": {
+      "app_bundles": [
+        "Typora.app"
+      ],
+      "quit": [],
+      "source": "https://formulae.brew.sh/api/cask/typora.json"
+    },
+    "qqmusic": {
+      "app_bundles": [
+        "QQMusic.app"
+      ],
+      "quit": [
+        "com.tencent.QQMusicMac"
+      ],
+      "source": "https://formulae.brew.sh/api/cask/qqmusic.json"
+    },
+    "arc": {
+      "app_bundles": [
+        "Arc.app"
+      ],
+      "quit": [
+        "company.thebrowser.Browser"
+      ],
+      "source": "https://formulae.brew.sh/api/cask/arc.json"
+    },
+    "snipaste": {
+      "app_bundles": [
+        "Snipaste.app"
+      ],
+      "quit": [
+        "com.Snipaste"
+      ],
+      "source": "https://formulae.brew.sh/api/cask/snipaste.json"
+    },
+    "telegram": {
+      "app_bundles": [
+        "Telegram.app"
+      ],
+      "quit": [
+        "ru.keepcoder.Telegram"
+      ],
+      "source": "https://formulae.brew.sh/api/cask/telegram.json"
+    },
+    "tencent-lemon": {
+      "app_bundles": [
+        "Tencent Lemon.app"
+      ],
+      "quit": [
+        "com.tencent.Lemon"
+      ],
+      "source": "https://formulae.brew.sh/api/cask/tencent-lemon.json"
+    },
+    "tencent-meeting": {
+      "app_bundles": [
+        "TencentMeeting.app"
+      ],
+      "quit": [
+        "com.tencent.meeting"
+      ],
+      "source": "https://formulae.brew.sh/api/cask/tencent-meeting.json"
+    },
+    "avidemux": {
+      "app_bundles": [
+        "Avidemux_2.8.1.app"
+      ],
+      "quit": [],
+      "source": "https://formulae.brew.sh/api/cask/avidemux.json"
+    },
+    "vlc": {
+      "app_bundles": [
+        "VLC.app"
+      ],
+      "quit": [
+        "org.videolan.vlc"
+      ],
+      "source": "https://formulae.brew.sh/api/cask/vlc.json"
+    },
+    "audacity": {
+      "app_bundles": [
+        "Audacity 4.app"
+      ],
+      "quit": [
+        "org.audacityteam.audacity4"
+      ],
+      "source": "https://formulae.brew.sh/api/cask/audacity.json"
+    },
+    "mediainfo": {
+      "app_bundles": [
+        "MediaInfo.app"
+      ],
+      "quit": [],
+      "source": "https://formulae.brew.sh/api/cask/mediainfo.json"
+    },
+    "obs": {
+      "app_bundles": [
+        "OBS.app"
+      ],
+      "quit": [
+        "com.obsproject.obs-studio"
+      ],
+      "source": "https://formulae.brew.sh/api/cask/obs.json"
+    },
+    "figma": {
+      "app_bundles": [
+        "Figma.app"
+      ],
+      "quit": [
+        "com.figma.agent"
+      ],
+      "source": "https://formulae.brew.sh/api/cask/figma.json"
+    },
+    "visual-studio-code": {
+      "app_bundles": [
+        "Visual Studio Code.app"
+      ],
+      "quit": [
+        "com.microsoft.VSCode"
+      ],
+      "source": "https://formulae.brew.sh/api/cask/visual-studio-code.json"
+    },
+    "jetbrains-toolbox": {
+      "app_bundles": [
+        "JetBrains Toolbox.app"
+      ],
+      "quit": [
+        "com.jetbrains.toolbox"
+      ],
+      "source": "https://formulae.brew.sh/api/cask/jetbrains-toolbox.json"
+    },
+    "kitty": {
+      "app_bundles": [
+        "kitty.app"
+      ],
+      "quit": [],
+      "source": "https://formulae.brew.sh/api/cask/kitty.json"
+    }
+  }
+}

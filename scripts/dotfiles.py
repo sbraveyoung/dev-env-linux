@@ -45,6 +45,9 @@ def apply(operation):
     STATE.mkdir(parents=True,exist_ok=True)
     receipt=STATE/'current.json'
     current=json.loads(receipt.read_text()) if receipt.exists() else None
+    if operation=='install' and current is not None:
+        print('dotfiles already installed; use upgrade to apply repository changes')
+        return
     if operation=='uninstall':
         if not current:return
         for relative,record in current['files'].items():

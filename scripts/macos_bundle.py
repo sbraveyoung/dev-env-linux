@@ -14,6 +14,7 @@ import tempfile
 
 sys.path.insert(0,str(Path(__file__).resolve().parents[1]))
 from scripts.catalog import load_or_exit, ROOT
+from scripts.macos_inventory import existing_application
 
 
 def run(*args,**kwargs):
@@ -84,6 +85,10 @@ def build(spec,stage):
 def operate(name,operation,data):
     spec=data['apps'][name]['darwin']
     if spec.get('installer')!='qt':raise ValueError('not a Qt application: '+name)
+    existing=existing_application(name,data)
+    if existing is not None:
+        if operation!='install':raise ValueError('refusing unmanaged application: '+str(existing))
+        print('preserved existing application: '+str(existing));return
     base=Path(os.environ.get('APP_PATH',str(Path.home()/'.local/share/dev-env-linux/app')))/'macos'
     app=base/name
     applications=Path(os.environ.get('DEV_ENV_APPLICATIONS_DIR',str(Path.home()/'Applications')))

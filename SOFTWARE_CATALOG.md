@@ -17,6 +17,7 @@ Shell/Python 安装器读取声明；构建不会重新生成或覆盖这份文�
 | 共享后端的显式期望版本 | apps.<ID>.managed.version（可选） |
 | 原生包映射 | apps.<ID>.native，发行版 ID 优先于 apt/dnf |
 | macOS 安装来源、可选官方 tap | apps.<ID>.darwin / darwin.tap |
+| macOS 已有 App 检测 | darwin.app_bundles / bundle_ids / app_directories |
 | macOS Qt 源码构建 | darwin.installer=qt；source_url / revision / project / bundle / brew_dependencies |
 | Go/Rust 默认安装版本 | apps.golang.version.default / apps.rust.version.default |
 | 自定义下载 URL、架构与校验来源 | 对应 app 的 download_url / targets / checksum_url |
@@ -114,3 +115,22 @@ Qt 工具默认发布到 ~/Applications，DEV_ENV_APPLICATIONS_DIR 可覆盖位�
 Qt5 是这些旧应用的兼容依赖，已由 Homebrew 标记 deprecated，计划 2027-05-19 disable；不把 Linux 编译验证当成 macOS 认证。
 
 YuvEye 身份/来源和 StreamEye 的供应商安装包仍需补充，具体状态见 TODO_STATUS.md。
+
+## macOS 已有软件的声明
+
+`darwin.app_bundles` 是完整 `.app` 文件名列表；`bundle_ids` 可选，声明后按 Info.plist 中的
+CFBundleIdentifier 精确匹配，即使用户改过 App 名称也能识别。同名但 ID 不同的 App 不匹配。
+未声明 ID 时按文件名匹配完整应用包，不把空目录或缺少可执行文件的残留当成已安装。
+这里是安装状态检测，不是代码签名或发布者身份认证。
+
+默认只读扫描 `/Applications`、`~/Applications` 及下一层应用目录；
+`DEV_ENV_APPLICATIONS_DIR` 替换系统 App 扫描位置，也控制 Qt 发布位置。
+额外扫描位置写入 `darwin.app_directories`，支持绝对路径与 `~/`，例如 WeType 的 Input Methods 目录。
+Qt 源码应用默认从 `darwin.bundle` 提取 App 名称，无需重复声明。
+Homebrew hook 也查询 `brew list`；不根据任意同名 PATH 命令推断手动 CLI 软件的版本或归属。
+
+App 名称主要核对自 [Homebrew 官方 cask API](https://formulae.brew.sh/docs/api/)，
+每项 `/api/cask/<package>.json` 的 app artifact；ID 可从已确认的主程序 plist 或 cask 的主程序退出声明核对。
+不要把 helper/agent 的 ID 当作主程序 ID。清单是维护源，安装时不在线下载检测规则。
+不同历史版本变更过名称或 ID 时，应在对应列表中添加核实后的别名，不能用宽泛通配符匹配其他应用。
+具体保护和限制见 [INSTALLATION_SAFETY.md](INSTALLATION_SAFETY.md)。

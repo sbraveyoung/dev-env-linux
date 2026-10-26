@@ -25,7 +25,11 @@ bash build.sh --operator=rollback --only=ccat
 Go/Cargo/Python/npm/Git/源码工具共享安装、升级、卸载和记录逻辑；卸载保留版本文件，
 只删除受管理链接。`rollback` 适用于已保存前一版本的共享后端，发行版原生包由 APT/DNF 管理。
 共享后端每次安装都会检查自身收据并修复入口，复用已构建版本；不被历史全局成功缓存跳过。
-仓库 dotfiles 在安装前保存备份，卸载恢复原文件并保留安装后用户修改的文件。
+仓库 dotfiles 首次安装保存备份；重复 install 保留后续修改，显式 upgrade 才更新仓库配置。
+卸载恢复未被修改的原文件，并保留安装后用户编辑的文件。
+
+macOS 安装前只读识别已有 App；匹配后跳过安装和配置，保留用户的软件所有权。
+各安装渠道的重复执行行为、检测范围及系统状态变更见 [INSTALLATION_SAFETY.md](INSTALLATION_SAFETY.md)。
 
 ## 版本、校验与兼容
 

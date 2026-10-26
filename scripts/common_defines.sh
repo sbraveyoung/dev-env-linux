@@ -8,8 +8,8 @@ export PATH="${BIN_PATH}:${HOME}/.cargo/bin:${PATH}"
 # $1-: command to be executed and all of args
 execute_if_not_success() {
   [[ $# -gt 0 ]] || return 2
-  # Managed receipts own idempotency and link repair. A historical global
-  # success must not prevent their metadata/command checks from running.
+  # Installers with their own state checks own idempotency and link repair.
+  # Historical success must not hide missing applications or stale receipts.
   if [[ $1 =~ ^install_(linux|darwin)_(.+)$ ]] && declare -p MANAGED_INSTALL_APPS >/dev/null 2>&1 &&
       [[ ${MANAGED_INSTALL_APPS[${BASH_REMATCH[2]}]:-false} == true ]]; then
     "$@"
@@ -50,6 +50,11 @@ execute_if_not_success() {
 # $3: app
 install() {
   local status
+  # Skip the entire lifecycle, including configuration, for existing Mac software.
+  if [[ $1 == darwin ]] && declare -F darwin_install_preflight >/dev/null; then
+    if darwin_install_preflight "$3"; then return 0; else status=$?; fi
+    [[ $status -eq 1 ]] || return "$status"
+  fi
   if command_exist "preinstall_$1_$3"; then
     (execute_if_not_success preinstall_"$1"_"$3" "$2")
     status=$?

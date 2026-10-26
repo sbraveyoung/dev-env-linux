@@ -147,8 +147,28 @@ preinstall_linux_iredis() {
 	pkg_install pipx
 }
 
+golang_owned_sdk_link() {
+	[[ -L "$APP_PATH/go" ]] || return 1
+	local destination version
+	destination=$(readlink "$APP_PATH/go") || return
+	version=${destination#"$APP_PATH/golang-"}; version=${version%/go}
+	[[ $version =~ ^[[:alnum:].+-]+$ && $destination == "$APP_PATH/golang-$version/go" ]]
+}
+
 install_linux_golang() {
-	local arch archive target previous
+	local arch archive target previous binary
+	# Refuse foreign commands and SDK links before download, migration or activation.
+	for binary in go gofmt; do
+		if [[ -e "$BIN_PATH/$binary" || -L "$BIN_PATH/$binary" ]] &&
+		  { [[ ! -L "$BIN_PATH/$binary" ]] || [[ $(readlink "$BIN_PATH/$binary") != "$APP_PATH/go/bin/$binary" ]]; }; then
+			printf 'refusing unmanaged command: %s\n' "$BIN_PATH/$binary" >&2
+			return 2
+		fi
+	done
+	if [[ -L "$APP_PATH/go" ]] && ! golang_owned_sdk_link; then
+		printf 'refusing unmanaged SDK link: %s\n' "$APP_PATH/go" >&2
+		return 2
+	fi
 	arch=$(linux_arch) || return
 	archive="${CLONE_PATH}/go${GOLANG_VERSION}.linux-${arch}.tar.gz"
 	target="${APP_PATH}/golang-${GOLANG_VERSION}"
@@ -195,12 +215,17 @@ install_linux_pomo() {
 upgrade_linux_golang() { install_linux_golang; }
 uninstall_linux_golang() {
   local binary
+  if ! golang_owned_sdk_link; then
+    printf 'no managed Go SDK link; preserved command entries\n'
+    return 0
+  fi
   for binary in go gofmt; do
     if [[ -L "$BIN_PATH/$binary" && $(readlink "$BIN_PATH/$binary") == "$APP_PATH/go/bin/$binary" ]]; then
       rm -- "$BIN_PATH/$binary"
     fi
   done
-  [[ ! -L "$APP_PATH/go" ]] || rm -- "$APP_PATH/go"
+  if golang_owned_sdk_link; then rm -- "$APP_PATH/go"; fi
+  return 0
 }
 
 

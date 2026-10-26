@@ -115,7 +115,17 @@ def load(path=None):
             token(platform,label+'.native platform',r'[a-z][a-z0-9_-]*');names([package],label+'.native.'+platform)
         if 'darwin' in app:
             mac=object_at(app['darwin'],label+'.darwin',('backend',),
-                          {'backend','package','implemented','version','download_url','archive','bundle','font_family','font_package','font_tap','tap','installer','source_url','revision','project','qt_package','brew_dependencies','library_subdir','link_packages','patches'})
+                          {'backend','package','implemented','version','download_url','archive','bundle','font_family','font_package','font_tap','tap','installer','source_url','revision','project','qt_package','brew_dependencies','library_subdir','link_packages','patches','app_bundles','bundle_ids','app_directories'})
+            if 'app_bundles' in mac:
+                names(mac['app_bundles'],label+'.darwin.app_bundles',r'[^/\\\x00-\x1f]+\.app')
+                if any(v.startswith('.') for v in mac['app_bundles']):raise ValueError(label+'.darwin.app_bundles: invalid basename')
+            if 'bundle_ids' in mac:names(mac['bundle_ids'],label+'.darwin.bundle_ids',r'[A-Za-z0-9-]+(?:\.[A-Za-z0-9-]+)+')
+            if 'app_directories' in mac:
+                if not isinstance(mac['app_directories'],list):raise ValueError(label+'.darwin.app_directories: expected an array')
+                for directory in mac['app_directories']:
+                    if (not isinstance(directory,str) or not directory.startswith(('/', '~/')) or
+                            '..' in PurePosixPath(directory).parts or any(ord(c)<32 for c in directory)):
+                        raise ValueError(label+'.darwin.app_directories: expected absolute or home-relative directory')
             if mac['backend'] not in ('brew','hook'):raise ValueError(label+'.darwin.backend: unsupported backend')
             if mac['backend']=='brew':names([mac.get('package')],label+'.darwin.package')
             if 'implemented' in mac and type(mac['implemented']) is not bool:raise ValueError(label+'.darwin.implemented: expected a boolean')

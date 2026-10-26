@@ -36,30 +36,52 @@ fi
 ########################## list of apps that to be install/upgrade/uninstall ###########################
 
 ################################ app install/config/upgrade/uninstall functions ################################
+# An external app is observed only: no cache entry, configuration, or adoption.
+declare -A DARWIN_BREW_PACKAGES=()
+# These hooks check actual installer state instead of trusting the global success cache.
+declare -A MANAGED_INSTALL_APPS=()
+darwin_existing_bundle() {
+  python3 "${_CATALOG_ROOT}/scripts/macos_inventory.py" "$1"
+}
+darwin_install_preflight() {
+  local existing status package=${DARWIN_BREW_PACKAGES[$1]:-}
+  if existing=$(darwin_existing_bundle "$1"); then
+    printf 'preserved existing application: %s\n' "$existing"
+    return 0
+  else status=$?; fi
+  [[ $status -eq 1 ]] || return "$status"
+  if [[ -n $package ]] && command_exist brew >/dev/null && brew list "$package" &>/dev/null; then
+    printf 'already installed by Homebrew: %s\n' "$1"
+    return 0
+  fi
+  return 1
+}
+darwin_require_brew() {
+  if ! command_exist brew >/dev/null; then
+    local url installer
+    url=$(catalog_query bootstrap homebrew) || return
+    installer=$(curl -fsSL "$url") || return
+    /bin/bash -c "$installer" || return
+  fi
+}
+
 # Generate every declared brew hook, including tools selected with --only/--enable.
 _brew_rows=$(catalog_query brew) || return
 while IFS=$'\t' read -r brew_app brew_package brew_tap; do
   [[ -n $brew_app ]] || continue
+  DARWIN_BREW_PACKAGES[$brew_app]=$brew_package
+  MANAGED_INSTALL_APPS[$brew_app]=true
   eval "function install_darwin_${brew_app}(){
-        # check if the app is installed by brew
-        if brew list '${brew_package}'
-        then
-            printf2stdout \"verbose\" \"the %s is is already installed by berw, continue...\\n\" ${brew_app}
-            return 0
-        fi
-
-        [[ -z '${brew_tap}' ]] || brew tap '${brew_tap}' || return
         local output status
+        if darwin_install_preflight '${brew_app}'; then return 0; else status=\$?; fi
+        [[ \$status -eq 1 ]] || return \"\$status\"
+        darwin_require_brew || return
+        [[ -z '${brew_tap}' ]] || brew tap '${brew_tap}' || return
         if output=\$(brew install '${brew_package}' 2>&1); then
             return 0
         else
             status=\$?
         fi
-        if [[ \$output == *'It seems there is already an App at'* ]]; then
-            printf2stdout \"verbose\" \"the %s is installed by other ways, continue...\\n\" ${brew_app}
-            return 0
-        fi
-        printf2stderr \"warning\" \"install %s with command 'brew install %s' failed.\n\" ${brew_app} ${brew_app}
         printf '%s\\n' \"\$output\" >&2
         return \"\$status\"
     }"
@@ -95,8 +117,18 @@ done <<< "$_brew_rows"
 unset _brew_rows brew_app brew_package brew_tap
 
 _qt_names=$(catalog_query qt) || return
-declare -A MANAGED_INSTALL_APPS=()
-macos_qt_app() { python3 "${_CATALOG_ROOT}/scripts/macos_bundle.py" "$@"; }
+macos_qt_app() {
+  local status
+  if darwin_existing_bundle "$1" >/dev/null; then
+    # Python also protects direct invocation and refuses other operations on external apps.
+    :
+  else
+    status=$?
+    [[ $status -eq 1 ]] || return "$status"
+    if [[ $2 == install || $2 == upgrade ]]; then darwin_require_brew || return; fi
+  fi
+  python3 "${_CATALOG_ROOT}/scripts/macos_bundle.py" "$@"
+}
 for _qt_app in $_qt_names; do
   MANAGED_INSTALL_APPS[$_qt_app]=true
   for _qt_operation in install upgrade uninstall rollback; do
@@ -121,8 +153,11 @@ config_darwin_fzf() {
   "$(brew --prefix)"/opt/fzf/install --all
 }
 
+MANAGED_INSTALL_APPS[wetype]=true
 install_darwin_wetype() {
-  local version archive bundle url
+  local version archive bundle url status
+  if darwin_install_preflight wetype; then return 0; else status=$?; fi
+  [[ $status -eq 1 ]] || return "$status"
   cd "$1"
   version=$WETYPE_VERSION
   archive=$(catalog_field wetype darwin.archive --version "$version") || return
@@ -151,17 +186,24 @@ config_darwin_orbstack() {
 }
 
 config_darwin_alacritty() {
+  local target="$HOME/.config/alacritty/alacritty.yml"
+  if [[ -e $target || -L $target ]]; then
+    printf 'preserved existing configuration: %s\n' "$target"
+    return 0
+  fi
   brew tap "$(catalog_field alacritty darwin.font_tap)"
   brew install "$(catalog_field alacritty darwin.font_package)" # or other fonts you like, see: https://www.nerdfonts.com/ or https://github.com/ryanoasis/nerd-fonts
   fc-cache -fv
 
   mkdir -p ~/.config/alacritty
-  cat >~/.config/alacritty/alacritty.yml <<EOF
+  (set -o noclobber
+  cat >"$target" <<EOF
 font:
   normal:
     family: $(catalog_field alacritty darwin.font_family)
     style: Regular
 EOF
+  )
 }
 
 config_darwin_kitty() {
@@ -184,11 +226,6 @@ fi
 
 tmp_dir=${CLONE_PATH}
 # Sources may be shared or referenced by installed symlinks; retain them.
-
-# install homebrew
-if ! command_exist brew; then
-  /bin/bash -c "$(curl -fsSL "$(catalog_query bootstrap homebrew)")"
-fi
 
 (batch_wrapper "${brew_apps[@]}")
 (batch_wrapper "${customized_apps[@]}")

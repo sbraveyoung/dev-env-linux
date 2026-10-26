@@ -1069,31 +1069,55 @@
     "wechat": {
       "darwin": {
         "backend": "brew",
-        "package": "wechat"
+        "package": "wechat",
+        "app_bundles": [
+          "WeChat.app"
+        ],
+        "bundle_ids": [
+          "com.tencent.xinWeChat"
+        ]
       }
     },
     "raycast": {
       "darwin": {
         "backend": "brew",
-        "package": "raycast"
+        "package": "raycast",
+        "app_bundles": [
+          "Raycast.app"
+        ],
+        "bundle_ids": [
+          "com.raycast.macos"
+        ]
       }
     },
     "google-chrome": {
       "darwin": {
         "backend": "brew",
-        "package": "google-chrome"
+        "package": "google-chrome",
+        "app_bundles": [
+          "Google Chrome.app"
+        ],
+        "bundle_ids": [
+          "com.google.Chrome"
+        ]
       }
     },
     "obsidian": {
       "darwin": {
         "backend": "brew",
-        "package": "obsidian"
+        "package": "obsidian",
+        "app_bundles": [
+          "Obsidian.app"
+        ]
       }
     },
     "dash": {
       "darwin": {
         "backend": "brew",
-        "package": "dash"
+        "package": "dash",
+        "app_bundles": [
+          "Dash.app"
+        ]
       }
     },
     "alacritty": {
@@ -1102,7 +1126,10 @@
         "package": "alacritty",
         "font_tap": "homebrew/cask-fonts",
         "font_package": "font-jetbrains-mono-nerd-font",
-        "font_family": "JetBrainsMono Nerd"
+        "font_family": "JetBrainsMono Nerd",
+        "app_bundles": [
+          "Alacritty.app"
+        ]
       }
     },
     "ffmpeg@6": {
@@ -1121,134 +1148,243 @@
         },
         "download_url": "https://wetype.wxqcloud.qq.com/app/mac/{release}/WeTypeInstaller_{version}.zip",
         "archive": "WeTypeInstaller_{version}.zip",
-        "bundle": "WeTypeInstaller_{version}.app"
+        "bundle": "WeTypeInstaller_{version}.app",
+        "app_bundles": [
+          "WeType.app"
+        ],
+        "app_directories": [
+          "/Library/Input Methods",
+          "~/Library/Input Methods"
+        ]
       }
     },
     "orbstack": {
       "darwin": {
         "backend": "brew",
-        "package": "orbstack"
+        "package": "orbstack",
+        "app_bundles": [
+          "OrbStack.app"
+        ],
+        "bundle_ids": [
+          "dev.kdrag0n.MacVirt"
+        ]
       }
     },
     "alfred": {
       "darwin": {
         "backend": "brew",
-        "package": "alfred"
+        "package": "alfred",
+        "app_bundles": [
+          "Alfred 5.app"
+        ],
+        "bundle_ids": [
+          "com.runningwithcrayons.Alfred"
+        ]
       }
     },
     "utools": {
       "darwin": {
         "backend": "brew",
-        "package": "utools"
+        "package": "utools",
+        "app_bundles": [
+          "uTools.app"
+        ],
+        "bundle_ids": [
+          "org.yuanli.utools"
+        ]
       }
     },
     "typora": {
       "darwin": {
         "backend": "brew",
-        "package": "typora"
+        "package": "typora",
+        "app_bundles": [
+          "Typora.app"
+        ]
       }
     },
     "qqmusic": {
       "darwin": {
         "backend": "brew",
-        "package": "qqmusic"
+        "package": "qqmusic",
+        "app_bundles": [
+          "QQMusic.app"
+        ],
+        "bundle_ids": [
+          "com.tencent.QQMusicMac"
+        ]
       }
     },
     "arc": {
       "darwin": {
         "backend": "brew",
-        "package": "arc"
+        "package": "arc",
+        "app_bundles": [
+          "Arc.app"
+        ],
+        "bundle_ids": [
+          "company.thebrowser.Browser"
+        ]
       }
     },
     "snipaste": {
       "darwin": {
         "backend": "brew",
-        "package": "snipaste"
+        "package": "snipaste",
+        "app_bundles": [
+          "Snipaste.app"
+        ],
+        "bundle_ids": [
+          "com.Snipaste"
+        ]
       }
     },
     "telegram": {
       "darwin": {
         "backend": "brew",
-        "package": "telegram"
+        "package": "telegram",
+        "app_bundles": [
+          "Telegram.app"
+        ],
+        "bundle_ids": [
+          "ru.keepcoder.Telegram"
+        ]
       }
     },
     "tencent-lemon": {
       "darwin": {
         "backend": "brew",
-        "package": "tencent-lemon"
+        "package": "tencent-lemon",
+        "app_bundles": [
+          "Tencent Lemon.app"
+        ],
+        "bundle_ids": [
+          "com.tencent.Lemon"
+        ]
       }
     },
     "tencent-meeting": {
       "darwin": {
         "backend": "brew",
-        "package": "tencent-meeting"
+        "package": "tencent-meeting",
+        "app_bundles": [
+          "TencentMeeting.app"
+        ],
+        "bundle_ids": [
+          "com.tencent.meeting"
+        ]
       }
     },
     "trojanx": {
       "darwin": {
         "backend": "brew",
-        "package": "trojanx"
+        "package": "trojanx",
+        "app_bundles": [
+          "TrojanX.app"
+        ]
       }
     },
     "handbrake": {
       "darwin": {
         "backend": "brew",
-        "package": "handbrake"
+        "package": "handbrake",
+        "app_bundles": [
+          "HandBrake.app"
+        ]
       }
     },
     "avidemux": {
       "darwin": {
         "backend": "brew",
-        "package": "avidemux"
+        "package": "avidemux",
+        "app_bundles": [
+          "Avidemux_2.8.1.app"
+        ]
       }
     },
     "vlc": {
       "darwin": {
         "backend": "brew",
-        "package": "vlc"
+        "package": "vlc",
+        "app_bundles": [
+          "VLC.app"
+        ],
+        "bundle_ids": [
+          "org.videolan.vlc"
+        ]
       }
     },
     "audacity": {
       "darwin": {
         "backend": "brew",
-        "package": "audacity"
+        "package": "audacity",
+        "app_bundles": [
+          "Audacity 4.app"
+        ],
+        "bundle_ids": [
+          "org.audacityteam.audacity4"
+        ]
       }
     },
     "mediainfo": {
       "darwin": {
         "backend": "brew",
-        "package": "mediainfo"
+        "package": "mediainfo",
+        "app_bundles": [
+          "MediaInfo.app"
+        ]
       }
     },
     "obs": {
       "darwin": {
         "backend": "brew",
-        "package": "obs"
+        "package": "obs",
+        "app_bundles": [
+          "OBS.app"
+        ],
+        "bundle_ids": [
+          "com.obsproject.obs-studio"
+        ]
       }
     },
     "zenmap": {
       "darwin": {
         "backend": "brew",
-        "package": "zenmap"
+        "package": "zenmap",
+        "app_bundles": [
+          "Zenmap.app"
+        ]
       }
     },
     "xquartz": {
       "darwin": {
         "backend": "brew",
-        "package": "xquartz"
+        "package": "xquartz",
+        "app_bundles": [
+          "XQuartz.app"
+        ],
+        "app_directories": [
+          "/Applications/Utilities"
+        ]
       }
     },
     "figma": {
       "darwin": {
         "backend": "brew",
-        "package": "figma"
+        "package": "figma",
+        "app_bundles": [
+          "Figma.app"
+        ]
       }
     },
     "He3": {
       "darwin": {
         "backend": "brew",
         "package": "he3",
-        "tap": "he3-app/he3"
+        "tap": "he3-app/he3",
+        "app_bundles": [
+          "He3.app"
+        ]
       }
     },
     "YuvEye": {
@@ -1319,7 +1455,13 @@
     "visual-studio-code": {
       "darwin": {
         "backend": "brew",
-        "package": "visual-studio-code"
+        "package": "visual-studio-code",
+        "app_bundles": [
+          "Visual Studio Code.app"
+        ],
+        "bundle_ids": [
+          "com.microsoft.VSCode"
+        ]
       }
     },
     "gnu-sed": {
@@ -1349,7 +1491,13 @@
     "jetbrains-toolbox": {
       "darwin": {
         "backend": "brew",
-        "package": "jetbrains-toolbox"
+        "package": "jetbrains-toolbox",
+        "app_bundles": [
+          "JetBrains Toolbox.app"
+        ],
+        "bundle_ids": [
+          "com.jetbrains.toolbox"
+        ]
       }
     },
     "ctags": {
@@ -1421,7 +1569,10 @@
     "kitty": {
       "darwin": {
         "backend": "brew",
-        "package": "kitty"
+        "package": "kitty",
+        "app_bundles": [
+          "kitty.app"
+        ]
       }
     },
     "direnv": {
